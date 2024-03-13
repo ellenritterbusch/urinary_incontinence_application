@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+//import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage.dart';
+import 'package:urinary_incontinence_application/Home/HomePage.dart';
+import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 
 void main() {
   runApp(
@@ -12,10 +15,27 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "UrDiary",
       debugShowCheckedModeBanner: false, //fjerne "debug" markat
-      //theme: ThemeData(
-        //fontFamily: GoogleFonts.quicksand().fontFamily),
+      theme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromARGB(70, 239, 242, 40),
+          brightness: Brightness.light,
+        ),
+      // textTheme: TextTheme(
+      //     displayLarge: const TextStyle(
+      //       fontSize: 72,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //     // ···
+      //     titleLarge: GoogleFonts.oswald(
+      //       fontSize: 30,
+      //       fontStyle: FontStyle.italic,
+      //     ),
+      //     bodyMedium: GoogleFonts.merriweather(),
+      //     displaySmall: GoogleFonts.pacifico(),
+      //  ),
+        ),
       home: const RootPage()
     );
   }
@@ -32,28 +52,29 @@ class RootPage extends StatefulWidget { //vigtigt at denne er stateful - betyder
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<Widget> pages = [
-    //const HomePage(),
+    const HomePage(),
     const BladderDiaryPage(),
-    //const NotificationPage(),
+    const NotificationPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: 
-      pages[currentPage],
-      bottomNavigationBar: NavigationBar(destinations: const [
-        NavigationDestination(icon: Icon(Icons.home), label: "Home"),
-        NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: "Calendar"),
-        NavigationDestination(icon: Icon(Icons.notifications), label: "Notifications")
-      ],
+      body: pages[currentPage],
+      bottomNavigationBar: NavigationBar(
       onDestinationSelected: (int index) {
           setState(() {
             currentPage = index;
           });
         },
-        selectedIndex: currentPage
+        selectedIndex: currentPage,
+        destinations: const [
+        NavigationDestination(icon: Icon(Icons.home), label: "Home"),
+        NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: "Calendar"),
+        NavigationDestination(icon: Icon(Icons.notifications), label: "Notifications")
+      ],        
       ),
     );
   }
 }
+

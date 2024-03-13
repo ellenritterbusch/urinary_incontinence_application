@@ -14,6 +14,7 @@ class _BladderDiaryPageState extends State<BladderDiaryPage> {
       appBar: AppBar(
         title: const Text("Calendar"),
       ),
+      body: const Text('kalenderen'),
     );
   }
 }
