@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-//import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
@@ -22,19 +22,20 @@ class MyApp extends StatelessWidget {
           seedColor: Color.fromARGB(70, 239, 242, 40),
           brightness: Brightness.light,
         ),
-      // textTheme: TextTheme(
-      //     displayLarge: const TextStyle(
-      //       fontSize: 72,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //     // ···
-      //     titleLarge: GoogleFonts.oswald(
-      //       fontSize: 30,
-      //       fontStyle: FontStyle.italic,
-      //     ),
-      //     bodyMedium: GoogleFonts.merriweather(),
-      //     displaySmall: GoogleFonts.pacifico(),
-      //  ),
+      textTheme: TextTheme(
+          displayLarge: const TextStyle(
+            fontSize: 72,
+            fontWeight: FontWeight.bold,
+          ),
+          // ···
+          titleLarge: GoogleFonts.quicksand(
+            fontSize: 30,
+            fontStyle: FontStyle.italic,
+          ),
+          bodyMedium: GoogleFonts.quicksand(),
+          displaySmall: GoogleFonts.pacifico(),
+      ),
+       fontFamily: GoogleFonts.quicksand().fontFamily
         ),
       home: const RootPage()
     );
