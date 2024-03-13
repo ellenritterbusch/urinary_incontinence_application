@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/table_calendar.dart';
 
 class BladderDiaryPage extends StatefulWidget {
   const BladderDiaryPage({super.key});
@@ -16,10 +17,10 @@ class _BladderDiaryPageState extends State<BladderDiaryPage> {
       ),
       body: 
 
-      //////////// track and evaluate button //////////
+      ////////// track and evaluate button //////////
       Column(
-        mainAxisAlignment: MainAxisAlignment.center,
       children: [
+        const Table_calendar(),         //Henviser til Table_calender klassen
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton.icon( 
@@ -38,7 +39,8 @@ class _BladderDiaryPageState extends State<BladderDiaryPage> {
             icon: const Icon(Icons.add),
             label: const Text("Track")),
         )
-      ],)
+      ],
+      )
     );
   }
 }
