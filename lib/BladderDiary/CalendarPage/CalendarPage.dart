@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 
@@ -39,6 +40,10 @@ class _CalendarPageState extends State<CalendarPage> {
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton.icon(
             onPressed:() {
+               Navigator.push(
+               context,
+                MaterialPageRoute(builder: (context) => const BladderDiaryPage()),
+               );
             
             },
             icon: const Icon(Icons.add),
