@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 
@@ -54,7 +54,7 @@ class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<Widget> pages = [
     const HomePage(),
-    const BladderDiaryPage(),
+    const CalendarPage(),
     const NotificationPage(),
   ];
 
