@@ -12,6 +12,7 @@ class Table_calendar extends StatefulWidget {
 class _Table_calendarState extends State<Table_calendar> {
 DateTime today = DateTime.now();
 
+
 void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
     today = day;
@@ -29,7 +30,8 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
           titleCentered: true,
         ),
         availableGestures: AvailableGestures.all,
-        calendarStyle: CalendarStyle(
+        ///Udseende detaljer///
+        calendarStyle: CalendarStyle(     
           selectedDecoration: BoxDecoration(
             color: Theme.of(context).colorScheme.primary,
             shape: BoxShape.circle),
@@ -40,11 +42,13 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
             todayTextStyle: TextStyle(color: Colors.black)
            ),
         
+        ///day specifications///
         firstDay:DateTime.utc(2024,01,01),
         lastDay: DateTime.utc(2030,01,01),
         focusedDay: today,
         onDaySelected: _onDaySelected,
         selectedDayPredicate: (day) => isSameDay(day, today),
+
         ),
     );
   }
