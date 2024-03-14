@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/BladderDiary/table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 
-class BladderDiaryPage extends StatefulWidget {
-  const BladderDiaryPage({super.key});
+class CalendarPage extends StatefulWidget {
+  const CalendarPage({super.key});
 
   @override
-  State<BladderDiaryPage> createState() => _BladderDiaryPageState();
+  State<CalendarPage> createState() => _CalendarPageState();
 }
 
-class _BladderDiaryPageState extends State<BladderDiaryPage> {
+class _CalendarPageState extends State<CalendarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,6 +26,10 @@ class _BladderDiaryPageState extends State<BladderDiaryPage> {
           padding: const EdgeInsets.all(8.0),
           child: ElevatedButton.icon( 
             onPressed: () {
+              Navigator.push(
+               context,
+                MaterialPageRoute(builder: (context) => const DailyEvaluationPage()),
+               );
             },
             icon: const Icon(Icons.add_reaction), 
             label: const Text("Evaluate")),
