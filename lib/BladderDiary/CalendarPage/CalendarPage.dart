@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Track_button.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Evaluate_button.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({super.key});
@@ -18,32 +20,18 @@ class _CalendarPageState extends State<CalendarPage> {
       ),
       body: 
 
-      ////////// track and evaluate button //////////
-      Column(
+      ////////// Opbygning af siden //////////
+      const Column(
       children: [
-        const Table_calendar(),         //Henviser til Table_calender klassen
+        Table_calendar(),         //Henviser til Table_calender klassen
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton.icon( 
-            onPressed: () {
-              Navigator.push(
-               context,
-                MaterialPageRoute(builder: (context) => const DailyEvaluationPage()),
-               );
-            },
-            icon: const Icon(Icons.add_reaction), 
-            label: const Text("Evaluate")),
+          padding: EdgeInsets.all(8.0),
+          child: Evaluate_button(),     //Henviser til Evaluate_button klassen
         ),
-
         Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: ElevatedButton.icon(
-            onPressed:() {
-            
-            },
-            icon: const Icon(Icons.add),
-            label: const Text("Track")),
-        )
+          padding: EdgeInsets.all(8.0),
+          child: Track_button()       //Henviser til Track_button klassen
+          )
       ],
       )
     );

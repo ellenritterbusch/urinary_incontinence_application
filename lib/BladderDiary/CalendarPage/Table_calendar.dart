@@ -25,11 +25,12 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
       child: TableCalendar(
         locale: "en_US",
         rowHeight: 50,
-        headerStyle: HeaderStyle(
+        headerStyle: const HeaderStyle(
           formatButtonVisible: false,
           titleCentered: true,
         ),
         availableGestures: AvailableGestures.all,
+
         ///Udseende detaljer///
         calendarStyle: CalendarStyle(     
           selectedDecoration: BoxDecoration(
@@ -37,17 +38,20 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
             shape: BoxShape.circle),
            todayDecoration: BoxDecoration(
             color: Colors.transparent,
-            //backgroundBlendMode: BlendMode.colorBurn,
+            border: Border.all(),
             shape: BoxShape.circle),
-            todayTextStyle: TextStyle(color: Colors.black)
+            todayTextStyle: const TextStyle(
+              color: Colors.black)
            ),
         
         ///day specifications///
         firstDay:DateTime.utc(2024,01,01),
-        lastDay: DateTime.utc(2030,01,01),
+        lastDay: DateTime.now(),
         focusedDay: today,
         onDaySelected: _onDaySelected,
         selectedDayPredicate: (day) => isSameDay(day, today),
+
+
 
         ),
     );
