@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
 class Track_button extends StatefulWidget {
@@ -17,6 +18,10 @@ class _Track_buttonState extends State<Track_button>{
             ),
             onPressed:() {
             debugPrint(today.toString());
+            Navigator.push(
+               context,
+                MaterialPageRoute(builder: (context) => const BladderDiaryPage()),
+               );
             },
             icon: const Icon(Icons.add,
             size: 30,),
