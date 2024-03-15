@@ -5,11 +5,14 @@ import 'package:table_calendar/table_calendar.dart';
 DateTime today = DateTime.now();
 
 class Table_calendar extends StatefulWidget {
-  const Table_calendar({super.key});
+  final CalendarFormat yourCalendarFormat;
+  //final double? yourRowHeight;
+
+  const Table_calendar({super.key, required this.yourCalendarFormat});
 
   @override
   State<Table_calendar> createState() => _Table_calendarState();
-}
+} 
 
 class _Table_calendarState extends State<Table_calendar> {
 
@@ -51,7 +54,7 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
         onDaySelected: _onDaySelected,
         selectedDayPredicate: (day) => isSameDay(day, today),
 
-
+        calendarFormat: widget.yourCalendarFormat,
 
         ),
     );

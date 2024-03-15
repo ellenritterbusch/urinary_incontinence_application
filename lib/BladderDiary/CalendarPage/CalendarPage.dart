@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Track_button.dart';
@@ -24,7 +25,7 @@ class _CalendarPageState extends State<CalendarPage> {
       ////////// Opbygning af siden //////////
       const Column(
       children: [
-        Table_calendar(),         //Henviser til Table_calender klassen
+        Table_calendar(yourCalendarFormat: CalendarFormat.month,),         //Henviser til Table_calender klassen
         Padding(
           padding: EdgeInsets.all(8.0),
           child: Evaluate_button(),     //Henviser til Evaluate_button klassen
