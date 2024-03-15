@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
-class Track_button extends StatelessWidget {
+class Track_button extends StatefulWidget {
   const Track_button({super.key});
 
   @override
+  State<Track_button> createState() => _Track_buttonState();
+}
+
+class _Track_buttonState extends State<Track_button>{
+ @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(200, 80)
+              fixedSize: Size(150, 80)
             ),
             onPressed:() {
-            
+            debugPrint(today.toString());
             },
             icon: const Icon(Icons.add,
             size: 30,),

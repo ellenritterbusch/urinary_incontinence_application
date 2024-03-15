@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+//global variables//
+DateTime today = DateTime.now();
 
 class Table_calendar extends StatefulWidget {
   const Table_calendar({super.key});
@@ -10,8 +12,6 @@ class Table_calendar extends StatefulWidget {
 }
 
 class _Table_calendarState extends State<Table_calendar> {
-DateTime today = DateTime.now();
-
 
 void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
