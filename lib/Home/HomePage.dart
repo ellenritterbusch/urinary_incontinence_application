@@ -8,14 +8,18 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  
   @override
   Widget build(BuildContext context) {
      return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
       ),
-
-      body: const Text('hjemme'),
-    );
+      body: 
+      ElevatedButton(
+        onPressed: () {},
+        child: const Text('Connect'),
+    ))  ;
+    
   }
 }
