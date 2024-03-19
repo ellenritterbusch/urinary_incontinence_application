@@ -1,30 +1,66 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 
 //global variables//
 DateTime today = DateTime.now();
 
 class Table_calendar extends StatefulWidget {
   final CalendarFormat yourCalendarFormat;
-  //final double? yourRowHeight;
 
-  const Table_calendar({super.key, required this.yourCalendarFormat});
+  const Table_calendar({super.key, required this.yourCalendarFormat}); //constructor requires calendar format
 
   @override
   State<Table_calendar> createState() => _Table_calendarState();
+   
 } 
 
 class _Table_calendarState extends State<Table_calendar> {
+   TextEditingController _evaluationController = TextEditingController();
+  //store the evaluations created
+  Map<DateTime, List<Evaluation>> evaluations = {};
+  late final ValueNotifier<List<Evaluation>> _selectedEvaluation;
 
-void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
+  @override
+  void initState(){
+    super.initState();
+    _selectedEvaluation = ValueNotifier(getEvaluationForDay(today));
+  }
+
+  List<Evaluation> getEvaluationForDay(DateTime day) {
+    return evaluations[day] ?? [];
+  }
+
+void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
-    today = day;
+    today = selectedDay;
   });
 }
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      // floatingActionButton: FloatingActionButton(
+      //       onPressed:() {
+      //         showDialog(context: context, 
+      //         builder: (context){
+      //           return AlertDialog(
+      //             content: TextField(controller: _evaluationController),
+      //             actions: [
+      //               ElevatedButton(
+      //                 onPressed: (){
+      //                   //store the evaluation into the map
+      //                   evaluations.addAll({today!: [Evaluation(_evaluationController.text)]});
+      //                   Navigator.of(context).pop();
+      //                 },
+      //                 child: Text('submit'),)
+      //             ],
+      //           );
+      //         }
+      //         );
+      //       },
+      //       child: Icon(Icons.add),
+      //     ),
       child: TableCalendar(
         locale: "en_US",
         rowHeight: 50,
@@ -56,8 +92,20 @@ void _onDaySelected(DateTime day, DateTime focusedDay){ //funktion der sætter d
 
         calendarFormat: widget.yourCalendarFormat,
 
-        ),
+        //builders
+        // calendarBuilders: CalendarBuilders(
+        //   markerBuilder:
+        // ),
+
+      ),
     );
   }
+  
+
+}
+
+class Evaluation {
+  final String title;
+  Evaluation(this.title);
 }
 

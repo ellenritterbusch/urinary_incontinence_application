@@ -14,6 +14,8 @@ class CalendarPage extends StatefulWidget {
 }
 
 class _CalendarPageState extends State<CalendarPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class _CalendarPageState extends State<CalendarPage> {
         Table_calendar(yourCalendarFormat: CalendarFormat.month,),         //Henviser til Table_calender klassen
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Evaluate_button(),     //Henviser til Evaluate_button klassen
+          child: Evaluate_button()     //Henviser til Evaluate_button klassen
         ),
         Padding(
           padding: EdgeInsets.all(8.0),
