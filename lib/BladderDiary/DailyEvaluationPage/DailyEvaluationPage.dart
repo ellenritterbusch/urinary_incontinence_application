@@ -33,7 +33,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   Navigator.of(context).pop(controller.text);
 }
   void close (){ //Method used to close memo window without saving user input. Called when 'Cancel' button is pressed. 
-    Navigator.of(context).pop();
+    Navigator.of(context).pop(controller.text);
+    controller.text = '';
   }
 
    openDialog() => showDialog(//method for creating the daily evaluation note. Called when Memo button is pressed

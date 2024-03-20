@@ -41,11 +41,16 @@ class DatabaseManager{
   void _createDb(Database db, int newVersion) async {
     await db.execute('CREATE TABLE $DailyEvaluationTable($colDate TEXT PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
   }
-    Future<List<Map<String, dynamic>>> getDailyEvaluationMapList(DatabaseModel dailyEvaluation) async {
+  Future<List<Map<String, dynamic>>> getDailyEvaluationMapList(DatabaseModel dailyEvaluation) async {
       Database db = await this.database;
       var result = await db.rawQuery("SELECT * FROM $DailyEvaluationTable WHERE $colDate = ?", [dailyEvaluation.date]);
       return result;
     }
+Future <int> updateDailyEvaluation (DatabaseModel dailyEvaluation) async {
+  Database db = await this.database;
+  var result = await db.update(DailyEvaluationTable, dailyEvaluation.toMap(), where :'$colDate= ?', whereArgs:[dailyEvaluation.date]);
+  return result;
+}
 Future <int> insertDailyEvaluation(DatabaseModel dailyEvaluation) async {
   var db = await this.database;
   var result = await db.update(DailyEvaluationTable, dailyEvaluation.toMap(), where: '$colDate=?', whereArgs: [dailyEvaluation.date]);
