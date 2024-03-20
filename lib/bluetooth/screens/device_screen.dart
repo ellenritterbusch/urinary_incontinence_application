@@ -178,7 +178,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text('${widget.device.remoteId}'),
-    );
+    ); 
   }
 
   Widget buildRssiTile(BuildContext context) {

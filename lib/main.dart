@@ -15,7 +15,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false, //fjerne "debug" markat
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -53,7 +52,7 @@ class RootPage extends StatefulWidget { //vigtigt at denne er stateful - betyder
 class _RootPageState extends State<RootPage> {
   int currentPage = 0;
   List<Widget> pages = [
-    const HomePage(),
+    const FlutterBlueApp(),
     const CalendarPage(),
     const NotificationPage(),
   ];
