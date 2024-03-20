@@ -27,7 +27,9 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
     // Track Button navigates to Bladder Diary //
       const Column(
       children: [
-        Calender_Bar(),  
+        Calender_Bar(), 
+        Padding(
+        padding: EdgeInsets.all(20.0)), 
         Row(mainAxisAlignment: MainAxisAlignment.center,
           children:[ 
             Accident_Button(),
@@ -38,7 +40,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
         ),
         Time_picker(),
         Padding(
-          padding: EdgeInsets.all(20.0)),
+          padding: EdgeInsets.all(40.0)),
         Save_Button(),
       ]),
          );
