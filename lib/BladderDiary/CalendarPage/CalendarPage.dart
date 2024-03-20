@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Track_button.dart';
-import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Evaluate_button.dart';
 
 class CalendarPage extends StatefulWidget {
