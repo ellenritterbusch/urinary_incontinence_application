@@ -27,6 +27,8 @@ class _HomePageState extends State<HomePage> {
 // This widget shows BluetoothOffScreen or
 // ScanScreen depending on the adapter state
 //
+
+
 class FlutterBlueApp extends StatefulWidget {
   const FlutterBlueApp({Key? key}) : super(key: key);
 
