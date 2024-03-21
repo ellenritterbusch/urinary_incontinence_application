@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+
 
 class DailyEvaluationPage extends StatefulWidget {
   const DailyEvaluationPage({super.key});
@@ -28,7 +30,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   int dailyEvaluation = 0; //Used to store result of daily evaluation, 1= bad, 2=neutral, 3= good
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
-  DatabaseModel databaseModelDE = DatabaseModel(0, '', '');
+  DatabaseModel databaseModelDE = DatabaseModel(0,'','');
 
   @override
   Widget build(BuildContext context) {
@@ -126,7 +128,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     ElevatedButton(
                       onPressed : (){
                         setState(() {
-                          databaseModelDE.date = '1';
+                          databaseModelDE.date = today.toString();
                           databaseModelDE.dailyEvaluationScore = dailyEvaluation;
                           databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
                           // function for send to database
