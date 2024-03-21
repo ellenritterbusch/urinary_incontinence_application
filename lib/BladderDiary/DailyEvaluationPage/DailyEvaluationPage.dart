@@ -1,8 +1,10 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/EvaluationButton.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+
 
 class DailyEvaluationPage extends StatefulWidget {
   const DailyEvaluationPage({super.key});
@@ -65,92 +67,104 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
           );
     return  Scaffold(
       appBar: AppBar(
-          title: const Text('Daily Evaluation: '), //Page title
+          title: const Text('Daily Evaluation '), //Page title
           centerTitle: true,
       ),
 
-      body : Column( //Page is 1 column with 4 rows, containing a button for green, yellow, and red, and one for "Submit daily evaluation "
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,         
-          children: <Widget>[
-              Row( //Green Button
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 3;
-              isVisible = true;
-                                              });
-                                    }, 
-                    style:  ElevatedButton.styleFrom(
-                         backgroundColor: Colors.green),
-                    child: Icon(
-                        Icons.sentiment_satisfied_rounded, size: 50.0, color: Colors.black),
-                    )
-                  ],
+      body : 
+        Column( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                EvaluationButton(iconcolor: Colors.green),
+                EvaluationButton(iconcolor: Colors.yellow),
+                EvaluationButton(iconcolor: Colors.red),
       
-                  ),
-              Row( //Yellow button
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 2;
-              isVisible = true;
-                                                  });
-                                     }, 
-                    style:  ElevatedButton.styleFrom(
-                         backgroundColor: Colors.yellow),
-                    child: Icon(
-                        Icons.sentiment_neutral_rounded, size: 50.0, color: Colors.black),
-                    )
-                  ],
-      
-                  ),
-              Row( //Red button
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 1;
-              isVisible = true;
-                                                });                      
-                                    }, 
-                    style:  ElevatedButton.styleFrom(
-                         backgroundColor: Colors.red),
-                    child: Icon(
-                        Icons.sentiment_dissatisfied_rounded, size: 50.0, color: Colors.black),
-                    )
-                  ],
-      
-                  ),
-              Row( // "Save daily evaluation" button
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[ 
-                    ElevatedButton(
-                      onPressed : (){
-                        setState(() {
-                          databaseModelDE.date = '1';
-                          databaseModelDE.dailyEvaluationScore = dailyEvaluation;
-                          databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
-                          // function for send to database
-                        
-                        });
-                      },   
-                      child: Text('Save daily evaluation'),       
-                    ),
-                  ],
-                )
-            ]
-          ),
-          floatingActionButton: //Button to open textfield for memo. Invisible until the user has chosen one of the three icons. Needs to be repositioned. 
+                //save button//
+                OutlinedButton(
+                   onPressed : (){
+                     setState(() {
+                      databaseModelDE.date = '1';
+                      databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                      databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
+                    });
+                  }, 
+                  style: OutlinedButton.styleFrom(fixedSize: Size(150, 70)),  
+                  child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
+                      ),
+                ]),
+    ///Button to open textfield for memo. Invisible until the user has chosen one of the three icons. Needs to be repositioned. 
+        floatingActionButton: 
           Visibility(visible: isVisible,
-                            child:  ElevatedButton(
+            child:  ElevatedButton(
                     onPressed : () async {
                         final dailyEvaluationMemo = await openDialog();
                         setState(() => this.dailyEvaluationMemo=dailyEvaluationMemo);
                     }, 
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
+                    ),
                     child: Icon(
-                        Icons.edit_note, size: 50.0,),
-                    ),)
-          
-          );
+                        Icons.edit_note, size: 50.0, color: Colors.black,),
+                    ),
+                    ),
+                );
 
   }
 }
+
+
+// <Widget>[
+              // Row( //Green Button
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: <Widget>[ ElevatedButton(
+              //       onPressed : () {setState(() {
+              // dailyEvaluation = 3;
+              // isVisible = true;
+              //                                 });
+              //                       }, 
+              //       style:  ElevatedButton.styleFrom(
+              //            fixedSize: Size(120, 120),
+              //            shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(23.0))),
+              //       child: 
+              //       const Icon(
+              //           Icons.sentiment_satisfied_rounded, size: 70.0, color: Colors.green,),
+              //       )
+              //     ],
+      
+              //     ),
+              // Row( //Yellow button
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //     children: <Widget>[ ElevatedButton(
+              //       onPressed : () {setState(() {
+              // dailyEvaluation = 2;
+              // isVisible = true;
+              //                                     });
+              //                        }, 
+              //       style:  ElevatedButton.styleFrom(
+              //            fixedSize: Size(120, 120),
+              //            shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(23.0))),
+              //       child: const Icon(
+              //           Icons.sentiment_satisfied_rounded, size: 70.0, color: Colors.yellow),
+              //       )
+              //     ],
+      
+              //     ),
+              // Row( //Red button
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //     children: <Widget>[ 
+              //       ElevatedButton(
+              //       onPressed : () {setState(() {
+              //       dailyEvaluation = 1;
+              //         isVisible = true;
+              //                                   });                      
+              //                       }, 
+              //       style:  ElevatedButton.styleFrom(
+              //            fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.width * 0.30),
+              //            shape: RoundedRectangleBorder(
+              //             borderRadius: BorderRadius.circular(23.0))),
+              //       child: const Icon(
+              //           Icons.sentiment_satisfied_rounded, size: 80, color: Colors.red),
+              //       )
+              //     ],
