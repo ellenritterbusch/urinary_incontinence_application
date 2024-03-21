@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+
 class Accident_Button extends StatefulWidget {
   const Accident_Button({super.key});
 
@@ -10,14 +11,19 @@ class Accident_Button extends StatefulWidget {
 class _Accident_ButtonState extends State<Accident_Button> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
-
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        fixedSize: Size(150,200),
+         ),
+      
     // Accident Button //
         onPressed: (){},
-          icon: const Icon(Icons.water_drop),
-          label: const Text("Accident"));
-
-  
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.water_drop, size: 80,),
+                Text("Accident", style: TextStyle(fontSize: 20),),],
+          ));
 }
 }
 
@@ -31,13 +37,21 @@ class No_Accident_Button extends StatefulWidget {
 class _No_Accident_ButtonState extends State<No_Accident_Button> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton.icon(
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        fixedSize: Size(150,200)
+      ),
+            
 
-    // Accident Button //
-        onPressed: (){},
-          icon: const Icon(Icons.water_drop),
-          label: const Text("No Accident"));
-
+    // No Accident Button //
+       onPressed: (){},
+       child: const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.water_drop_outlined, size: 80,),
+          Text("No Accident", style: TextStyle(fontSize: 18),),],
+       ));
   
 }
+
 }
