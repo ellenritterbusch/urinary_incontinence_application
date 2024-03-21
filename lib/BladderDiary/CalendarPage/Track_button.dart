@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
-import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/table_calendar.dart';
 
 class Track_button extends StatefulWidget {
   const Track_button({super.key});

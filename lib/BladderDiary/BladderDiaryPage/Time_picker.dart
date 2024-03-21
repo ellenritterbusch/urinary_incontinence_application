@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Time_picker extends StatefulWidget {
-  const Time_picker({super.key});
+class TimePicker extends StatefulWidget {
+  const TimePicker({super.key});
 
   @override
-  State<Time_picker> createState() => _Time_pickerState();
+  State<TimePicker> createState() => _TimePickerState();
 }
 
-class _Time_pickerState extends State<Time_picker> {
+class _TimePickerState extends State<TimePicker> {
   TimeOfDay selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class _Time_pickerState extends State<Time_picker> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text("${selectedTime.hour}:${selectedTime.minute}", style: TextStyle(fontSize: 50)),
+          Text("${selectedTime.hour}:${selectedTime.minute}", style: const TextStyle(fontSize: 50)),
           //ElevatedButton(
             //child: const Text("Choose time", style: TextStyle(fontSize: 12)),
            // onPressed: () async {

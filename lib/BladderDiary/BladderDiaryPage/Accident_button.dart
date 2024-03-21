@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 
-class Accident_Button extends StatefulWidget {
-  const Accident_Button({super.key});
+class AccidentButton extends StatefulWidget {
+  const AccidentButton({super.key});
 
   @override
-  State<Accident_Button> createState() => _Accident_ButtonState();
+  State<AccidentButton> createState() => _AccidentButtonState();
 }
 
-class _Accident_ButtonState extends State<Accident_Button> {
+class _AccidentButtonState extends State<AccidentButton> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(150,200),
+        fixedSize: const Size(150,200),
          ),
       
     // Accident Button //
@@ -27,19 +27,19 @@ class _Accident_ButtonState extends State<Accident_Button> {
 }
 }
 
-class No_Accident_Button extends StatefulWidget {
-  const No_Accident_Button({super.key});
+class NoAccidentButton extends StatefulWidget {
+  const NoAccidentButton({super.key});
 
   @override
-  State<No_Accident_Button> createState() => _No_Accident_ButtonState();
+  State<NoAccidentButton> createState() => _NoAccidentButtonState();
 }
 
-class _No_Accident_ButtonState extends State<No_Accident_Button> {
+class _NoAccidentButtonState extends State<NoAccidentButton> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(150,200)
+        fixedSize: const Size(150,200)
       ),
             
 
