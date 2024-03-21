@@ -1,8 +1,9 @@
 class DatabaseModel {
-  
+
  late int _dailyEvaluationScore;
  late String _dailyEvaluationMemo;
  late String _date;
+ late bool _accident;
 
   DatabaseModel(this._dailyEvaluationScore, this._dailyEvaluationMemo, this._date);
 
@@ -29,7 +30,7 @@ class DatabaseModel {
     map['dailyEvaluationScore'] = _dailyEvaluationScore;
     map['dailyEvaluationMemo'] = _dailyEvaluationMemo;
     map['date'] = _date;
-
+    map['accident']= _accident;
     return map;
   }
 

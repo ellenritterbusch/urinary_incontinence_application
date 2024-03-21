@@ -1,6 +1,8 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 
 class DailyEvaluationPage extends StatefulWidget {
   const DailyEvaluationPage({super.key});
@@ -22,9 +24,11 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   
 
   //ATTRIBUTES FOR DAILY EVALUATION
+  
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   int dailyEvaluation = 0; //Used to store result of daily evaluation, 1= bad, 2=neutral, 3= good
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
+  DatabaseModel databaseModelDE = DatabaseModel(0, '', '');
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +70,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
       ),
 
       body : Column( //Page is 1 column with 4 rows, containing a button for green, yellow, and red, and one for "Submit daily evaluation "
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,         
           children: <Widget>[
               Row( //Green Button
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -120,7 +124,15 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[ 
                     ElevatedButton(
-                      onPressed : (){},   
+                      onPressed : (){
+                        setState(() {
+                          databaseModelDE.date = '1';
+                          databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                          databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
+                          // function for send to database
+                        
+                        });
+                      },   
                       child: Text('Save daily evaluation'),       
                     ),
                   ],
