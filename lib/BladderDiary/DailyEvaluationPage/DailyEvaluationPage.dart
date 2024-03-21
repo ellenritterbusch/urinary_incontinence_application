@@ -14,7 +14,8 @@ class DailyEvaluationPage extends StatefulWidget {
 }
 
 class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
-  late TextEditingController controller; //initialize controller for memo
+  late TextEditingController controller;
+  
 
   @override //Used to take user input for memo
     void initState(){
@@ -30,7 +31,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   int dailyEvaluation = 0; //Used to store result of daily evaluation, 1= bad, 2=neutral, 3= good
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
-  DatabaseModel databaseModelDE = DatabaseModel(0,'','');
+  DatabaseModel databaseModelDE = DatabaseModel(0,'',today);
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +78,13 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
               Row( //Green Button
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 3;
-              isVisible = true;
-                                              });
-                                    }, 
+                    onPressed : () {
+                      setState(() {
+                        isVisible = true;
+                        dailyEvaluation = 3;
+                        databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                      });
+                       }, 
                     style:  ElevatedButton.styleFrom(
                          backgroundColor: Colors.green),
                     child: Icon(
@@ -93,11 +96,13 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
               Row( //Yellow button
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 2;
-              isVisible = true;
-                                                  });
-                                     }, 
+                    onPressed : () {
+                      setState(() {
+                        isVisible = true;
+                        dailyEvaluation = 2;
+                        databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                      });
+                       }, 
                     style:  ElevatedButton.styleFrom(
                          backgroundColor: Colors.yellow),
                     child: Icon(
@@ -109,11 +114,13 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
               Row( //Red button
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[ ElevatedButton(
-                    onPressed : () {setState(() {
-              dailyEvaluation = 1;
-              isVisible = true;
-                                                });                      
-                                    }, 
+                    onPressed : () {
+                      setState(() {
+                        isVisible = true;
+                        dailyEvaluation = 1;
+                        databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                      });
+                       },  
                     style:  ElevatedButton.styleFrom(
                          backgroundColor: Colors.red),
                     child: Icon(
@@ -126,16 +133,10 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[ 
                     ElevatedButton(
-                      onPressed : (){
-                        setState(() {
-                          databaseModelDE.date = today.toString();
-                          databaseModelDE.dailyEvaluationScore = dailyEvaluation;
-                          databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
-                          // function for send to database
-                        
-                        });
+                      onPressed : ()async{
+                          await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                       },   
-                      child: Text('Save daily evaluation'),       
+                      child: Text('Save'),       
                     ),
                   ],
                 )
@@ -146,7 +147,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                             child:  ElevatedButton(
                     onPressed : () async {
                         final dailyEvaluationMemo = await openDialog();
-                        setState(() => this.dailyEvaluationMemo=dailyEvaluationMemo);
+                        setState(() => databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo);
                     }, 
                     child: Icon(
                         Icons.edit_note, size: 50.0,),
