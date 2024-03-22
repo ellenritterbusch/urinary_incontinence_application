@@ -3,12 +3,13 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 
 class EvaluationButton extends StatefulWidget {
   final Color iconcolor;
+  final IconData yourIcon;
   //final bool visibility;
   final Function() onPressed;
   //final int dailyEvaluation;
 
 
-  const EvaluationButton({required this.iconcolor, required this.onPressed});
+  const EvaluationButton({required this.iconcolor, required this.yourIcon, required this.onPressed});
 
 @override
 _EvaluationButtonState createState() => _EvaluationButtonState();
@@ -28,8 +29,7 @@ class _EvaluationButtonState extends State<EvaluationButton> {
           fixedSize: Size(MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.width * 0.25),
           shape: RoundedRectangleBorder(
                borderRadius: BorderRadius.circular(23))),
-          child: Icon(
-        Icons.sentiment_satisfied_rounded, size: 80, color: widget.iconcolor),
+          child: Icon(widget.yourIcon,  size: 80, color: widget.iconcolor),
           ),
       ),
       ]

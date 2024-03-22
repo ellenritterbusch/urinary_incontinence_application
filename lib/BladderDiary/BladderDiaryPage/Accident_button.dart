@@ -14,6 +14,7 @@ class _Accident_ButtonState extends State<Accident_Button> {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         fixedSize: Size(150,200),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23))
          ),
       
     // Accident Button //
@@ -21,8 +22,12 @@ class _Accident_ButtonState extends State<Accident_Button> {
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Icons.water_drop, size: 80,),
-                Text("Accident", style: TextStyle(fontSize: 20),),],
+                Text("Accident", 
+                style: TextStyle(fontSize: 20, color: Colors.black),
+                textAlign: TextAlign.start,
+                ),
+                Icon(Icons.water_drop, size: 80, color: Colors.yellow,),
+                ],
           ));
 }
 }
@@ -39,17 +44,28 @@ class _No_Accident_ButtonState extends State<No_Accident_Button> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(150,200)
+        fixedSize: Size(150,200),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23))
       ),
             
 
     // No Accident Button //
        onPressed: (){},
-       child: const Column(
+       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.water_drop_outlined, size: 80,),
-          Text("No Accident", style: TextStyle(fontSize: 18),),],
+          Text("No Accident", 
+          style: TextStyle(fontSize: 18, color: Colors.black),
+          textAlign: TextAlign.start,
+          ),
+          Stack(
+            alignment: Alignment.center,
+            children: [
+          Icon(Icons.water_drop, size: 70, color:  Colors.yellow.withOpacity(0.6),),
+          Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.yellow,)
+          ]
+        ),
+        ],
        ));
   
 }

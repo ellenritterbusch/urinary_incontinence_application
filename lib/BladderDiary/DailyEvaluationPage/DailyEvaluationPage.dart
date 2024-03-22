@@ -75,19 +75,25 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
         Column( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                EvaluationButton(iconcolor: Colors.green,
+                EvaluationButton(                             //green button
+                  yourIcon: Icons.sentiment_satisfied_rounded,
+                  iconcolor: Colors.green,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
                   });
                 }),
-                EvaluationButton(iconcolor: Colors.yellow,
+                EvaluationButton(
+                  yourIcon: Icons.sentiment_neutral_rounded,
+                  iconcolor: Colors.yellow,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
                   });
                 }),
-                EvaluationButton(iconcolor: Colors.red,
+                EvaluationButton(
+                  yourIcon: Icons.sentiment_dissatisfied_outlined,
+                  iconcolor: Colors.red,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
@@ -95,18 +101,21 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 }),
       
                 //save button//
-                OutlinedButton(
-                   onPressed : (){
-                     setState(() {
-                      databaseModelDE.date = '1';
-                      databaseModelDE.dailyEvaluationScore = dailyEvaluation;
-                      databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
-                    });
-                  }, 
-                  style: OutlinedButton.styleFrom(
-                    fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
-                  child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
-                      ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: OutlinedButton(
+                     onPressed : (){
+                       setState(() {
+                        databaseModelDE.date = '1';
+                        databaseModelDE.dailyEvaluationScore = dailyEvaluation;
+                        databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
+                      });
+                    }, 
+                    style: OutlinedButton.styleFrom(
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
+                    child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
+                        ),
+                ),
                 ]),
     ///Button to open textfield for memo. Invisible until the user has chosen one of the three icons. Needs to be repositioned. 
         floatingActionButton: 

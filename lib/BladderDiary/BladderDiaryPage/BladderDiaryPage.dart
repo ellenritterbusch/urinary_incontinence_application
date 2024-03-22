@@ -38,10 +38,14 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
             No_Accident_Button(),    
         ]
         ),
-        Time_picker(),
         Padding(
-          padding: EdgeInsets.all(40.0)),
-        Save_Button(),
+          padding: EdgeInsets.all(20.0),
+          child: Time_picker(),
+        ),
+        Padding(
+          padding: EdgeInsets.all(25.0),
+          child: Save_Button(),
+        ),
       ]),
          );
   }

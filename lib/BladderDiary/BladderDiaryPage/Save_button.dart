@@ -12,14 +12,14 @@ class _Save_ButtonState extends State<Save_Button> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: const Size(140,40),
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08),
          ),
 
         onPressed: (){},
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Save", style: TextStyle(fontSize: 20),),],
+                Text("Save", style: TextStyle(fontSize: 28, color: Colors.black),),],
           ));
   }
 }
