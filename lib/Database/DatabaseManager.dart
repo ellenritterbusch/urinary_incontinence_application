@@ -54,6 +54,10 @@ Future <int> deleteDailyEvaluation (String date) async {
 }
 }
 
+void read() async {
+  //final evaluation = await DatabaseManager.getDailyEvaluationMapList();
+ // evaluation.forEach((row)=>print(row));
+} 
 
  // DatabaseManager._createInstance();
  // factory DatabaseManager(){ //Used to create _databaseManager for the first time, which is then used from then on. 
