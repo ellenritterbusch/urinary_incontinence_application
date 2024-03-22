@@ -30,10 +30,30 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   int dailyEvaluation = 0; //Used to store result of daily evaluation, 1= bad, 2=neutral, 3= good
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
+  bool goodDay = false; //Used for color of green button
+  bool mehDay = false; //Used for color of yellow button
+  bool badDay = false; //Used for color of red button
+  Color saveButtonColor = kDefaultIconLightColor; //Used for color of  save button, defined below. 
+
+ 
   DatabaseModel databaseModelDE = DatabaseModel(0, '', '');
+
 
   @override
   Widget build(BuildContext context) {
+//Defining the color of the save button based on selected daily evaluation. 
+     if (goodDay){ 
+    saveButtonColor = Colors.green;
+  }
+  else if (mehDay){
+    saveButtonColor = Colors.yellow;
+  }
+  else if (badDay){
+    saveButtonColor = Colors.red;
+  }
+  else (){
+    saveButtonColor = kDefaultIconLightColor;
+  };
    
     void submit(){ //Method used to save user input for memo and close window. Called when 'Submit' button is pressed.
   Navigator.of(context).pop(controller.text);
@@ -75,28 +95,41 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
         Column( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                EvaluationButton(                             //green button
+                EvaluationButton(      
+                          //green button
                   yourIcon: Icons.sentiment_satisfied_rounded,
-                  iconcolor: Colors.green,
+                  iconcolor: goodDay? Colors.black: Colors.green,
+                  backgroundcolor: goodDay? Colors.green: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
+                     goodDay = true;
+                     mehDay = false;
+                     badDay = false;     
                   });
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_neutral_rounded,
-                  iconcolor: Colors.yellow,
+                  iconcolor: mehDay ? Colors.black: Colors.yellow,
+                  backgroundcolor: mehDay? Colors.yellow: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
+                    goodDay = false;
+                    mehDay = true;
+                    badDay = false;
                   });
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_dissatisfied_outlined,
-                  iconcolor: Colors.red,
+                  iconcolor: badDay? Colors.black: Colors.red,
+                  backgroundcolor: badDay? Colors.red: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
+                    goodDay = false;
+                    mehDay = false;
+                    badDay = true;
                   });
                 }),
       
@@ -112,7 +145,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       });
                     }, 
                     style: OutlinedButton.styleFrom(
-                      fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
+                       backgroundColor: saveButtonColor,),  
                     child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
                         ),
                 ),
@@ -128,6 +162,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
                     ),
+
                     child: Icon(
                         Icons.edit_note, size: 50.0, color: Colors.black,),
                     ),
