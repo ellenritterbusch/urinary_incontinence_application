@@ -17,7 +17,7 @@ class _Time_pickerState extends State<Time_picker> {
         children: <Widget>[
           Text("${selectedTime.hour}:${selectedTime.minute}", style: TextStyle(fontSize: 50)),
           ElevatedButton(
-            child: const Text("Choose time", style: TextStyle(fontSize: 16)),
+            child: const Text("Choose time", style: TextStyle(fontSize: 12)),
            onPressed: () async {
              final TimeOfDay? timeOfDay = await showTimePicker(
                context: context,
@@ -29,10 +29,9 @@ class _Time_pickerState extends State<Time_picker> {
                    selectedTime = timeOfDay;
                  });
                }
-           }
-
-            )
-        ],
+           },
+          )
+        ]
       )
     );
   }
