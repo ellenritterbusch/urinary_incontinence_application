@@ -75,9 +75,24 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
         Column( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                EvaluationButton(iconcolor: Colors.green),
-                EvaluationButton(iconcolor: Colors.yellow),
-                EvaluationButton(iconcolor: Colors.red),
+                EvaluationButton(iconcolor: Colors.green,
+                onPressed: (){
+                  setState(() {
+                    isVisible = true;
+                  });
+                }),
+                EvaluationButton(iconcolor: Colors.yellow,
+                onPressed: (){
+                  setState(() {
+                    isVisible = true;
+                  });
+                }),
+                EvaluationButton(iconcolor: Colors.red,
+                onPressed: (){
+                  setState(() {
+                    isVisible = true;
+                  });
+                }),
       
                 //save button//
                 OutlinedButton(
@@ -88,7 +103,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
                     });
                   }, 
-                  style: OutlinedButton.styleFrom(fixedSize: Size(150, 70)),  
+                  style: OutlinedButton.styleFrom(
+                    fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
                   child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
                       ),
                 ]),
