@@ -5,6 +5,7 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 
 
 class DailyEvaluationPage extends StatefulWidget {
@@ -146,6 +147,10 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                         databaseModelDE.dailyEvaluationScore = dailyEvaluation;
                         databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
                       });
+                      Navigator.push(
+               context,
+                MaterialPageRoute(builder: (context) => const CalendarPage()),
+               );
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
