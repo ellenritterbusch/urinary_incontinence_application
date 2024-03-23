@@ -25,7 +25,7 @@ class _Evaluate_buttonState extends State<Evaluate_button> {
               fontSize: 24
             ),),
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(200, 80),
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.35, MediaQuery.of(context).size.height * 0.08),
             )
     );
   }
