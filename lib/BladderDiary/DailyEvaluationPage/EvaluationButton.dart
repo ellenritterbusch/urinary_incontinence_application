@@ -26,10 +26,10 @@ class _EvaluationButtonState extends State<EvaluationButton> {
         child: ElevatedButton(
           onPressed: widget.onPressed,
          style:  ElevatedButton.styleFrom(
-          fixedSize: Size(MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.width * 0.25),
+          fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.width * 0.30),
           shape: RoundedRectangleBorder(
                borderRadius: BorderRadius.circular(23))),
-          child: Icon(widget.yourIcon,  size: 80, color: widget.iconcolor),
+          child: Icon(widget.yourIcon,  size: 60, color: widget.iconcolor),
           ),
       ),
       ]
