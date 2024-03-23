@@ -16,7 +16,7 @@ class DailyEvaluationPage extends StatefulWidget {
 
 class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   late TextEditingController controller;
-  
+  late DatabaseModel evaluation;
 
   @override //Used to take user input for memo
     void initState(){
@@ -32,6 +32,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
   DatabaseModel databaseModelDE = DatabaseModel(0,'',today);
+  
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +110,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
                      onPressed : () async{
-                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
+                      final evaluation =  await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
+                      debugPrint('$evaluation value inserted');
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
