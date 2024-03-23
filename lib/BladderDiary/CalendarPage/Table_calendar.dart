@@ -63,7 +63,7 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
       //     ),
       child: TableCalendar(
         locale: "en_US",
-        rowHeight: 50,
+        rowHeight: MediaQuery.of(context).size.height * 0.07,
         headerStyle: const HeaderStyle(
           formatButtonVisible: false,
           titleCentered: true,
