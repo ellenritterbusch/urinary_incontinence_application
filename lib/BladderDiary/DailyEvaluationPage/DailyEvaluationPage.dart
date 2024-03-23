@@ -108,7 +108,6 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   child: OutlinedButton(
                      onPressed : (){
                        setState(() {
-                        databaseModelDE.date = '1';
                         databaseModelDE.dailyEvaluationScore = dailyEvaluation;
                         databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
                       });
@@ -140,58 +139,3 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
 }
 
 
-// <Widget>[
-              // Row( //Green Button
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //   children: <Widget>[ ElevatedButton(
-              //       onPressed : () {setState(() {
-              // dailyEvaluation = 3;
-              // isVisible = true;
-              //                                 });
-              //                       }, 
-              //       style:  ElevatedButton.styleFrom(
-              //            fixedSize: Size(120, 120),
-              //            shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(23.0))),
-              //       child: 
-              //       const Icon(
-              //           Icons.sentiment_satisfied_rounded, size: 70.0, color: Colors.green,),
-              //       )
-              //     ],
-      
-              //     ),
-              // Row( //Yellow button
-              //   mainAxisAlignment: MainAxisAlignment.center,
-              //     children: <Widget>[ ElevatedButton(
-              //       onPressed : () {setState(() {
-              // dailyEvaluation = 2;
-              // isVisible = true;
-              //                                     });
-              //                        }, 
-              //       style:  ElevatedButton.styleFrom(
-              //            fixedSize: Size(120, 120),
-              //            shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(23.0))),
-              //       child: const Icon(
-              //           Icons.sentiment_satisfied_rounded, size: 70.0, color: Colors.yellow),
-              //       )
-              //     ],
-      
-              //     ),
-              // Row( //Red button
-              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              //     children: <Widget>[ 
-              //       ElevatedButton(
-              //       onPressed : () {setState(() {
-              //       dailyEvaluation = 1;
-              //         isVisible = true;
-              //                                   });                      
-              //                       }, 
-              //       style:  ElevatedButton.styleFrom(
-              //            fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.width * 0.30),
-              //            shape: RoundedRectangleBorder(
-              //             borderRadius: BorderRadius.circular(23.0))),
-              //       child: const Icon(
-              //           Icons.sentiment_satisfied_rounded, size: 80, color: Colors.red),
-              //       )
-              //     ],
