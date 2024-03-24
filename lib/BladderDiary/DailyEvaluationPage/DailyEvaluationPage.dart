@@ -1,5 +1,3 @@
-//import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/EvaluationButton.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
@@ -26,7 +24,6 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
     }
 
   
-
   //ATTRIBUTES FOR DAILY EVALUATION
   
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
@@ -36,7 +33,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   bool goodDay = false; //Used for color of green button
   bool mehDay = false; //Used for color of yellow button
   bool badDay = false; //Used for color of red button
-  Color saveButtonColor = kDefaultIconLightColor; //Used for color of  save button, defined below. 
+  //Color saveButtonColor = Colors.grey; //Used for color of  save button, defined below. 
 
 
   DatabaseModel databaseModelDE = DatabaseModel(0,'',today);
@@ -45,19 +42,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
 
   @override
   Widget build(BuildContext context) {
-//Defining the color of the save button based on selected daily evaluation. 
-     if (goodDay){ 
-    saveButtonColor = Colors.green;
-  }
-  else if (mehDay){
-    saveButtonColor = Colors.yellow;
-  }
-  else if (badDay){
-    saveButtonColor = Colors.red;
-  }
-  else (){
-    saveButtonColor = kDefaultIconLightColor;
-  };
+
    
     void submit(){ //Method used to save user input for memo and close window. Called when 'Submit' button is pressed.
   Navigator.of(context).pop(controller.text);
@@ -102,8 +87,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 EvaluationButton(      
                           //green button
                   yourIcon: Icons.sentiment_satisfied_rounded,
-                  iconcolor: goodDay? Colors.black: Colors.green,
-                  backgroundcolor: goodDay? Colors.green: kDefaultIconLightColor,
+                  iconcolor: Colors.green,
+                  bordercolor: goodDay? Colors.green: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
@@ -114,8 +99,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_neutral_rounded,
-                  iconcolor: mehDay ? Colors.black: Colors.yellow,
-                  backgroundcolor: mehDay? Colors.yellow: kDefaultIconLightColor,
+                  iconcolor: Colors.yellow,
+                  bordercolor: mehDay? Colors.yellow: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
@@ -126,8 +111,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_dissatisfied_outlined,
-                  iconcolor: badDay? Colors.black: Colors.red,
-                  backgroundcolor: badDay? Colors.red: kDefaultIconLightColor,
+                  iconcolor: Colors.red,
+                  bordercolor: badDay? Colors.red: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
@@ -137,7 +122,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   });
                 }),
       
-                //save button//
+                ////Save button////
+                if ((goodDay) | (mehDay) | (badDay))
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
@@ -149,12 +135,18 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
-                       backgroundColor: saveButtonColor,),  
-                    child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
+                       shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),  
+                    child: Text('Save', style: 
+                    TextStyle(
+                      color: Colors.black, fontSize: 28),),       
                         ),
                 ),
                 ]),
-    ///Button to open textfield for memo. Invisible until the user has chosen one of the three icons. Needs to be repositioned. 
+
+
+    ///Button to open textfield for memo. 
+    ///Invisible until the user has chosen one of the three icons. 
         floatingActionButton: 
           Visibility(visible: isVisible,
             child:  ElevatedButton(
