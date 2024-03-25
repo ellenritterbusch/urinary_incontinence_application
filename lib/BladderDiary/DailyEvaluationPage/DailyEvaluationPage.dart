@@ -15,6 +15,7 @@ class DailyEvaluationPage extends StatefulWidget {
 
 class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   late TextEditingController controller;
+  late String date; 
   
 
   @override //Used to take user input for memo
@@ -34,10 +35,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   bool goodDay = false; //Used for color of green button
   bool mehDay = false; //Used for color of yellow button
   bool badDay = false; //Used for color of red button
-  //Color saveButtonColor = Colors.grey; //Used for color of  save button, defined below. 
-
-
-  DatabaseModel databaseModelDE = DatabaseModel(0,'',date);
+  
+   DatabaseModel databaseModelDE = DatabaseModel(0,'','');
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +72,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                 ],
             ),
           );
+
     return  Scaffold(
       appBar: AppBar(
           title: const Text('Daily Evaluation '), //Page title
@@ -90,6 +90,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   bordercolor: goodDay? Colors.green: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
+                    databaseModelDE.dailyEvaluationScore = 3;
                     isVisible = true;
                      goodDay = true;
                      mehDay = false;
@@ -102,6 +103,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   bordercolor: mehDay? Colors.yellow: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
+                    databaseModelDE.dailyEvaluationScore = 2;
                     isVisible = true;
                     goodDay = false;
                     mehDay = true;
@@ -114,6 +116,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   bordercolor: badDay? Colors.red: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
+                    databaseModelDE.dailyEvaluationScore = 1;
                     isVisible = true;
                     goodDay = false;
                     mehDay = false;
@@ -127,7 +130,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
                      onPressed : () async{
-                      
+                      date = today.toString().substring(0,10);
+                      databaseModelDE.date = date;
                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                       debugPrint('data is sucessfully inserted');
                       final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 
-//global variables//
+
 DateTime today = DateTime.now();
-String date = today.toString().substring(0,10);
 class Table_calendar extends StatefulWidget {
   final CalendarFormat yourCalendarFormat;
 
@@ -17,7 +17,9 @@ class Table_calendar extends StatefulWidget {
 } 
 
 class _Table_calendarState extends State<Table_calendar> {
-   TextEditingController _evaluationController = TextEditingController();
+
+TextEditingController _evaluationController = TextEditingController();
+  
   //store the evaluations created
   Map<DateTime, List<Evaluation>> evaluations = {};
   late final ValueNotifier<List<Evaluation>> _selectedEvaluation;
@@ -35,8 +37,10 @@ class _Table_calendarState extends State<Table_calendar> {
 void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
     today = selectedDay;
+    debugPrint('$today');
   });
 }
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +92,7 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
         firstDay:DateTime.utc(2024,01,01),
         lastDay: DateTime.now(),
         focusedDay: today,
-        onDaySelected: _onDaySelected,
+        onDaySelected: _onDaySelected, 
         selectedDayPredicate: (day) => isSameDay(day, today),
 
         calendarFormat: widget.yourCalendarFormat,
