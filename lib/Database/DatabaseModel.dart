@@ -2,7 +2,7 @@ class DatabaseModel {
 
  late int? dailyEvaluationScore;
  late String? dailyEvaluationMemo;
- late int date;
+ late String? date;
 // late bool accident;
 
 DatabaseModel(this.dailyEvaluationScore, this.dailyEvaluationMemo, this.date);

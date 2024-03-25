@@ -26,7 +26,7 @@ class DatabaseManager{
    }
 
   void _createDb(Database db, int newVersion) async { //Constructor for creating tables in database. 
-    await db.execute('CREATE TABLE $DailyEvaluationTable($colDate INTEGER PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
+    await db.execute('CREATE TABLE $DailyEvaluationTable($colDate STRING PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
   }
   //RETRIEVE DATA FROM DATABASE
   Future<List<Map<String, dynamic>>> getDailyEvaluationMapList(DatabaseModel dailyEvaluation) async { //
