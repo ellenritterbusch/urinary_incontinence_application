@@ -31,7 +31,8 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
-  DatabaseModel databaseModelDE = DatabaseModel(0,'',today);
+  DatabaseModel databaseModelDE = DatabaseModel(0,'',10);
+
   
 
   @override
@@ -110,9 +111,11 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
                      onPressed : () async{
-                      final evaluation = await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
+                      
+                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
+                      debugPrint('here');
                       //final DBcheck = await DatabaseManager.databaseManager.getDailyEvaluationMapList(today);
-                      debugPrint('$evaluation value inserted');
+                      //debugPrint('$evaluation value inserted');
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  

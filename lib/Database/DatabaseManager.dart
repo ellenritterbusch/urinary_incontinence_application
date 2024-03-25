@@ -26,31 +26,31 @@ class DatabaseManager{
    }
 
   void _createDb(Database db, int newVersion) async { //Constructor for creating tables in database. 
-    await db.execute('CREATE TABLE $DailyEvaluationTable($colDate REAL PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
+    await db.execute('CREATE TABLE $DailyEvaluationTable($colDate INTEGER PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
   }
   //RETRIEVE DATA FROM DATABASE
   Future<List<Map<String, dynamic>>> getDailyEvaluationMapList(DatabaseModel dailyEvaluation) async { //
       Database db = await databaseManager.databaseDB;
-      var result = await db.rawQuery("SELECT * FROM $DailyEvaluationTable WHERE $colDate = ?", [dailyEvaluation.date]);
-      return result;
+      var res = await db.rawQuery("SELECT * FROM $DailyEvaluationTable WHERE $colDate = ?", [dailyEvaluation.date]);
+      return res;
     }
     //UPDATE VALUES IN DATABASE
 Future <int> updateDailyEvaluation (DatabaseModel dailyEvaluation) async {
   Database db = await databaseManager.databaseDB;
-  var result = await db.update(DailyEvaluationTable, dailyEvaluation.toMap(), where :'$colDate= ?', whereArgs:[dailyEvaluation.date]);
-  return result;
+  var res = await db.update(DailyEvaluationTable, dailyEvaluation.toMap(), where :'$colDate= ?', whereArgs:[dailyEvaluation.date]);
+  return res;
 }
 //INSERT NEW VALUES IN DATABASE
-Future <int> insertDailyEvaluation(DatabaseModel data) async {
+Future <void> insertDailyEvaluation(DatabaseModel data) async {
   Database db = await databaseManager.databaseDB;
-  var result = await db.insert('DailyEvaluation', data.toMap());
-  return result;
+  await db.insert('DailyEvaluation', data.toMap(),conflictAlgorithm: ConflictAlgorithm.replace);
+
 }
 //DELETE VALUES IN DATABASE
 Future <int> deleteDailyEvaluation (String date) async {
   var db = await databaseManager.databaseDB;
-  int result = await db.rawDelete("DELETE FROM $DailyEvaluationTable WHERE $colDate =?", [date]);
-  return result;
+  int res = await db.rawDelete("DELETE FROM $DailyEvaluationTable WHERE $colDate =?", [date]);
+  return res;
 }
 }
 
