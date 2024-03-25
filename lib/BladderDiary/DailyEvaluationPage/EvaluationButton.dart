@@ -4,7 +4,6 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 class EvaluationButton extends StatefulWidget {
   final Color iconcolor;
   final IconData yourIcon;
-  //final bool visibility;
   final Function() onPressed;
   //final int dailyEvaluation;
 

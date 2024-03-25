@@ -1,5 +1,3 @@
-//import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/EvaluationButton.dart';
@@ -17,7 +15,7 @@ class DailyEvaluationPage extends StatefulWidget {
 
 class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   late TextEditingController controller;
-  late DatabaseModel evaluation;
+  
 
   @override //Used to take user input for memo
     void initState(){
@@ -27,17 +25,23 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
     }
 
   
-
   //ATTRIBUTES FOR DAILY EVALUATION
   
   String dailyEvaluationMemo =''; //Initialize a memo string to be filled out later
+  int dailyEvaluation = 0; //Used to store result of daily evaluation, 1= bad, 2=neutral, 3= good
   bool isVisible = false;  //Used for displaying note button when an evaluation has been given
-  DatabaseModel databaseModelDE = DatabaseModel(0,'',time);
 
-  
+  bool goodDay = false; //Used for color of green button
+  bool mehDay = false; //Used for color of yellow button
+  bool badDay = false; //Used for color of red button
+  //Color saveButtonColor = Colors.grey; //Used for color of  save button, defined below. 
+
+
+  DatabaseModel databaseModelDE = DatabaseModel(0,'',date);
 
   @override
   Widget build(BuildContext context) {
+
    
     void submit(){ //Method used to save user input for memo and close window. Called when 'Submit' button is pressed.
   Navigator.of(context).pop(controller.text);
@@ -79,35 +83,46 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
         Column( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                EvaluationButton(                             //green button
+                EvaluationButton(      
+                          //green button
                   yourIcon: Icons.sentiment_satisfied_rounded,
                   iconcolor: Colors.green,
+                  bordercolor: goodDay? Colors.green: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
-                    databaseModelDE.dailyEvaluationScore = 3;
+                     goodDay = true;
+                     mehDay = false;
+                     badDay = false;     
                   });
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_neutral_rounded,
                   iconcolor: Colors.yellow,
+                  bordercolor: mehDay? Colors.yellow: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
-                    databaseModelDE.dailyEvaluationScore = 2;
+                    goodDay = false;
+                    mehDay = true;
+                    badDay = false;
                   });
                 }),
                 EvaluationButton(
                   yourIcon: Icons.sentiment_dissatisfied_outlined,
                   iconcolor: Colors.red,
+                  bordercolor: badDay? Colors.red: kDefaultIconLightColor,
                 onPressed: (){
                   setState(() {
                     isVisible = true;
-                    databaseModelDE.dailyEvaluationScore = 1;
+                    goodDay = false;
+                    mehDay = false;
+                    badDay = true;
                   });
                 }),
       
-                //save button//
+                ////Save button////
+                if ((goodDay) | (mehDay) | (badDay))
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
@@ -124,14 +139,20 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       MaterialPageRoute(builder: (context) => const CalendarPage()),
                       );
                     }, 
-                    
                     style: OutlinedButton.styleFrom(
-                      fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
-                    child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       
+                      fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
+                       shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20))),  
+                    child: Text('Save', style: 
+                    TextStyle(
+                      color: Colors.black, fontSize: 28),),       
                         ),
                 ),
                 ]),
-    ///Button to open textfield for memo. Invisible until the user has chosen one of the three icons. Needs to be repositioned. 
+
+
+    ///Button to open textfield for memo. 
+    ///Invisible until the user has chosen one of the three icons. 
         floatingActionButton: 
           Visibility(visible: isVisible,
             child:  ElevatedButton(
@@ -142,6 +163,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
                     ),
+
                     child: Icon(
                         Icons.edit_note, size: 50.0, color: Colors.black,),
                     ),
@@ -150,4 +172,5 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
 
   }
 }
+
 
