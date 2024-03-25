@@ -3,7 +3,7 @@ class DatabaseModel {
  late int? dailyEvaluationScore;
  late String? dailyEvaluationMemo;
  late String? date;
- late bool? accident;
+ late int? accident;
  late String? time;
  late int? stimType;
  late int? stimIntensity;
@@ -12,7 +12,7 @@ class DatabaseModel {
  late int? PIN;
 
 DatabaseModel.DE(this.dailyEvaluationScore, this.dailyEvaluationMemo, this.date);
-DatabaseModel.BD(this.date, this.time, this.accident, this.stimType, this.stimIntensity, this.stimeTimeSetting);
+DatabaseModel.BD(this.date, this.time, this.accident);
 DatabaseModel.User(this.PIN);
 
 

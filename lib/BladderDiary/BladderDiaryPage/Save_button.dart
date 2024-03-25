@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class Save_Button extends StatefulWidget {
-  const Save_Button({super.key});
+  final Function() onpressed;
+  
+  const Save_Button({super.key, required this.onpressed});
 
   @override
   State<Save_Button> createState() => _Save_ButtonState();
@@ -15,7 +17,7 @@ class _Save_ButtonState extends State<Save_Button> {
         fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08),
          ),
 
-        onPressed: (){},
+        onPressed: widget.onpressed,
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [

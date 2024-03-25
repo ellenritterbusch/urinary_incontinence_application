@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+TimeOfDay selectedTime = TimeOfDay.now();
 class Time_picker extends StatefulWidget {
   const Time_picker({super.key});
 
@@ -8,7 +9,6 @@ class Time_picker extends StatefulWidget {
 }
 
 class _Time_pickerState extends State<Time_picker> {
-  TimeOfDay selectedTime = TimeOfDay.now();
   @override
   Widget build(BuildContext context) {
     return Center(

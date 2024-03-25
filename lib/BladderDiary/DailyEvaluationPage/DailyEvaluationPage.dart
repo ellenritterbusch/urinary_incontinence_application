@@ -130,15 +130,17 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
                      onPressed : () async{
+                      //set date
                       date = today.toString().substring(0,10);
                       databaseModelDE.date = date;
+
+                      //insert to database
                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                       debugPrint('data is sucessfully inserted');
                       final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();
                       debugPrint('$evaluation');
-                      //final DBcheck = await DatabaseManager.databaseManager.getDailyEvaluationMapList(today);
-                      //debugPrint('$evaluation value inserted');
                     
+                      //navigate to CalendarPage
                      Navigator.push(context,
                       MaterialPageRoute(builder: (context) => const CalendarPage()),
                       );

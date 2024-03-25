@@ -2,73 +2,48 @@ import 'package:flutter/material.dart';
 
 
 class Accident_Button extends StatefulWidget {
-  //final Function() onPressed;
-  const Accident_Button({super.key});
+  final Function() onPressed;
+  final String accidentText;
+  final Icon icon;
+  final Icon stackIcon;
+  final Color bordercolor;
+
+  const Accident_Button({super.key, required this.onPressed, required this.accidentText,
+   required this.icon, required this.stackIcon, required this.bordercolor});
 
   @override
   State<Accident_Button> createState() => _Accident_ButtonState();
 }
 
+// Accident Button //
 class _Accident_ButtonState extends State<Accident_Button> {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(150,200),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23))
-         ),
-      
-    // Accident Button //
-        onPressed: (){},
-          child: const Column(
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.38,MediaQuery.of(context).size.height * 0.20),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
+        side: BorderSide(color: widget.bordercolor)
+        ),
+        onPressed: widget.onPressed,
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Accident", 
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                Text(widget.accidentText, 
+                style: TextStyle(fontSize: 15, color: Colors.black),
                 textAlign: TextAlign.start,
                 ),
-                Icon(Icons.water_drop, size: 80, color: Colors.yellow,),
-                ],
-          ));
-}
-}
-
-class No_Accident_Button extends StatefulWidget {
-  const No_Accident_Button({super.key});
-
-  @override
-  State<No_Accident_Button> createState() => _No_Accident_ButtonState();
-}
-
-class _No_Accident_ButtonState extends State<No_Accident_Button> {
-  @override
-  Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        fixedSize: Size(150,200),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23))
-      ),
-            
-
-    // No Accident Button //
-       onPressed: (){},
-       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text("No Accident", 
-          style: TextStyle(fontSize: 18, color: Colors.black),
-          textAlign: TextAlign.start,
+                Stack(
+                  alignment: Alignment.center,
+                    children: [
+                    widget.stackIcon,
+                    widget.icon,
+                  ],
+                )
+            ]
           ),
-          Stack(
-            alignment: Alignment.center,
-            children: [
-          Icon(Icons.water_drop, size: 70, color:  Colors.yellow.withOpacity(0.6),),
-          Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.yellow,)
-          ]
-        ),
-        ],
-       ));
-  
+    );
+  }
 }
 
-}
+
