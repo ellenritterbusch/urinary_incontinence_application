@@ -110,8 +110,9 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                   padding: const EdgeInsets.all(10.0),
                   child: OutlinedButton(
                      onPressed : () async{
-                      final evaluation =  await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
-                      print('$evaluation value inserted');
+                      final evaluation = await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
+                      //final DBcheck = await DatabaseManager.databaseManager.getDailyEvaluationMapList(today);
+                      debugPrint('$evaluation value inserted');
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
