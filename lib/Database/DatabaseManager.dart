@@ -29,11 +29,11 @@ class DatabaseManager{
     await db.execute('CREATE TABLE $DailyEvaluationTable($colDate STRING PRIMARY KEY, $colEvaluation INT, $colMemo TEXT)');
   }
   //RETRIEVE DATA FROM DATABASE
-  Future<List<Map<String, dynamic>>> getDailyEvaluationMapList(DatabaseModel dailyEvaluation) async { //
-      Database db = await databaseManager.databaseDB;
-      var res = await db.rawQuery("SELECT * FROM $DailyEvaluationTable WHERE $colDate = ?", [dailyEvaluation.date]);
-      return res;
-    }
+  Future<List<Map<String, dynamic>>> getDailyEvaluations() async {
+    Database db = await databaseDB;
+    return await db.query(DailyEvaluationTable);
+  }
+
     //UPDATE VALUES IN DATABASE
 Future <int> updateDailyEvaluation (DatabaseModel dailyEvaluation) async {
   Database db = await databaseManager.databaseDB;

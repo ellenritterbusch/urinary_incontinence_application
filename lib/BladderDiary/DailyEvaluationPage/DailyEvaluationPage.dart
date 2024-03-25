@@ -1,6 +1,7 @@
 //import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/EvaluationButton.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
@@ -113,10 +114,17 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                      onPressed : () async{
                       
                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
-                      debugPrint('here');
+                      debugPrint('data is sucessfully inserted');
+                      final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();
+                      debugPrint('$evaluation');
                       //final DBcheck = await DatabaseManager.databaseManager.getDailyEvaluationMapList(today);
                       //debugPrint('$evaluation value inserted');
+                    
+                     Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const CalendarPage()),
+                      );
                     }, 
+                    
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)),  
                     child: Text('Save', style: TextStyle(color: Colors.black, fontSize: 28),),       

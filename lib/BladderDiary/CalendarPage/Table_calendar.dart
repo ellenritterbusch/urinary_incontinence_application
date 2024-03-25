@@ -5,7 +5,7 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Calen
 
 //global variables//
 DateTime today = DateTime.now();
-String time = today.toString();
+String time = today.toString().substring(0,10);
 class Table_calendar extends StatefulWidget {
   final CalendarFormat yourCalendarFormat;
 
