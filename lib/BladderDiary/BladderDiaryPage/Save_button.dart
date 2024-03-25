@@ -15,6 +15,8 @@ class _Save_ButtonState extends State<Save_Button> {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
         fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20))
          ),
 
         onPressed: widget.onpressed,

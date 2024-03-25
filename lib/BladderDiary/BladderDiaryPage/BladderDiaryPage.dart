@@ -79,6 +79,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
           child: Time_picker(),
         ),
         ///// save button ////
+        if (yespressed | nopressed)
         Padding(
           padding: EdgeInsets.all(25.0),
           child: Save_Button(
