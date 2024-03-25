@@ -36,7 +36,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
   bool mehDay = false; //Used for color of yellow button
   bool badDay = false; //Used for color of red button
   
-   DatabaseModel databaseModelDE = DatabaseModel(0,'','');
+   DatabaseModel databaseModelDE = DatabaseModel.DE(0,'','');
 
   @override
   Widget build(BuildContext context) {
