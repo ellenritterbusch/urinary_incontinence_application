@@ -70,7 +70,7 @@ class DatabaseManager{
    }
 
   void _createBDDb(Database bddb, int newVersion) async { //Constructor for creating tables in database. 
-    await bddb.execute('CREATE TABLE $BladderDiaryTable($colID INTEGTER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER,'); // $colStimIntensity INTEGER, $colStimTimeSetting STRING, $colStimType STRING)
+    await bddb.execute('CREATE TABLE $BladderDiaryTable($colID INTEGER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER)'); // $colStimIntensity INTEGER, $colStimTimeSetting STRING, $colStimType STRING) $colID INTEGER PRIMARY KEY AUTOINCREMENT
   }
 
 

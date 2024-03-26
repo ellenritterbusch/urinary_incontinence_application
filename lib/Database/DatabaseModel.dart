@@ -37,9 +37,9 @@ DatabaseModel.User(this.PIN);
     map['accident'] = accident;
     map['time'] = time;
     map['date'] = date;
-    map['stimtype']= stimType;
-    map ['stimintensity']= stimIntensity;
-    map ['stimtimesetting'] = stimeTimeSetting;
+   // map['stimtype']= stimType;
+    //map ['stimintensity']= stimIntensity;
+   // map ['stimtimesetting'] = stimeTimeSetting;
     return map;
   }
   DatabaseModel.fromMapObjectBD(Map<String,dynamic> map){

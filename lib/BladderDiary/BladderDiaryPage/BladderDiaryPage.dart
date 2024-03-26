@@ -89,7 +89,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               databaseModelBD.date = date;
               
               //set time//
-              time = selectedTime.toString();
+              time = selectedTime.toString().substring(10,15);
               databaseModelBD.time = time;
 
               //insert to database//
