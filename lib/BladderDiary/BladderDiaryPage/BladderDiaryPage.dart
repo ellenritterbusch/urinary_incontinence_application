@@ -48,7 +48,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
                 accidentText: 'Accident',
                 icon: const Icon(Icons.water_drop, size: 90, color:  Colors.yellow),
                 stackIcon: Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.white.withOpacity(1)),
-                bordercolor: yespressed? Colors.yellow: kDefaultIconDarkColor,
+                bordercolor: yespressed? kDefaultIconDarkColor : Colors.yellow,
               onPressed: () {setState(() {
                 yespressed = true;
                 nopressed = false;
@@ -63,7 +63,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
                 accidentText: 'No accident',
                 icon: Icon(Icons.water_drop, size: 70, color:  Colors.yellow.withOpacity(0.6),),
                 stackIcon: Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.yellow,),
-                bordercolor: nopressed? Colors.yellow: kDefaultIconDarkColor,
+                bordercolor: nopressed? kDefaultIconDarkColor : Colors.yellow,
               onPressed: () {setState(() {
                 yespressed = false;
                 nopressed = true;
