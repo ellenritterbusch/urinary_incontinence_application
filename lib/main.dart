@@ -58,6 +58,7 @@ class _RootPageState extends State<RootPage> {
     const NotificationPage(),
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,5 +77,37 @@ class _RootPageState extends State<RootPage> {
       ],        
       ),
     );
+  }
+}
+
+class SnackBar extends StatefulWidget {
+  const SnackBar({super.key, required Text content});
+
+  @override
+  State<SnackBar> createState() => _SnackBar();
+}
+
+class _SnackBar extends State<SnackBar> {
+
+
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text("Flutter ShowDialog"),
+        ), // AppBar
+        body: Center(
+          child: Builder(builder: (context){
+            return ElevatedButton(
+              onPressed: () {
+                final snackBar = SnackBar(content: Text("Yay a snackbar"));
+              },
+              child: const Text('Show SnackBar'),
+            ); //ElevatedButton
+          }), //Builder
+        ), //Center
+        ), //Scaffold
+      );// MaterialApp
   }
 }
