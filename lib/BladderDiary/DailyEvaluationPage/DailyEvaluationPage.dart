@@ -77,6 +77,11 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
       appBar: AppBar(
           title: const Text('Daily Evaluation '), //Page title
           centerTitle: true,
+          leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: (){
+            Navigator.pop(context);
+          },),
       ),
 
       body : 
@@ -141,9 +146,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       debugPrint('$evaluation');
                     
                       //navigate to CalendarPage
-                     Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => const CalendarPage()),
-                      );
+                     Navigator.pop(context);
                     }, 
                     style: OutlinedButton.styleFrom(
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
