@@ -53,7 +53,6 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               child: Accident_Button(                      
                 accidentText: 'Accident',
                 icon: const Icon(Icons.water_drop, size: 90, color:  Colors.yellow),
-                stackIcon: Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.white.withOpacity(1)),
                 bordercolor: yespressed? kDefaultIconDarkColor : Colors.yellow,
               onPressed: () {setState(() {
                 yespressed = true;
@@ -65,7 +64,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
             /////// NO  accidentButton /////
             Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Accident_Button(                           
+              child: No_Accident_Button(                           
                 accidentText: 'No accident',
                 icon: Icon(Icons.water_drop, size: 70, color:  Colors.yellow.withOpacity(0.6),),
                 stackIcon: Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.yellow,),

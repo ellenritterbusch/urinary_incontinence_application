@@ -59,6 +59,8 @@ Future <void> insertDailyEvaluation(DatabaseModel data) async {
     Database db = await databaseDB;
     return await db.query(DailyEvaluationTable);
   }
+
+  
 //UPDATE
 Future <int> updateDailyEvaluation (DatabaseModel dailyEvaluation) async {
   Database db = await databaseManager.databaseDB;
