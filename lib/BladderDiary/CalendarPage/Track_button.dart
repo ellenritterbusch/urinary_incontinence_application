@@ -14,7 +14,7 @@ class _Track_buttonState extends State<Track_button>{
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.08)
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)
             ),
             onPressed:() {
             debugPrint(today.toString());
