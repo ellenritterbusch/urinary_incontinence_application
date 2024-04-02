@@ -30,7 +30,7 @@ class _EvaluationButtonState extends State<EvaluationButton> {
             side: BorderSide(
               color: widget.bordercolor
           ), 
-          fixedSize: Size(MediaQuery.of(context).size.width * 0.25, MediaQuery.of(context).size.width * 0.25),
+          fixedSize: Size(MediaQuery.of(context).size.width * 0.35, MediaQuery.of(context).size.width * 0.35),
           shape: RoundedRectangleBorder(
                borderRadius: BorderRadius.circular(23))),
           child: Icon(widget.yourIcon,  size: 80, color: widget.iconcolor),

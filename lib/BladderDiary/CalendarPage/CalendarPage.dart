@@ -21,6 +21,7 @@ class _CalendarPageState extends State<CalendarPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Calendar"),
+        leading: null,
       ),
       body: 
 

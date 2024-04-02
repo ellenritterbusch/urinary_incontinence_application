@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 
-//global variables//
+
 DateTime today = DateTime.now();
-
 class Table_calendar extends StatefulWidget {
   final CalendarFormat yourCalendarFormat;
 
@@ -16,51 +19,32 @@ class Table_calendar extends StatefulWidget {
 } 
 
 class _Table_calendarState extends State<Table_calendar> {
-   TextEditingController _evaluationController = TextEditingController();
+
+  
   //store the evaluations created
-  Map<DateTime, List<Evaluation>> evaluations = {};
-  late final ValueNotifier<List<Evaluation>> _selectedEvaluation;
+  // Map<DateTime, List<Evaluation>> evaluations = DatabaseManager.databaseManager.getDailyEvaluations();
+  // late final ValueNotifier<List<Evaluation>> _selectedEvaluation;
 
-  @override
-  void initState(){
-    super.initState();
-    _selectedEvaluation = ValueNotifier(getEvaluationForDay(today));
-  }
+  // @override
+  // void initState(){
+  //   super.initState();
+  //   _selectedEvaluation = ValueNotifier(getEvaluationForDay(today));
+  // }
 
-  List<Evaluation> getEvaluationForDay(DateTime day) {
-    return evaluations[day] ?? [];
-  }
+
 
 void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
     today = selectedDay;
+    debugPrint('$today');
   });
 }
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      // floatingActionButton: FloatingActionButton(
-      //       onPressed:() {
-      //         showDialog(context: context, 
-      //         builder: (context){
-      //           return AlertDialog(
-      //             content: TextField(controller: _evaluationController),
-      //             actions: [
-      //               ElevatedButton(
-      //                 onPressed: (){
-      //                   //store the evaluation into the map
-      //                   evaluations.addAll({today!: [Evaluation(_evaluationController.text)]});
-      //                   Navigator.of(context).pop();
-      //                 },
-      //                 child: Text('submit'),)
-      //             ],
-      //           );
-      //         }
-      //         );
-      //       },
-      //       child: Icon(Icons.add),
-      //     ),
+    
       child: TableCalendar(
         locale: "en_US",
         rowHeight: MediaQuery.of(context).size.height * 0.07,
@@ -87,7 +71,7 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
         firstDay:DateTime.utc(2024,01,01),
         lastDay: DateTime.now(),
         focusedDay: today,
-        onDaySelected: _onDaySelected,
+        onDaySelected: _onDaySelected, 
         selectedDayPredicate: (day) => isSameDay(day, today),
 
         calendarFormat: widget.yourCalendarFormat,
