@@ -43,9 +43,16 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Scaffold(
     
-      child: TableCalendar(
+      body: FutureBuilder(
+        future: DatabaseManager.databaseManager.getDailyEvaluations(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (snapshot.data == null || snapshot.data.isEmpty) {
+              return const Center(child: Text("No evaluations"));
+            }
+        return TableCalendar(
         locale: "en_US",
         rowHeight: MediaQuery.of(context).size.height * 0.07,
         headerStyle: const HeaderStyle(
@@ -74,22 +81,17 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
         onDaySelected: _onDaySelected, 
         selectedDayPredicate: (day) => isSameDay(day, today),
 
-        calendarFormat: widget.yourCalendarFormat,
+        calendarFormat: widget.yourCalendarFormat,);
+          }
+         return const SizedBox();
+        }
+        
 
-        //builders
-        // calendarBuilders: CalendarBuilders(
-        //   markerBuilder:
-        // ),
-
-      ),
+      )
+      
     );
-  }
-  
+  } 
 
 }
 
-class Evaluation {
-  final String title;
-  Evaluation(this.title);
-}
 

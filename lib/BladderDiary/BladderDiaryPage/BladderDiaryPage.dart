@@ -102,6 +102,9 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               debugPrint('data is sucessfully inserted');
               final diary = await DatabaseManager.databaseManager.getBladderDiary();
               debugPrint('$diary');
+
+              //navigate to calendar page 
+               Navigator.pop(context);
           }),
         ),
       ]),

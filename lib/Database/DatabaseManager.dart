@@ -55,10 +55,17 @@ Future <void> insertDailyEvaluation(DatabaseModel data) async {
   await db.insert('DailyEvaluation', data.toMapDE(),conflictAlgorithm: ConflictAlgorithm.replace);
 }
 //RETRIEVE
-  Future<List<Map<String, dynamic>>> getDailyEvaluations() async {
+  Future getDailyEvaluations() async {
     Database db = await databaseDB;
     return await db.query(DailyEvaluationTable);
   }
+
+  Future getDailyEvaluationsdate(String date) async {
+  final db = await databaseDB;
+  var res = await db.rawQuery('SELECT * FROM $DailyEvaluationTable WHERE $colDate =?', [date]);
+  return res;
+  
+}
 
   
 //UPDATE

@@ -143,7 +143,16 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                       debugPrint('data is sucessfully inserted');
                       final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();
-                      debugPrint('$evaluation');
+                      final evaluationEntry = await DatabaseManager.databaseManager.getDailyEvaluationsdate(date);
+                      debugPrint('$evaluationEntry');
+
+                      //snack bar//
+                      if (evaluationEntry != null){            //hvis der ligger en værdi for datoen har vi gemt evalueringen
+                        const snackBar = SnackBar(
+                           content: Text('Daily evaluation is saved'),
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
                     
                       //navigate to CalendarPage
                      Navigator.pop(context);
