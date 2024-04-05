@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 
 class EvaluationButton extends StatefulWidget {
   final Color iconcolor;

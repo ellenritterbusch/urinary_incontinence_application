@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
-import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
-import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
-import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 
 
 DateTime today = DateTime.now();

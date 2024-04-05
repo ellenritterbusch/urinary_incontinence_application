@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
-import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 
 
 void main() {
@@ -106,7 +104,7 @@ class _SnackBar extends State<SnackBar> {
           child: Builder(builder: (context){
             return ElevatedButton(
               onPressed: () {
-                final snackBar = SnackBar(content: Text("Yay a snackbar"));
+                const snackBar = SnackBar(content: Text("Yay a snackbar"));
               },
               child: const Text('Show SnackBar'),
             ); //ElevatedButton
