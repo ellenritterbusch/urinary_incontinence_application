@@ -9,16 +9,18 @@ import '../widgets/descriptor_tile.dart';
 import '../utils/snackbar.dart';
 import '../utils/extra.dart';
 
-class DeviceScreen extends StatefulWidget {
-  final BluetoothDevice device;
-
-  const DeviceScreen({Key? key, required this.device}) : super(key: key);
+class UconDeviceScreen extends StatefulWidget {
+  //final BluetoothDevice device;
+  final BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');        //vi laver device ud fra ID
+  UconDeviceScreen({super.key, required BluetoothDevice ucon});                                       //Kræver key, og device
+  
+  final DeviceIdentifier uconId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');   //DeviceIdentifier (Ved ærligt ikke helt om den her gør noget)
 
   @override
-  State<DeviceScreen> createState() => _DeviceScreenState();
+  State<UconDeviceScreen> createState() => _UconDeviceScreenState();
 }
 
-class _DeviceScreenState extends State<DeviceScreen> {
+class _UconDeviceScreenState extends State<UconDeviceScreen> {
   int? _rssi;                                                                             //RSSI (Received signal strengh indicator) som kan være null 
   int? _mtuSize;                                                                          //MTU som kan være null takket være ?-tegnet
   BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;      //Disconnected state 
@@ -27,43 +29,47 @@ class _DeviceScreenState extends State<DeviceScreen> {
   bool _isConnecting = false;                                                             //Connecter den lige nu?
   bool _isDisconnecting = false;                                                          //Er den ved at disconnecte?
 
+  late BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
+  late DeviceIdentifier remoteId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');
+
+
   late StreamSubscription<BluetoothConnectionState> _connectionStateSubscription;         
   late StreamSubscription<bool> _isConnectingSubscription;
   late StreamSubscription<bool> _isDisconnectingSubscription;
   late StreamSubscription<int> _mtuSubscription;
-
+  
   @override
   void initState() {
     super.initState();
 
-    _connectionStateSubscription = widget.device.connectionState.listen((state) async {
+    _connectionStateSubscription = widget.ucon.connectionState.listen((state) async {
       _connectionState = state;
-      if (state == BluetoothConnectionState.connected) {
-        _services = [];                                                               // must rediscover services
+      if (state == BluetoothConnectionState.connected) {                              //If connection is established
+        _services = [];                                                               //Show services
       }
-      if (state == BluetoothConnectionState.connected && _rssi == null) {
-        _rssi = await widget.device.readRssi();                                       //Her læser vi RSSI
+      if (state == BluetoothConnectionState.connected && _rssi == null) {             //If connection is established and RSSI = null
+        _rssi = await widget.ucon.readRssi();                                       //Her læser vi RSSI
       }
       if (mounted) {
         setState(() {});
       }
     });
 
-    _mtuSubscription = widget.device.mtu.listen((value) {
+    _mtuSubscription = widget.ucon.mtu.listen((value) {
       _mtuSize = value;
       if (mounted) {
         setState(() {});
       }
     });
 
-    _isConnectingSubscription = widget.device.isConnecting.listen((value) {
+    _isConnectingSubscription = widget.ucon.isConnecting.listen((value) {
       _isConnecting = value;
       if (mounted) {
         setState(() {});
       }
     });
 
-    _isDisconnectingSubscription = widget.device.isDisconnecting.listen((value) {
+    _isDisconnectingSubscription = widget.ucon.isDisconnecting.listen((value) {
       _isDisconnecting = value;
       if (mounted) {
         setState(() {});
@@ -73,42 +79,42 @@ class _DeviceScreenState extends State<DeviceScreen> {
 
   @override
   void dispose() {
-    _connectionStateSubscription.cancel();                    //Tjek connectionstate afbryd
-    _mtuSubscription.cancel();                                //Noget med notifikationer afbryd
-    _isConnectingSubscription.cancel();                       //Er i gang med at connecte afbryd
-    _isDisconnectingSubscription.cancel();                    //Er i gang med at disconnecte afbryd
+    _connectionStateSubscription.cancel();                    //Cancelling connection 
+    _mtuSubscription.cancel();                                //Cancellation of MTU-subscribtion
+    _isConnectingSubscription.cancel();                       //Cancelling while connecting
+    _isDisconnectingSubscription.cancel();                    //cancelling while disconnecting
     super.dispose();
   }
 
   bool get isConnected {
-    return _connectionState == BluetoothConnectionState.connected;
+    return _connectionState == BluetoothConnectionState.connected;      //Tjekker om vi er forbundet
   }
 
-  Future onConnectPressed() async {
+  Future onConnectPressed() async {                           //Når man trykker på connect
     try {
-      await widget.device.connectAndUpdateStream();
+      await widget.ucon.connectAndUpdateStream();
       Snackbar.show(ABC.c, "Connect: Success", success: true);
     } catch (e) {
       if (e is FlutterBluePlusException && e.code == FbpErrorCode.connectionCanceled.index) {
-        // ignore connections canceled by the user
+        // ignore connections cancelled by the user
       } else {
         Snackbar.show(ABC.c, prettyException("Connect Error:", e), success: false);
       }
     }
   }
 
-  Future onCancelPressed() async {
+  Future onCancelPressed() async {                          //Når man canceller
     try {
-      await widget.device.disconnectAndUpdateStream(queue: false);
+      await widget.ucon.disconnectAndUpdateStream(queue: false);
       Snackbar.show(ABC.c, "Cancel: Success", success: true);
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Cancel Error:", e), success: false);
     }
   }
 
-  Future onDisconnectPressed() async {
+  Future onDisconnectPressed() async {                      //Når man trykker disconnect
     try {
-      await widget.device.disconnectAndUpdateStream();
+      await widget.ucon.disconnectAndUpdateStream();
       Snackbar.show(ABC.c, "Disconnect: Success", success: true);
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Disconnect Error:", e), success: false);
@@ -122,7 +128,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
       });
     }
     try {
-      _services = await widget.device.discoverServices();
+      _services = await widget.ucon.discoverServices();
       Snackbar.show(ABC.c, "Discover Services: Success", success: true);
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Discover Services Error:", e), success: false);
@@ -136,7 +142,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
 
   Future onRequestMtuPressed() async {                                        //Ændring af MTU
     try {
-      await widget.device.requestMtu(223, predelay: 0);
+      await widget.ucon.requestMtu(223, predelay: 0);
       Snackbar.show(ABC.c, "Request Mtu: Success", success: true);                      //Success
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Change Mtu Error:", e), success: false);    //Fejl
@@ -177,7 +183,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
   Widget buildRemoteId(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text('${widget.device.remoteId}'),
+      child: Text('${widget.ucon.remoteId}'),
     ); 
   }
 
@@ -241,7 +247,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
       key: Snackbar.snackBarKeyC,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(widget.device.platformName),
+          title: Text(widget.ucon.platformName),  
           actions: [buildConnectButton(context)],
         ),
         body: SingleChildScrollView(
@@ -254,7 +260,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
                 trailing: buildGetServices(context),
               ),
               buildMtuTile(context),
-              ..._buildServiceTiles(context, widget.device),
+              ..._buildServiceTiles(context, widget.ucon),
             ],
           ),
         ),

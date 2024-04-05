@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/bluetooth/find_devices.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,8 +15,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-
-      body: const Text('hjemme'),
+      body: const FindDevice()
     );
   }
 }
