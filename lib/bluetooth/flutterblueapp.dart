@@ -1,8 +1,8 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:urinary_incontinence_application/bluetooth/screens/bluetooth_off_screen.dart';
-import 'package:urinary_incontinence_application/bluetooth/screens/scan_screen.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/bluetooth/screens/ucon_scan.dart';
 
 
 // This widget shows BluetoothOffScreen or
@@ -42,13 +42,15 @@ class _FlutterBlueAppState extends State<FlutterBlueApp> {
   @override
   Widget build(BuildContext context) {
     Widget screen = _adapterState == BluetoothAdapterState.on
-        ? const ScanScreen()
+        ? UconScan()                                                //Naviger til UconScan eller bluescreenoff()
         : BluetoothOffScreen(adapterState: _adapterState);
+        
 
     return MaterialApp(
       color: Colors.lightBlue,
       home: screen,
       navigatorObservers: [BluetoothAdapterStateObserver()],
+      debugShowCheckedModeBanner: false, //fjerne "debug" markat
     );
   }
 }
@@ -56,13 +58,13 @@ class _FlutterBlueAppState extends State<FlutterBlueApp> {
 //
 // This observer listens for Bluetooth Off and dismisses the DeviceScreen
 //
-class BluetoothAdapterStateObserver extends NavigatorObserver {
+class BluetoothAdapterStateObserver extends NavigatorObserver {                 //Basically listens whether bluetooth is on, when pushing a new screen
   StreamSubscription<BluetoothAdapterState>? _adapterStateSubscription;
 
   @override
   void didPush(Route route, Route? previousRoute) {
     super.didPush(route, previousRoute);
-    if (route.settings.name == '/DeviceScreen') {
+    if (route.settings.name == '/UconDeviceScreen') {
       // Start listening to Bluetooth state changes when a new route is pushed
       _adapterStateSubscription ??= FlutterBluePlus.adapterState.listen((state) {
         if (state != BluetoothAdapterState.on) {
