@@ -14,7 +14,6 @@ class FindDevice extends StatefulWidget {
 }
 
 class _FindDeviceState extends State<FindDevice> {
-    StreamSubscription<BluetoothAdapterState>? _adapterStateSubscription;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +21,7 @@ class _FindDeviceState extends State<FindDevice> {
       children: [
         ElevatedButton(
           onPressed:() {
-            showModalBottomSheet(
+            showModalBottomSheet(               //findes i mybluetooth
               context: context, 
               builder: (BuildContext context) {
                 return const SizedBox(
@@ -40,7 +39,7 @@ class _FindDeviceState extends State<FindDevice> {
   
 }
 
-class BluetoothAdapterStateObserver extends NavigatorObserver {
+class BluetoothAdapterStateObserver extends NavigatorObserver {           //vises hvis BT er slået fra og beder den om at slå det til
   StreamSubscription<BluetoothAdapterState>? _adapterStateSubscription;
 
   @override

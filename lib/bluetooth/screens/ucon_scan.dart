@@ -12,9 +12,9 @@ import '../utils/extra.dart';
 
 class UconScan extends StatefulWidget {
   UconScan({Key? key}) : super(key: key);
-  final String remoteId = 'A40020C2-2DA0-9B61-B94F-4332828925BE';
+  //final String remoteId = 'A40020C2-2DA0-9B61-B94F-4332828925BE';
   BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
-  final String uconDevice = 'A40020C2-2DA0-9B61-B94F-4332828925BE';
+ 
   @override
   State<UconScan> createState() => _UconScan();
 }
@@ -66,7 +66,7 @@ class _UconScan extends State<UconScan> {
       // Note: scan filters use an *or* behavior. i.e. if you set `withServices` & `withNames`
       //   we return all the advertisments that match any of the specified services *or* any
       //   of the specified names.
-      await FlutterBluePlus.startScan(withServices: [Guid("A40020C2-2DA0-9B61-B94F-4332828925BE")], withNames:["UCon STIM"],); //Filter som filtrer efter ID og navn.;
+      await FlutterBluePlus.startScan(withNames:["UCon STIM"]); //Filter som filtrer efter navn.;
     } catch (e) {
       Snackbar.show(ABC.b, prettyException("Start Scan Error:", e), success: false);                    //Start scan error
     }
@@ -95,7 +95,7 @@ class _UconScan extends State<UconScan> {
 
   Future onRefresh() {
     if (_isScanning == false) {
-      FlutterBluePlus.startScan(withServices: [Guid("A40020C2-2DA0-9B61-B94F-4332828925BE")], timeout: const Duration(seconds: 15));
+      FlutterBluePlus.startScan(withNames: ["UCon STIM"]); //timeout: const Duration(seconds: 15));
     }
     if (mounted) {
       setState(() {});
@@ -103,7 +103,7 @@ class _UconScan extends State<UconScan> {
     return Future.delayed(const Duration(milliseconds: 500));
   }
 
-  Widget buildScanButton(BuildContext context) {
+  Widget buildScanButton(BuildContext context) {          //SCAN button
     if (FlutterBluePlus.isScanningNow) {
       return FloatingActionButton(
         onPressed: onStopPressed,

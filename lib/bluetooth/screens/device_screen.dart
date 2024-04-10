@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_characteristic.dart';
 
 import '../widgets/service_tile.dart';
-import '../widgets/characteristic_tile.dart';
 import '../widgets/descriptor_tile.dart';
 import '../utils/snackbar.dart';
 import '../utils/extra.dart';

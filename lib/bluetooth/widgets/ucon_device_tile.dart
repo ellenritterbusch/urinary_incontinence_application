@@ -5,17 +5,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class UconDeviceTile extends StatefulWidget {
-  final BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
+  final BluetoothDevice ucon;
   final VoidCallback onOpen;
   final VoidCallback onConnect;
-  final String remoteId = 'A40020C2-2DA0-9B61-B94F-4332828925BE';
+  //final String remoteId = 'A40020C2-2DA0-9B61-B94F-4332828925BE';
   
 
 
      UconDeviceTile({
+    required this.ucon,
     required this.onOpen,
     required this.onConnect,
-    Key? key, required BluetoothDevice ucon,
+    Key? key,
   }) : super(key: key);
 
   @override

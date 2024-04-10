@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_characteristic.dart';
 
-import "characteristic_tile.dart";
 
 class ServiceTile extends StatelessWidget {
   final BluetoothService service;

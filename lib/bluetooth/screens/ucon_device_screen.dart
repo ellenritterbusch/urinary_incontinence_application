@@ -2,19 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:urinary_incontinence_application/bluetooth/widgets/service_tile.dart';
+import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_characteristic.dart';
 
-import '../widgets/service_tile.dart';
-import '../widgets/characteristic_tile.dart';
+
 import '../widgets/descriptor_tile.dart';
 import '../utils/snackbar.dart';
 import '../utils/extra.dart';
 
 class UconDeviceScreen extends StatefulWidget {
-  //final BluetoothDevice device;
-  final BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');        //vi laver device ud fra ID
+
+  late BluetoothDevice ucon;       //vi laver device ud fra ID
   UconDeviceScreen({super.key, required BluetoothDevice ucon});                                       //Kræver key, og device
-  
-  final DeviceIdentifier uconId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');   //DeviceIdentifier (Ved ærligt ikke helt om den her gør noget)
 
   @override
   State<UconDeviceScreen> createState() => _UconDeviceScreenState();
@@ -23,14 +22,14 @@ class UconDeviceScreen extends StatefulWidget {
 class _UconDeviceScreenState extends State<UconDeviceScreen> {
   int? _rssi;                                                                             //RSSI (Received signal strengh indicator) som kan være null 
   int? _mtuSize;                                                                          //MTU som kan være null takket være ?-tegnet
-  BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;      //Disconnected state 
+  late BluetoothConnectionState _connectionState;                                         //Disconnected state 
   List<BluetoothService> _services = [];                                                  //Array til services list
   bool _isDiscoveringServices = false;                                                    //Leder den lige nu?
   bool _isConnecting = false;                                                             //Connecter den lige nu?
   bool _isDisconnecting = false;                                                          //Er den ved at disconnecte?
 
-  late BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
-  late DeviceIdentifier remoteId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');
+ // late BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
+ // late DeviceIdentifier remoteId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');
 
 
   late StreamSubscription<BluetoothConnectionState> _connectionStateSubscription;         
@@ -46,6 +45,7 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
       _connectionState = state;
       if (state == BluetoothConnectionState.connected) {                              //If connection is established
         _services = [];                                                               //Show services
+        
       }
       if (state == BluetoothConnectionState.connected && _rssi == null) {             //If connection is established and RSSI = null
         _rssi = await widget.ucon.readRssi();                                       //Her læser vi RSSI
@@ -140,7 +140,7 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
     }
   }
 
-  Future onRequestMtuPressed() async {                                        //Ændring af MTU
+  Future onRequestMtuPressed() async {                                        //Ændring af MTU (android only)
     try {
       await widget.ucon.requestMtu(223, predelay: 0);
       Snackbar.show(ABC.c, "Request Mtu: Success", success: true);                      //Success
@@ -160,14 +160,14 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
         .toList();
   }
 
-  CharacteristicTile _buildCharacteristicTile(BluetoothCharacteristic c) {
+  CharacteristicTile _buildCharacteristicTile(BluetoothCharacteristic c) {              //characteristics udgør services
     return CharacteristicTile(
       characteristic: c,
       descriptorTiles: c.descriptors.map((d) => DescriptorTile(descriptor: d)).toList(),
     );
   }
 
-  Widget buildSpinner(BuildContext context) {
+  Widget buildSpinner(BuildContext context) {                   //tænke hjul
     return const Padding(
       padding: EdgeInsets.all(14.0),
       child: AspectRatio(
@@ -219,16 +219,6 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
     );
   }
 
-  Widget buildMtuTile(BuildContext context) {                     //Under device Tile hvor der står MTU size, antal af bytes og en blyant.
-    return ListTile(
-        title: const Text('MTU Size'),
-        subtitle: Text('$_mtuSize bytes'),                        //Maximum transmission unit = MTU. mængde af data der sendes i en packet
-        trailing: IconButton(
-          icon: const Icon(Icons.edit),
-          onPressed: onRequestMtuPressed,
-        ));
-  }
-
   Widget buildConnectButton(BuildContext context) {
     return Row(children: [
       if (_isConnecting || _isDisconnecting) buildSpinner(context),
@@ -259,7 +249,6 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
                 title: Text('Device is ${_connectionState.toString().split('.')[1]}.'),
                 trailing: buildGetServices(context),
               ),
-              buildMtuTile(context),
               ..._buildServiceTiles(context, widget.ucon),
             ],
           ),
