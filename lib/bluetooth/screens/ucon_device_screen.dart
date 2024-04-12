@@ -23,11 +23,12 @@ class UconDeviceScreen extends StatefulWidget {
 class _UconDeviceScreenState extends State<UconDeviceScreen> {
   int? _rssi;                                                                             //RSSI (Received signal strengh indicator) som kan være null 
   int? _mtuSize;                                                                          //MTU som kan være null takket være ?-tegnet
-  BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;      //Disconnected state 
+  late BluetoothConnectionState _connectionState;                     //Disconnected state 
   List<BluetoothService> _services = [];                                                  //Array til services list
   bool _isDiscoveringServices = false;                                                    //Leder den lige nu?
   bool _isConnecting = false;                                                             //Connecter den lige nu?
-  bool _isDisconnecting = false;                                                          //Er den ved at disconnecte?
+  bool _isDisconnecting = false;  
+   Map<Guid, List<int>> readValues = new Map<Guid, List<int>>();                                                        //Er den ved at disconnecte?
 
   late BluetoothDevice ucon = BluetoothDevice.fromId('A40020C2-2DA0-9B61-B94F-4332828925BE');
   late DeviceIdentifier remoteId =  const DeviceIdentifier('A40020C2-2DA0-9B61-B94F-4332828925BE');
@@ -149,6 +150,13 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
     }
   }
 
+  Future readCharacteristic(BluetoothCharacteristic characteristic) async{
+      List<int> value = await characteristic.read();
+      setState(() {
+        readValues[characteristic.uuid] = value;
+      });
+  }
+  
   List<Widget> _buildServiceTiles(BuildContext context, BluetoothDevice d) {
     return _services
         .map(
@@ -259,7 +267,7 @@ class _UconDeviceScreenState extends State<UconDeviceScreen> {
                 title: Text('Device is ${_connectionState.toString().split('.')[1]}.'),
                 trailing: buildGetServices(context),
               ),
-              buildMtuTile(context),
+              //buildMtuTile(context),
               ..._buildServiceTiles(context, widget.ucon),
             ],
           ),
