@@ -3,7 +3,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:urinary_incontinence_application/bluetooth/mybluetooth.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/mybluetooth.dart';
 
 
 class FindDevice extends StatefulWidget {
@@ -22,7 +22,7 @@ class _FindDeviceState extends State<FindDevice> {
       children: [
         ElevatedButton(
           onPressed:() {
-            showModalBottomSheet(
+            showModalBottomSheet( //CHANGE TO CONNECT SERVICE
               context: context, 
               builder: (BuildContext context) {
                 return const SizedBox(

@@ -1,8 +1,8 @@
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:urinary_incontinence_application/bluetooth/screens/bluetooth_off_screen.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/screens/bluetooth_off_screen.dart';
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/bluetooth/screens/ucon_scan.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/screens/ucon_scan.dart';
 
 
 // This widget shows BluetoothOffScreen or

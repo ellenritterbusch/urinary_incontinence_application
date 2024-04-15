@@ -1,0 +1,33 @@
+//New file
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+
+
+class _FindDeviceState extends State<FindDevice> {
+    StreamSubscription<BluetoothAdapterState>? _adapterStateSubscription;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        ElevatedButton(
+          onPressed:() {
+            showModalBottomSheet( //CHANGE TO CONNECT SERVICE
+              context: context, 
+              builder: (BuildContext context) {
+                return const SizedBox(
+                  height: 400,
+                  child: onScanPressed(),
+                );
+              }
+            );
+          },
+          child: const Text('Find UCon device'),
+          ),
+      ],
+    );
+  }
+  
+}

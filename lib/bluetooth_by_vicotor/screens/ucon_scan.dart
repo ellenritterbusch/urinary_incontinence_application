@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:urinary_incontinence_application/bluetooth/screens/ucon_device_screen.dart';
-import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_device_tile.dart';
-import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_scan_result.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/screens/ucon_device_screen.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/widgets/ucon_device_tile.dart';
+import 'package:urinary_incontinence_application/bluetooth_by_vicotor/widgets/ucon_scan_result.dart';
 
 import 'device_screen.dart';
 import '../utils/snackbar.dart';
