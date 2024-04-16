@@ -10,18 +10,17 @@ class BluetoothOffScreen extends StatelessWidget {
 
   final BluetoothAdapterState? adapterState;
 
-  Widget buildBluetoothOffIcon(BuildContext context) {                  //Bygger kæmpe BT-OFF icon
+  Widget buildBluetoothOffIcon(BuildContext context) {
     return const Icon(
-      Icons.bluetooth_disabled,                                         //Specifikt ikon
-      size: 200.0,                                                      //Giga size
-      color: Colors.white54,                                          //Farve på 
+      Icons.bluetooth_disabled,
+      size: 200.0,
+      color: Colors.white54,
     );
   }
 
   Widget buildTitle(BuildContext context) {
     String? state = adapterState?.toString().split(".").last;
     return Text(
-      // ignore: prefer_if_null_operators
       'Bluetooth Adapter is ${state != null ? state : 'not available'}',
       style: Theme.of(context).primaryTextTheme.titleSmall?.copyWith(color: Colors.white),
     );

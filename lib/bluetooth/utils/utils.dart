@@ -3,9 +3,6 @@ import 'dart:async';
 // It is essentially a stream but:
 //  1. we cache the latestValue of the stream
 //  2. the "latestValue" is re-emitted whenever the stream is listened to
-
-
-//Godmorgen vicotor. Overvej at lave en ny class som er services tile. På denne måde kan vi putte den i en knap.
 class StreamControllerReemit<T> {
   T? _latestValue;
 
@@ -14,7 +11,7 @@ class StreamControllerReemit<T> {
   StreamControllerReemit({T? initialValue}) : _latestValue = initialValue;
 
   Stream<T> get stream {
-    return _latestValue != null ? _controller.stream.newStreamWithInitialValue(_latestValue as T) : _controller.stream;
+    return _latestValue != null ? _controller.stream.newStreamWithInitialValue(_latestValue!) : _controller.stream;
   }
 
   T? get value => _latestValue;

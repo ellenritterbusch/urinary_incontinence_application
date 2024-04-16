@@ -42,9 +42,8 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
 
   BluetoothCharacteristic get c => widget.characteristic;
 
-  List<int> _getRandomBytes() {
-    final math = Random();
-    return [math.nextInt(255), math.nextInt(255), math.nextInt(255), math.nextInt(255)];
+  List<int> _getBytes() {                                 //den her der bliver kaldt i write - vi skal vælge de rigtige bytes at write
+    return [02,04];
   }
 
   Future onReadPressed() async {
@@ -56,9 +55,9 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
     }
   }
 
-  Future onWritePressed() async {
+  Future onWritePressed() async {                         //TAG FAT I DEN HER
     try {
-      await c.write(_getRandomBytes(), withoutResponse: c.properties.writeWithoutResponse);
+      await c.write(_getBytes(), withoutResponse: c.properties.writeWithoutResponse);
       Snackbar.show(ABC.c, "Write: Success", success: true);
       if (c.properties.read) {
         await c.read();
@@ -84,19 +83,19 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
     }
   }
 
-  Widget buildUuid(BuildContext context) {
+  Widget buildUuid(BuildContext context) {                                //her der bliver skrevet vores UUID i characteristics
     String uuid = '0x${widget.characteristic.uuid.str.toUpperCase()}';
-    return Text(uuid, style: const TextStyle(fontSize: 13));
+    return Text(uuid, style: TextStyle(fontSize: 13));
   }
 
   Widget buildValue(BuildContext context) {
     String data = _value.toString();
-    return Text(data, style: const TextStyle(fontSize: 13, color: Colors.grey));
+    return Text(data, style: TextStyle(fontSize: 13, color: Colors.grey));
   }
 
   Widget buildReadButton(BuildContext context) {
     return TextButton(
-        child: const Text("Read"),
+        child: Text("Read"),
         onPressed: () async {
           await onReadPressed();
           if (mounted) {

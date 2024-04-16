@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-import 'device_screen.dart';
-import '../utils/snackbar.dart';
-import '../widgets/system_device_tile.dart';
-import '../widgets/scan_result_tile.dart';
-import '../utils/extra.dart';
+import 'package:urinary_incontinence_application/Bluetooth/screens/scan_screen.dart';
+
+import 'package:urinary_incontinence_application/Bluetooth/screens/device_screen.dart';
+import 'package:urinary_incontinence_application/Bluetooth/utils/snackbar.dart';
+import 'package:urinary_incontinence_application/Bluetooth/widgets/system_device_tile.dart';
+import 'package:urinary_incontinence_application/Bluetooth/widgets/scan_result_tile.dart';
+import 'package:urinary_incontinence_application/Bluetooth/utils/extra.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({Key? key}) : super(key: key);

@@ -19,15 +19,15 @@ class DeviceScreen extends StatefulWidget {
 }
 
 class _DeviceScreenState extends State<DeviceScreen> {
-  int? _rssi;                                                                             //RSSI (Received signal strengh indicator) som kan være null 
-  int? _mtuSize;                                                                          //MTU som kan være null takket være ?-tegnet
-  BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;      //Disconnected state 
-  List<BluetoothService> _services = [];                                                  //Array til services list
-  bool _isDiscoveringServices = false;                                                    //Leder den lige nu?
-  bool _isConnecting = false;                                                             //Connecter den lige nu?
-  bool _isDisconnecting = false;                                                          //Er den ved at disconnecte?
+  int? _rssi;
+  int? _mtuSize;
+  BluetoothConnectionState _connectionState = BluetoothConnectionState.disconnected;
+  List<BluetoothService> _services = [];
+  bool _isDiscoveringServices = false;
+  bool _isConnecting = false;
+  bool _isDisconnecting = false;
 
-  late StreamSubscription<BluetoothConnectionState> _connectionStateSubscription;         
+  late StreamSubscription<BluetoothConnectionState> _connectionStateSubscription;
   late StreamSubscription<bool> _isConnectingSubscription;
   late StreamSubscription<bool> _isDisconnectingSubscription;
   late StreamSubscription<int> _mtuSubscription;
@@ -39,10 +39,10 @@ class _DeviceScreenState extends State<DeviceScreen> {
     _connectionStateSubscription = widget.device.connectionState.listen((state) async {
       _connectionState = state;
       if (state == BluetoothConnectionState.connected) {
-        _services = [];                                                               // must rediscover services
+        _services = []; // must rediscover services
       }
       if (state == BluetoothConnectionState.connected && _rssi == null) {
-        _rssi = await widget.device.readRssi();                                       //Her læser vi RSSI
+        _rssi = await widget.device.readRssi();
       }
       if (mounted) {
         setState(() {});
@@ -73,10 +73,10 @@ class _DeviceScreenState extends State<DeviceScreen> {
 
   @override
   void dispose() {
-    _connectionStateSubscription.cancel();                    //Tjek connectionstate afbryd
-    _mtuSubscription.cancel();                                //Noget med notifikationer afbryd
-    _isConnectingSubscription.cancel();                       //Er i gang med at connecte afbryd
-    _isDisconnectingSubscription.cancel();                    //Er i gang med at disconnecte afbryd
+    _connectionStateSubscription.cancel();
+    _mtuSubscription.cancel();
+    _isConnectingSubscription.cancel();
+    _isDisconnectingSubscription.cancel();
     super.dispose();
   }
 
@@ -115,7 +115,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
     }
   }
 
-  Future onDiscoverServicesPressed() async {
+  Future onDiscoverServicesPressed() async {                  //TAG FAT I (den der bliver kaldt når vi trykker på "get services")
     if (mounted) {
       setState(() {
         _isDiscoveringServices = true;
@@ -134,12 +134,12 @@ class _DeviceScreenState extends State<DeviceScreen> {
     }
   }
 
-  Future onRequestMtuPressed() async {                                        //Ændring af MTU
+  Future onRequestMtuPressed() async {
     try {
       await widget.device.requestMtu(223, predelay: 0);
-      Snackbar.show(ABC.c, "Request Mtu: Success", success: true);                      //Success
+      Snackbar.show(ABC.c, "Request Mtu: Success", success: true);
     } catch (e) {
-      Snackbar.show(ABC.c, prettyException("Change Mtu Error:", e), success: false);    //Fejl
+      Snackbar.show(ABC.c, prettyException("Change Mtu Error:", e), success: false);
     }
   }
 
@@ -162,8 +162,8 @@ class _DeviceScreenState extends State<DeviceScreen> {
   }
 
   Widget buildSpinner(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(14.0),
+    return Padding(
+      padding: const EdgeInsets.all(14.0),
       child: AspectRatio(
         aspectRatio: 1.0,
         child: CircularProgressIndicator(
@@ -178,7 +178,7 @@ class _DeviceScreenState extends State<DeviceScreen> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text('${widget.device.remoteId}'),
-    ); 
+    );
   }
 
   Widget buildRssiTile(BuildContext context) {
@@ -196,16 +196,16 @@ class _DeviceScreenState extends State<DeviceScreen> {
       index: (_isDiscoveringServices) ? 1 : 0,
       children: <Widget>[
         TextButton(
-          onPressed: onDiscoverServicesPressed,
           child: const Text("Get Services"),
+          onPressed: onDiscoverServicesPressed,
         ),
         const IconButton(
           icon: SizedBox(
-            width: 18.0,
-            height: 18.0,
             child: CircularProgressIndicator(
               valueColor: AlwaysStoppedAnimation(Colors.grey),
             ),
+            width: 18.0,
+            height: 18.0,
           ),
           onPressed: null,
         )
@@ -213,10 +213,10 @@ class _DeviceScreenState extends State<DeviceScreen> {
     );
   }
 
-  Widget buildMtuTile(BuildContext context) {                     //Under device Tile hvor der står MTU size, antal af bytes og en blyant.
+  Widget buildMtuTile(BuildContext context) {
     return ListTile(
         title: const Text('MTU Size'),
-        subtitle: Text('$_mtuSize bytes'),                        //Maximum transmission unit = MTU. mængde af data der sendes i en packet
+        subtitle: Text('$_mtuSize bytes'),
         trailing: IconButton(
           icon: const Icon(Icons.edit),
           onPressed: onRequestMtuPressed,

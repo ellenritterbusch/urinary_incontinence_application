@@ -3,6 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
+import 'package:urinary_incontinence_application/Bluetooth/ConnectPage.dart';
 
 
 void main() {
@@ -59,6 +60,7 @@ class _RootPageState extends State<RootPage> {
     const HomePage(),
     const CalendarPage(),
     const NotificationPage(),
+    const ScanScreen(),
   ];
 
 
@@ -76,7 +78,8 @@ class _RootPageState extends State<RootPage> {
         destinations: const [
         NavigationDestination(icon: Icon(Icons.home), label: "Home"),
         NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: "Calendar"),
-        NavigationDestination(icon: Icon(Icons.notifications), label: "Notifications")
+        NavigationDestination(icon: Icon(Icons.notifications), label: "Notifications"),
+        NavigationDestination(icon: Icon(Icons.bluetooth), label: "Connect")
       ],        
       ),
     );
