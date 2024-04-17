@@ -15,14 +15,17 @@ class CharacteristicTile extends StatefulWidget {
   const CharacteristicTile({Key? key, required this.characteristic, required this.descriptorTiles}) : super(key: key);
 
   @override
-  State<CharacteristicTile> createState() => _CharacteristicTileState();
+  State<CharacteristicTile> createState() => CharacteristicTileState();
 }
 
-class _CharacteristicTileState extends State<CharacteristicTile> {
+class CharacteristicTileState extends State<CharacteristicTile> {
+  
   List<int> _value = [];
+  static late String readResults;
+ 
 
   late StreamSubscription<List<int>> _lastValueSubscription;
-
+ 
   @override
   void initState() {
     super.initState();
@@ -50,9 +53,12 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
     try {
       await c.read();
       Snackbar.show(ABC.c, "Read: Success", success: true);
+     
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Read Error:", e), success: false);
     }
+    debugPrint('nice');
+      readResults = 'Triple nice';
   }
 
   Future onWritePressed() async {                         //TAG FAT I DEN HER
@@ -65,6 +71,7 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
     } catch (e) {
       Snackbar.show(ABC.c, prettyException("Write Error:", e), success: false);
     }
+    debugPrint ('Double nice');
   }
 
   Future onSubscribePressed() async {
@@ -162,4 +169,5 @@ class _CharacteristicTileState extends State<CharacteristicTile> {
       children: widget.descriptorTiles,
     );
   }
+  
 }
