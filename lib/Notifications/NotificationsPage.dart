@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 
 class NotificationPage extends StatefulWidget {
+
   const NotificationPage({super.key});
 
   @override
@@ -10,11 +12,8 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Notifications"),
-      ),
-      body: const Text('notifikationer'),
-    );
+    return Placeholder();
   }
 }
+
+
