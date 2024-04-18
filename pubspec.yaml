@@ -53,9 +53,6 @@ dev_dependencies:
     sdk: flutter
 
 
-#dependency_overrides:
-  #flutter_local_notifications_platform_interface:
-  #  path: C:\Users\ellen\OneDrive\Dokumenter\GitHub\flutter_local_notifications\flutter_local_notifications_platform_interface
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

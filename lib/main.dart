@@ -59,7 +59,7 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pages = [
     const HomePage(),
     const CalendarPage(),
-    const SetNotifications(),
+    const NotificationPage(),
   ];
 
 
