@@ -14,8 +14,18 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-          onPressed: (){SetNotifications().showNotificationWithActions();}
-        , child: Text('Noti'))));
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+            onPressed: (){SetNotifications().showNotificationWithActions();}
+          , child: Text('Action Noti')),
+          ElevatedButton(
+            onPressed: ()async {await SetNotifications().scheduleDailyNotification();},
+            child: Text('10 am noti'),
+          )
+          ]),
+      )
+    );
   }
 }

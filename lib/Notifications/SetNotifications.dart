@@ -2,9 +2,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
+import 'package:urinary_incontinence_application/Home/HomePage.dart';
 
 int id = 0;
 int dailyReminder = 10;
@@ -65,8 +67,20 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 class SetNotifications {
  Future<void> main() async{
 
+WidgetsFlutterBinding.ensureInitialized();
+await _configureLocalTimeZone();
+
+// final NotificationAppLaunchDetails? notificationAppLaunchDetails =  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+//   String initialRoute = DailyEvaluationPage.routeName;
+//   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+//     selectedNotificationPayload =
+//         notificationAppLaunchDetails!.notificationResponse?.payload;
+//     initialRoute = DailyEvaluationPage.routeName;
+//   }
+
 const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
+
 final DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
       requestAlertPermission: true,
@@ -104,17 +118,19 @@ final InitializationSettings initializationSettings = InitializationSettings(
     },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
   );
+
 }
 
 
 /////  functions  //////
 
- Future<void> scheduleDailyTenAMNotification() async {
+ Future<void> scheduleDailyNotification() async {
+
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Remember to evaluate your day!',
         '',
-        _nextInstanceOfTenAM(),
+        _nextInstanceOfChosenTime(),
         const NotificationDetails(
           android: AndroidNotificationDetails('daily notification channel id',
               'daily notification channel name',
@@ -126,7 +142,7 @@ final InitializationSettings initializationSettings = InitializationSettings(
         matchDateTimeComponents: DateTimeComponents.time);
   }
 
-    tz.TZDateTime _nextInstanceOfTenAM() {
+    tz.TZDateTime _nextInstanceOfChosenTime() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
         tz.TZDateTime(tz.local, now.year, now.month, now.day, dailyReminder);       //dailyReminder variable is the preffered time
@@ -174,4 +190,10 @@ final InitializationSettings initializationSettings = InitializationSettings(
         id++, 'Remember to register!', 'Register directly in the notification', notificationDetails,
         payload: 'item z');
   }
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName!));
 }
