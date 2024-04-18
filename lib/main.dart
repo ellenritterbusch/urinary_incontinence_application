@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
-import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
+import 'package:urinary_incontinence_application/Notifications/notificationsPage.dart';
 
 
 void main() {
