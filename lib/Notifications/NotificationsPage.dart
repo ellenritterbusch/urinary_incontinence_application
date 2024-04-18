@@ -15,7 +15,7 @@ class _NotificationPageState extends State<NotificationPage> {
     return Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: (){SetNotifications().showNotification();}
+          onPressed: (){SetNotifications().showNotificationWithActions();}
         , child: Text('Noti'))));
   }
 }
