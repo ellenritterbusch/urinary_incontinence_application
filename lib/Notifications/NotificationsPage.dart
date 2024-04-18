@@ -53,8 +53,12 @@ class _NotificationsSettings extends State<NotificationsSettings> {
     return Scaffold(
       body: Column(
         children: <Widget>[
+        const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
+
+
                                       //////////////////////////////// PROFILE TAB I TOPPEN ///////////////////////////////////////////7
         ListTile(
+          tileColor: Colors.white,
           title: const Text('Profile', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,)),       //Profil tekst
           leading: ElevatedButton(
             onPressed: () {},
@@ -69,6 +73,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
           trailing: const Icon(Icons.arrow_forward_ios, size: 22,),                //Pil icon
         ),
 
+          const Divider(height: 10),              //Tilføjer mellemrum mellem, således at der kommer en streg
+
 
           ///////////////////////////// Slå alle notifikationer til ////////////////////
           SwitchListTile(        
@@ -81,8 +87,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 onChanged: (bool? value) {
                   setState(() {
                     _allnotifications = value!;
-                    _dailyreminder = value!;
-                    _ondemand = value!; 
+                    _dailyreminder = value;
+                    _ondemand = value; 
 
                   });
                 },
@@ -105,7 +111,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             value: _dailyreminder,                                                 //Switch value
             onChanged: (bool? value) {
               setState(() {
-                _dailyreminder = value!;
+                _dailyreminder = value!;                                          //ON/OFF daily reminder
+                _allnotifications = value ? value==true : value==false;                                       //ON/OFF ALLE NOTIFIKATIONer
               });
             },
           ),
@@ -152,28 +159,26 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             onChanged: (bool? value) {                                                                        //Hvad der sker når ændret
               setState(() {
                 _ondemand = value!;
+                _allnotifications = value ? value==true : value==false;  
               });
             },
           ),
           ListTile(
-              //leading: FlutterLogo(size: 72.0),
               title: const Text('Time after on-demand', style: TextStyle(fontWeight: FontWeight.bold)),                      
               subtitle:
                   const Text('Choose how long after an on-demand stimulation, you want to receive a notification'),
               trailing: CupertinoButton(
                 padding: EdgeInsets.zero,
-                // Display a CupertinoPicker with list of options.
+                                              // Display a CupertinoPicker with list of options.
                 onPressed: () => _showDialog(
                   CupertinoPicker(
-                    //magnification: 1.13,
-                    //squeeze: 1,
                     useMagnifier: false,
                     itemExtent: _kItemExtent,
-                    // This sets the initial item.
+                                              // This sets the initial item.
                     scrollController: FixedExtentScrollController(
                       initialItem: _selectedTime,
                     ),
-                    // This is called when selected item is changed.
+                                             // This is called when selected item is changed.
                     onSelectedItemChanged: (int selectedItem) {
                       setState(() {
                         _selectedTime = selectedItem;
@@ -185,7 +190,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                     }),
                   ),
                 ),
-                // This displays the selected time name:
+                                             // This displays the selected time name:
                 child: Text(
                   timeOnDemand[_selectedTime],
                   style: const TextStyle(
