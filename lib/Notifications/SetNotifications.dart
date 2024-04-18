@@ -109,7 +109,7 @@ class SetNotifications {
 
   Future<void> initNotification() async{
     AndroidInitializationSettings initializationSettingsAndroid =
-     AndroidInitializationSettings('drawable/flutter_logo');
+     AndroidInitializationSettings('app_icon');
 
   final DarwinInitializationSettings initializationSettingsDarwin =
      DarwinInitializationSettings(
