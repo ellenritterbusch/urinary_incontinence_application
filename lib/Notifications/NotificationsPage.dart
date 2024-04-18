@@ -81,6 +81,9 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 onChanged: (bool? value) {
                   setState(() {
                     _allnotifications = value!;
+                    _dailyreminder = value!;
+                    _ondemand = value!; 
+
                   });
                 },
               ),
