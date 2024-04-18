@@ -6,14 +6,8 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table
 
 
 class DailyEvaluationPage extends StatefulWidget {
- const DailyEvaluationPage(
-    this.payload, {
-    Key? key,
-  }) : super(key: key);
+ const DailyEvaluationPage({super.key});
 
-  static const String routeName = '/DailyEvaluationPage';
-
-  final String? payload;
   @override
   State<DailyEvaluationPage> createState() => _DailyEvaluationPageState();
 }

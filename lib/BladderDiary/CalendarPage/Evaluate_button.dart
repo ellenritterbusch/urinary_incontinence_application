@@ -15,7 +15,7 @@ class _Evaluate_buttonState extends State<Evaluate_button> {
             onPressed: () {
               Navigator.push(
                context,
-                MaterialPageRoute(builder: (context) => const DailyEvaluationPage('')),
+                MaterialPageRoute(builder: (context) => const DailyEvaluationPage()),
                );
             },
             icon: const Icon(Icons.add_reaction_outlined,

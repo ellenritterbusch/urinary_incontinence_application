@@ -3,23 +3,27 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
+import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 
 int id = 0;
-int dailyReminder = 10;
+int dailyReminderHour = 12;
+int dailyReminderMin = 44;
 
-FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-    FlutterLocalNotificationsPlugin();
+FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+//for initialization
 final StreamController<ReceivedNotification> didReceiveLocalNotificationStream =
     StreamController<ReceivedNotification>.broadcast();
 
 final StreamController<String?> selectNotificationStream =
     StreamController<String?>.broadcast();
 
+//Everything a notification can maintain
 class ReceivedNotification {
   ReceivedNotification({
     required this.id,
@@ -40,7 +44,7 @@ String? selectedNotificationPayload;
 const String urlLaunchActionId = 'id_1';
 
 /// A notification action which triggers a App navigation event
-const String navigationActionId = 'id_3';
+const String navigationActionId = '/DailyEvaluationPage';
 
 /// Defines a iOS/MacOS notification category for text input actions.
 const String darwinNotificationCategoryText = 'textCategory';
@@ -63,20 +67,15 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 
 
 // Initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+ class SetNotifications {
 
-class SetNotifications {
+  final onClickNotification = BehaviorSubject<String>(); 
+  
+  void onNotificationTap(NotificationResponse notificationResponse) {
+    onClickNotification.add(notificationResponse.payload!);
+  }
+
  Future<void> main() async{
-
-WidgetsFlutterBinding.ensureInitialized();
-await _configureLocalTimeZone();
-
-// final NotificationAppLaunchDetails? notificationAppLaunchDetails =  await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-//   String initialRoute = DailyEvaluationPage.routeName;
-//   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
-//     selectedNotificationPayload =
-//         notificationAppLaunchDetails!.notificationResponse?.payload;
-//     initialRoute = DailyEvaluationPage.routeName;
-//   }
 
 const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
@@ -93,8 +92,7 @@ final DarwinInitializationSettings initializationSettingsDarwin =
           title: title,
           body: body,
           payload: payload,
-        ),
-      );
+        ));
         },);
 final InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
@@ -103,19 +101,19 @@ final InitializationSettings initializationSettings = InitializationSettings(
 
   await flutterLocalNotificationsPlugin.initialize(
     initializationSettings,
-    onDidReceiveNotificationResponse:
-        (NotificationResponse notificationResponse) async {
-      switch (notificationResponse.notificationResponseType) {
-        case NotificationResponseType.selectedNotification:
-          selectNotificationStream.add(notificationResponse.payload);
-          break;
-        case NotificationResponseType.selectedNotificationAction:
-          if (notificationResponse.actionId == navigationActionId) {
-            selectNotificationStream.add(notificationResponse.payload);
-          }
-          break;
-      }
-    },
+    onDidReceiveNotificationResponse: onNotificationTap,
+      //       (NotificationResponse notificationResponse) async {
+      // switch (notificationResponse.notificationResponseType) {
+      //   case NotificationResponseType.selectedNotification:
+      //     selectNotificationStream.add(notificationResponse.payload);
+      //     break;
+      //   case NotificationResponseType.selectedNotificationAction:
+      //     if (notificationResponse.actionId == navigationActionId) {
+      //       selectNotificationStream.add(notificationResponse.payload);
+      //     }
+      //     break;
+      // }
+   // },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
   );
 
@@ -145,7 +143,7 @@ final InitializationSettings initializationSettings = InitializationSettings(
     tz.TZDateTime _nextInstanceOfChosenTime() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, dailyReminder);       //dailyReminder variable is the preffered time
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, dailyReminderHour, dailyReminderMin);       //dailyReminder variable is the preffered time
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
@@ -190,10 +188,4 @@ final InitializationSettings initializationSettings = InitializationSettings(
         id++, 'Remember to register!', 'Register directly in the notification', notificationDetails,
         payload: 'item z');
   }
-}
-
-Future<void> _configureLocalTimeZone() async {
-  tz.initializeTimeZones();
-  final String? timeZoneName = await FlutterTimezone.getLocalTimezone();
-  tz.setLocalLocation(tz.getLocation(timeZoneName!));
 }
