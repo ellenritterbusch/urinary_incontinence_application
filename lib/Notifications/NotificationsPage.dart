@@ -112,11 +112,12 @@ class _NotificationsSettings extends State<NotificationsSettings> {
               subtitle:
                   const Text('Enter desired time of the day to receive the daily evaluation reminder'),
               trailing: CupertinoButton(
-                child: Text('${_selectedTid.hour}:${_selectedTid.minute}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
+                child: Text('${(_selectedTid.hour < 10) ? ('0${_selectedTid.hour}') : ('${_selectedTid.hour}')}:${(_selectedTid.minute < 10) ? ('0${_selectedTid.minute}') : '${_selectedTid.minute}'}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
                 onPressed: () => _showDialog(
                       CupertinoDatePicker(
                         initialDateTime: _selectedTid,
                         mode: CupertinoDatePickerMode.time,
+                        //minuteInterval: 10,
                         use24hFormat: true,
                         // This shows day of week alongside day of month
                         showDayOfWeek: false,
@@ -200,6 +201,10 @@ class _NotificationsSettings extends State<NotificationsSettings> {
       )
     );
   }
+  // DateTime getDateTime() {
+  //   final now = DateTime.now();
+  //   return DateTime(now.year, now.month, now.day, now.hour, 15);
+  // }
 
     void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
