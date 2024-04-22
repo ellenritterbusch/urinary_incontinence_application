@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
-import 'package:urinary_incontinence_application/Notifications/notificationsPage.dart';
+import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 

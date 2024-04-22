@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
+import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -11,9 +12,10 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 
+
 int id = 0;
-int dailyReminderHour = 12;
-int dailyReminderMin = 44;
+int dailyReminderHour = 20;
+int dailyReminderMin = 00;
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
