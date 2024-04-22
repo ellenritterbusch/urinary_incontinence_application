@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 const double _kItemExtent = 32.0;
-List<String> timeOnDemand = <String>[
-  'Instant',
-  '1 min',
-  '3 min',
-  'Never',
+List <int> timeOnDemand = <int> [
+  0,
+  1,
+  3,
+  5,
+  1,
+  2,
+  4,
+  6,
+  8,
+  12,
 ];
-
-
 class NotificationPage extends StatefulWidget {
   const NotificationPage({super.key});
 
@@ -22,7 +26,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Notifications"),
+        title: const Text("Settings"),
       ),
       body:  const Center(
         child: NotificationsSettings(),
@@ -56,7 +60,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
         const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
 
 
-                                      //////////////////////////////// PROFILE TAB I TOPPEN ///////////////////////////////////////////7
+                                                  //////////////////////////////// PROFILE TAB I TOPPEN ///////////////////////////////////////////7
         ListTile(
           tileColor: Colors.white,
           title: const Text('Profile', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold,)),       //Profil tekst
@@ -76,7 +80,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
           const Divider(height: 10),              //Tilføjer mellemrum mellem, således at der kommer en streg
 
 
-          ///////////////////////////// Slå alle notifikationer til ////////////////////
+                                                      ///////////////////////////// Slå alle notifikationer til ////////////////////
           SwitchListTile(        
                 activeColor: Colors.white,                      //Gør switch hvid
                 activeTrackColor: Colors.green,                 //Gør indre switch grøn ved aktiv
@@ -147,7 +151,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
 
 
-                            ///////////////////////////////// After ON-DEMAND stimuli ////////////////////////////////
+                                                 //////////////////////////////// After ON-DEMAND stimuli ////////////////////////////////
           SwitchListTile(
             activeColor: Colors.white,                                                                      //Gør switch hvid
             activeTrackColor: Colors.green,                                                                 //Gør indre switch grøn ved aktiv
@@ -186,13 +190,13 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                     },
                     children:
                         List<Widget>.generate(timeOnDemand.length, (int index) {
-                      return Center(child: Text(timeOnDemand[index]));
+                      return Center(child: Text('${timeOnDemand[index]}'));
                     }),
                   ),
                 ),
                                              // This displays the selected time name:
                 child: Text(
-                  timeOnDemand[_selectedTime],
+                  '${_selectedTime == 0 ? 'Instant' : '${timeOnDemand[_selectedTime]}'} ${_selectedTime == 0 ? ' ' : _selectedTime <=3 ? 'min' : 'hours'}',
                   style: const TextStyle(
                     //fontSize: 19.0,
                     color: Colors.black,
