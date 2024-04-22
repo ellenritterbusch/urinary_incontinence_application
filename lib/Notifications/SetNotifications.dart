@@ -1,4 +1,5 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -36,6 +37,9 @@ class ReceivedNotification {
   final String? title;
   final String? body;
   final String? payload;
+
+
+
 }
 
 String? selectedNotificationPayload;
@@ -69,61 +73,62 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 // Initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
  class SetNotifications {
 
-  final onClickNotification = BehaviorSubject<String>(); 
-  
-  void onNotificationTap(NotificationResponse notificationResponse) {
+  static final onClickNotification = BehaviorSubject<String>();
+
+  // on tap on any notification
+  static void onNotificationTap(NotificationResponse notificationResponse) {
     onClickNotification.add(notificationResponse.payload!);
   }
 
- Future<void> main() async{
+ static Future initializeNotification() async{
 
-const AndroidInitializationSettings initializationSettingsAndroid =
+  const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
 
-final DarwinInitializationSettings initializationSettingsDarwin =
+  final DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
-      requestAlertPermission: true,
-      requestBadgePermission: true,
-      requestSoundPermission: true,
-        onDidReceiveLocalNotification:(int id, String? title, String? body, String? payload) async{
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+        onDidReceiveLocalNotification: 
+        (int id, String? title, String? body, String? payload) async{
           didReceiveLocalNotificationStream.add(
         ReceivedNotification(
           id: id,
           title: title,
           body: body,
           payload: payload,
-        ));
-        },);
-final InitializationSettings initializationSettings = InitializationSettings(
+        )); 
+      });
+        
+  final InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
     iOS: initializationSettingsDarwin,
     macOS: initializationSettingsDarwin);
 
-  await flutterLocalNotificationsPlugin.initialize(
-    initializationSettings,
-    onDidReceiveNotificationResponse: onNotificationTap,
-      //       (NotificationResponse notificationResponse) async {
-      // switch (notificationResponse.notificationResponseType) {
-      //   case NotificationResponseType.selectedNotification:
-      //     selectNotificationStream.add(notificationResponse.payload);
-      //     break;
-      //   case NotificationResponseType.selectedNotificationAction:
-      //     if (notificationResponse.actionId == navigationActionId) {
-      //       selectNotificationStream.add(notificationResponse.payload);
-      //     }
-      //     break;
-      // }
-   // },
-    onDidReceiveBackgroundNotificationResponse: notificationTapBackground,
-  );
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: onNotificationTap,
+  //           (NotificationResponse notificationResponse) async {
+  //     switch (notificationResponse.notificationResponseType) {
+  //       case NotificationResponseType.selectedNotification:
+  //         selectNotificationStream.add(notificationResponse.payload);
+  //         break;
+  //       case NotificationResponseType.selectedNotificationAction:
+  //         if (notificationResponse.actionId == navigationActionId) {
+  //           selectNotificationStream.add(notificationResponse.payload);
+  //         }
+  //         break;
+  //     }
+  //  },
+    onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
+  
+ }
 
-}
+       /////  functions  //////
 
-
-/////  functions  //////
-
+///// daily notification ////
  Future<void> scheduleDailyNotification() async {
-
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
         'Remember to evaluate your day!',
@@ -150,6 +155,7 @@ final InitializationSettings initializationSettings = InitializationSettings(
     return scheduledDate;
   }
 
+    // action notification ///
   Future<void> showNotificationWithActions() async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
@@ -187,5 +193,20 @@ final InitializationSettings initializationSettings = InitializationSettings(
     await flutterLocalNotificationsPlugin.show(
         id++, 'Remember to register!', 'Register directly in the notification', notificationDetails,
         payload: 'item z');
+  }
+
+    ///// simple notification///
+  Future<void> showNotification() async {
+    const AndroidNotificationDetails androidNotificationDetails =
+        AndroidNotificationDetails('your channel id', 'your channel name',
+            channelDescription: 'your channel description',
+            importance: Importance.max,
+            priority: Priority.high,
+            ticker: 'ticker');
+    const NotificationDetails notificationDetails =
+        NotificationDetails(android: androidNotificationDetails);
+    await flutterLocalNotificationsPlugin.show(
+        id++, 'plain title', 'plain body', notificationDetails,
+        payload: 'item x');
   }
 }

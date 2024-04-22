@@ -7,10 +7,24 @@ import 'package:urinary_incontinence_application/Notifications/NotificationsPage
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 
-
-void main() {
+final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
+void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //initialize database
-  tz.initializeTimeZones();
+  tz.initializeTimeZones();                 //initialize timezones
+  await SetNotifications.initializeNotification();    //initialize notifications
+
+  //  handle in terminated state
+  var initialNotification =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  if (initialNotification?.didNotificationLaunchApp == true) {
+    // LocalNotifications.onClickNotification.stream.listen((event) {
+    Future.delayed(Duration(seconds: 1), () {
+      // print(event);
+      navigatorKey.currentState!.pushNamed('/DailyEvaluationPage',
+          arguments: initialNotification?.notificationResponse?.payload);
+    });
+  }
+
   runApp(
  const MyApp());
 }
@@ -43,6 +57,9 @@ class MyApp extends StatelessWidget {
       ),
        fontFamily: GoogleFonts.quicksand().fontFamily
         ),
+        routes: {
+        '/DailyEvaluationPage': (context) => const DailyEvaluationPage(),
+      },
       home: const RootPage()
     );
   }
@@ -111,15 +128,11 @@ class _SnackBar extends State<SnackBar> {
                 const snackBar = SnackBar(content: Text("Yay a snackbar"));
               },
               child: const Text('Show SnackBar'),
-            ); //ElevatedButton
-          }), //Builder
-        ), //Center
-        ), //Scaffold
-
-    routes: {
-        '/DailyEvaluationPage': (context) => const DailyEvaluationPage(),
-      },
-
-      );// MaterialApp
+            ); 
+          }), 
+        ), 
+        ), 
+      );
   }
 }
+

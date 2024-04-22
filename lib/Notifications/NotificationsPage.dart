@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:urinary_incontinence_application/main.dart';
 
 class NotificationPage extends StatefulWidget {
 
@@ -14,12 +16,14 @@ class NotificationPage extends StatefulWidget {
 class _NotificationPageState extends State<NotificationPage> {
 @override
 void initState(){
-  super.initState();
   listenToNotifications();
+  super.initState();
 }
 
-listenToNotifications() {
-    SetNotifications().onClickNotification.stream.listen((event) {
+  listenToNotifications() {
+    print("Listening to notification");
+    SetNotifications.onClickNotification.stream.listen((event) {
+      print(event);
       Navigator.pushNamed(context, '/DailyEvaluationPage', arguments: event);
     });
   }
@@ -31,12 +35,15 @@ listenToNotifications() {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton(
+             ElevatedButton(
             onPressed: (){SetNotifications().showNotificationWithActions();}
           , child: Text('Action Noti')),
+            ElevatedButton(
+            onPressed: (){SetNotifications().showNotification();}
+          , child: Text('Simple Noti')),
           ElevatedButton(
             onPressed: ()async {await SetNotifications().scheduleDailyNotification();},
-            child: Text('10 am noti'),
+            child: Text('10 am Noti'),
           )
           ]),
       )
