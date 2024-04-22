@@ -49,8 +49,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   bool _allnotifications = false;     //Value for 
   bool _dailyreminder = false;        //Value for daily reminder switch
   bool _ondemand = false;             //Value for on-demand
-  int _selectedTime = 0;
-  DateTime _selectedTid =  DateTime.now();
+  int _selectedOnDemandTime = 0;
+  DateTime _selectedDailyEvTime =  DateTime.now();
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 value: _allnotifications,                                                                    //Switch value
                 onChanged: (bool? value) {
                   setState(() {
-                    _allnotifications = value!;
+                    _allnotifications = value!;           //Ved ændring skift alle switch værdier
                     _dailyreminder = value;
                     _ondemand = value; 
 
@@ -116,28 +116,28 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             onChanged: (bool? value) {
               setState(() {
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
-                _allnotifications = value ? value==true : value==false;                                       //ON/OFF ALLE NOTIFIKATIONer
+                _allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
           ),
           ListTile(                                                             //Reminder time
-              title: const Text('Daily evaluation reminder time', style: TextStyle(fontWeight: FontWeight.bold)),
-              isThreeLine: true,
+              title: const Text('Daily evaluation reminder time', style: TextStyle(fontWeight: FontWeight.bold)),     //Titel
+              isThreeLine: true,                                                                                      //Makes it big enough for 3 lines of text
               subtitle:
-                  const Text('Enter desired time of the day to receive the daily evaluation reminder'),
-              trailing: CupertinoButton(
-                child: Text('${(_selectedTid.hour < 10) ? ('0${_selectedTid.hour}') : ('${_selectedTid.hour}')}:${(_selectedTid.minute < 10) ? ('0${_selectedTid.minute}') : '${_selectedTid.minute}'}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
+                  const Text('Enter desired time of the day to receive the daily evaluation reminder'),               //Subtitle
+              trailing: CupertinoButton(                                                                              //Textbutton in cupertinostyle like iphone
+                child: Text('${(_selectedDailyEvTime.hour < 10) ? ('0${_selectedDailyEvTime.hour}') : ('${_selectedDailyEvTime.hour}')}:${(_selectedDailyEvTime.minute < 10) ? ('0${_selectedDailyEvTime.minute}') : '${_selectedDailyEvTime.minute}'} ${(_selectedDailyEvTime.hour > 12) ? 'PM' : 'AM'}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
                 onPressed: () => _showDialog(
-                      CupertinoDatePicker(
-                        initialDateTime: _selectedTid,
-                        mode: CupertinoDatePickerMode.time,
+                      CupertinoDatePicker(        //Opens white box in bottom of page
+                        initialDateTime: _selectedDailyEvTime,        //Starts on selected time 
+                        mode: CupertinoDatePickerMode.time,   //No date, only time
                         //minuteInterval: 10,
-                        use24hFormat: true,
+                        use24hFormat: true,                   //24h format
                         // This shows day of week alongside day of month
                         showDayOfWeek: false,
-                        // This is called when the user changes the date.
+                        // This is called when the user changes the date:
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => _selectedTid = newTime);
+                          setState(() => _selectedDailyEvTime = newTime);
                         },
                       ),
                 ),
@@ -153,25 +153,25 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
                                                  //////////////////////////////// After ON-DEMAND stimuli ////////////////////////////////
           SwitchListTile(
-            activeColor: Colors.white,                                                                      //Gør switch hvid
-            activeTrackColor: Colors.green,                                                                 //Gør indre switch grøn ved aktiv
-            tileColor: Colors.white,                                                                        //Gør tile hvid  
+            activeColor: Colors.white,                                                                      //Make switch white 
+            activeTrackColor: Colors.green,                                                                 //Make switch green when active
+            tileColor: Colors.white,                                                                        //Make tile white 
             title: const Text('Notification after on-demand', style: TextStyle(fontWeight: FontWeight.bold)), //Titel
             subtitle: const Text('Receive a notification after using the on-demand function with UCon'),      //Subtitel
-            isThreeLine: true,
+            isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
-            onChanged: (bool? value) {                                                                        //Hvad der sker når ændret
+            onChanged: (bool? value) {                                                                        //What happens when changed
               setState(() {
-                _ondemand = value!;
-                _allnotifications = value ? value==true : value==false;  
+                _ondemand = value!;                                                                           //Changes switch value
+                _allnotifications = value ? value==true : value==false;                                       //Turns on all notifications, if off
               });
             },
           ),
           ListTile(
-              title: const Text('Time after on-demand', style: TextStyle(fontWeight: FontWeight.bold)),                      
+              title: const Text('Time after on-demand', style: TextStyle(fontWeight: FontWeight.bold)),                   //Title                
               subtitle:
-                  const Text('Choose how long after an on-demand stimulation, you want to receive a notification'),
-              trailing: CupertinoButton(
+                  const Text('Choose how long after an on-demand stimulation, you want to receive a notification'),       //Subtitle
+              trailing: CupertinoButton(                                                                                  //Iphone text button
                 padding: EdgeInsets.zero,
                                               // Display a CupertinoPicker with list of options.
                 onPressed: () => _showDialog(
@@ -180,23 +180,23 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                     itemExtent: _kItemExtent,
                                               // This sets the initial item.
                     scrollController: FixedExtentScrollController(
-                      initialItem: _selectedTime,
+                      initialItem: _selectedOnDemandTime,           //Starts with selectedtime
                     ),
                                              // This is called when selected item is changed.
                     onSelectedItemChanged: (int selectedItem) {
                       setState(() {
-                        _selectedTime = selectedItem;
+                        _selectedOnDemandTime = selectedItem;    
                       });
                     },
                     children:
                         List<Widget>.generate(timeOnDemand.length, (int index) {
-                      return Center(child: Text('${timeOnDemand[index]}'));
+                      return Center(child: Text('${timeOnDemand[index]}'));             
                     }),
                   ),
                 ),
                                              // This displays the selected time name:
                 child: Text(
-                  '${_selectedTime == 0 ? 'Instant' : '${timeOnDemand[_selectedTime]}'} ${_selectedTime == 0 ? ' ' : _selectedTime <=3 ? 'min' : 'hours'}',
+                  '${_selectedOnDemandTime == 0 ? 'Instant' : '${timeOnDemand[_selectedOnDemandTime]}'} ${_selectedOnDemandTime == 0 ? ' ' : _selectedOnDemandTime <=3 ? 'min' : 'hours'}',
                   style: const TextStyle(
                     //fontSize: 19.0,
                     color: Colors.black,
@@ -213,10 +213,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
       )
     );
   }
-  // DateTime getDateTime() {
-  //   final now = DateTime.now();
-  //   return DateTime(now.year, now.month, now.day, now.hour, 15);
-  // }
+
 
     void _showDialog(Widget child) {
     showCupertinoModalPopup<void>(
