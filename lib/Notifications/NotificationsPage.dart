@@ -24,7 +24,7 @@ void initState(){
     print("Listening to notification");
     SetNotifications.onClickNotification.stream.listen((event) {
       print(event);
-      Navigator.pushNamed(context, '/DailyEvaluationPage', arguments: event);
+      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
     });
   }
 

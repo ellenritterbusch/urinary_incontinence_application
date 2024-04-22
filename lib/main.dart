@@ -17,10 +17,9 @@ void main() async {
   var initialNotification =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (initialNotification?.didNotificationLaunchApp == true) {
-    // LocalNotifications.onClickNotification.stream.listen((event) {
+   
     Future.delayed(Duration(seconds: 1), () {
-      // print(event);
-      navigatorKey.currentState!.pushNamed('/DailyEvaluationPage',
+      navigatorKey.currentState!.pushNamed('/CalendarPage',
           arguments: initialNotification?.notificationResponse?.payload);
     });
   }
@@ -58,7 +57,7 @@ class MyApp extends StatelessWidget {
        fontFamily: GoogleFonts.quicksand().fontFamily
         ),
         routes: {
-        '/DailyEvaluationPage': (context) => const DailyEvaluationPage(),
+        '/CalendarPage': (context) => const CalendarPage(),
       },
       home: const RootPage()
     );
