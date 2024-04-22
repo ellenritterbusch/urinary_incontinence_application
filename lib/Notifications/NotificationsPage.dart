@@ -1,13 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
-  0,
+  0, //Instant
   1,
   3,
   5,
-  1,
+  1, //change to hours
   2,
   4,
   6,
@@ -89,7 +93,15 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 subtitle: const Text('Receive all notifications'),                                            //Subtitel
                 value: _allnotifications,                                                                    //Switch value
                 onChanged: (bool? value) {
-                  setState(() {
+                  setState(() async {
+                    //databaseModelNoti.noti_all = true; 
+
+                      //insert to database
+                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                      debugPrint('data is sucessfully inserted');
+                      final _allnoti = await DatabaseManager.databaseManager.getNotification();
+                      debugPrint('$_allnoti');
+
                     _allnotifications = value!;           //Ved ændring skift alle switch værdier
                     _dailyreminder = value;
                     _ondemand = value; 
@@ -114,7 +126,13 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
             value: _dailyreminder,                                                 //Switch value
             onChanged: (bool? value) {
-              setState(() {
+              setState(() async {
+                //insert to database
+                await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                debugPrint('data is sucessfully inserted');
+                final _dailyremind = await DatabaseManager.databaseManager.getNotification();
+                debugPrint('$_dailyremind');
+
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
                 _allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
@@ -161,7 +179,13 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
             onChanged: (bool? value) {                                                                        //What happens when changed
-              setState(() {
+              setState(() async {
+                      //insert to database
+                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                      debugPrint('data is sucessfully inserted');
+                      final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                      debugPrint('$ondemandnoti');
+
                 _ondemand = value!;                                                                           //Changes switch value
                 _allnotifications = value ? value==true : value==false;                                       //Turns on all notifications, if off
               });
