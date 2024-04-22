@@ -1,12 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/notificationsPage.dart';
+import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 
-
-void main() {
+final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
+void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //initialize database
+  tz.initializeTimeZones();                 //initialize timezones
+  await SetNotifications.initializeNotification();    //initialize notifications
+
+  //  handle in terminated state
+  var initialNotification =
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+  if (initialNotification?.didNotificationLaunchApp == true) {
+   
+    Future.delayed(Duration(seconds: 1), () {
+      navigatorKey.currentState!.pushNamed('/CalendarPage',
+          arguments: initialNotification?.notificationResponse?.payload);
+    });
+  }
+
   runApp(
  const MyApp());
 }
@@ -39,6 +56,9 @@ class MyApp extends StatelessWidget {
       ),
        fontFamily: GoogleFonts.quicksand().fontFamily
         ),
+        routes: {
+        '/CalendarPage': (context) => const CalendarPage(),
+      },
       home: const RootPage()
     );
   }
@@ -107,10 +127,11 @@ class _SnackBar extends State<SnackBar> {
                 const snackBar = SnackBar(content: Text("Yay a snackbar"));
               },
               child: const Text('Show SnackBar'),
-            ); //ElevatedButton
-          }), //Builder
-        ), //Center
-        ), //Scaffold
-      );// MaterialApp
+            ); 
+          }), 
+        ), 
+        ), 
+      );
   }
 }
+

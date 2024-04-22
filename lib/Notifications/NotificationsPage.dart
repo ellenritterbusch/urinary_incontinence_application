@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 
 DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
+=======
+import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+>>>>>>> 09928a1cce0fdf14ac5c6ecfee969b50504fda53
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -19,6 +24,7 @@ List <int> timeOnDemand = <int> [
   12,
 ];
 class NotificationPage extends StatefulWidget {
+
   const NotificationPage({super.key});
 
   @override
@@ -26,6 +32,20 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+@override
+void initState(){
+  listenToNotifications();
+  super.initState();
+}
+
+  listenToNotifications() {
+    print("Listening to notification");
+    SetNotifications.onClickNotification.stream.listen((event) {
+      print(event);
+      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
