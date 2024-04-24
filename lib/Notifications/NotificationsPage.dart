@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 
 DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
-=======
-import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
->>>>>>> 09928a1cce0fdf14ac5c6ecfee969b50504fda53
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [

@@ -63,6 +63,12 @@ Future <void> insertDailyEvaluation(DatabaseModel data) async {
     return await db.query(DailyEvaluationTable);
   }
 
+  Future getDailyEvaluationsdate(String date) async {       //retriving only the date of daily evaluation
+  final db = await databaseDB;
+  var res = await db.rawQuery('SELECT * FROM $DailyEvaluationTable WHERE $colDate =?', [date]);
+  return res;
+  }
+
   
 //UPDATE
 Future <int> updateDailyEvaluation (DatabaseModel dailyEvaluation) async {
