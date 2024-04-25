@@ -1,14 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
-
-DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
-=======
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
->>>>>>> 09928a1cce0fdf14ac5c6ecfee969b50504fda53
+
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(1, 1, 1);
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -70,9 +66,9 @@ class NotificationsSettings extends StatefulWidget {
 }
 
 class _NotificationsSettings extends State<NotificationsSettings> {
-  bool _allnotifications = false;     //Value for 
-  bool _dailyreminder = false;        //Value for daily reminder switch
-  bool _ondemand = false;             //Value for on-demand
+  bool _allnotifications = true;     //Value for 
+  bool _dailyreminder = true;        //Value for daily reminder switch
+  bool _ondemand = true;             //Value for on-demand
   int _selectedOnDemandTime = 0;
   DateTime _selectedDailyEvTime =  DateTime.now();
 
@@ -112,21 +108,31 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 title: const Text('Notifications', style: TextStyle(fontWeight: FontWeight.bold)),           //Titel
                 subtitle: const Text('Receive all notifications'),                                            //Subtitel
                 value: _allnotifications,                                                                    //Switch value
-                onChanged: (bool? value) {
-                  setState(() async {
-                    //databaseModelNoti.noti_all = true; 
+                onChanged: (bool? value) async {
 
-                      //insert to database
-                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      debugPrint('data is sucessfully inserted');
+                     //databaseModelNoti.noti_all = true; 
+                      if (_allnotifications == true) {
+                        databaseModelNoti.noti_all = 1;
+                        } else {
+                          databaseModelNoti.noti_all = 0; 
+                        }
+                      
                       final _allnoti = await DatabaseManager.databaseManager.getNotification();
+                      if(_allnoti == 0){
+                        await DatabaseManager.databaseManager.insertAllNotification(databaseModelNoti);
+                      } else {
+                        await DatabaseManager.databaseManager.updateAllNotification(databaseModelNoti);
+                      }
+                      debugPrint('data is sucessfully updated');
                       debugPrint('$_allnoti');
 
+                  setState(()  {
                     _allnotifications = value!;           //Ved ændring skift alle switch værdier
                     _dailyreminder = value;
                     _ondemand = value; 
 
-                  });
+                  }
+                  );
                 },
               ),
 
@@ -145,13 +151,40 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             title: const Text('Daily evaluation reminder', style: TextStyle(fontWeight: FontWeight.bold)),                           //Titel
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
             value: _dailyreminder,                                                 //Switch value
-            onChanged: (bool? value) {
-              setState(() async {
-                //insert to database
-                await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                debugPrint('data is sucessfully inserted');
-                final _dailyremind = await DatabaseManager.databaseManager.getNotification();
-                debugPrint('$_dailyremind');
+            onChanged: (bool? value) async {
+
+              
+
+              databaseModelNoti.noti_eva = 1; 
+                              //insert to database
+                // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                // debugPrint('data is sucessfully inserted');
+                // final _dailyremind = await DatabaseManager.databaseManager.getNotification();
+                // debugPrint('$_dailyremind');
+                         //insert to database
+                      // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                      // debugPrint('data is sucessfully inserted');
+                      // final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                      // debugPrint('$ondemandnoti');
+                     //databaseModelNoti.noti_all = true; 
+                      if (_dailyreminder == true) {
+                        databaseModelNoti.noti_eva = 1;
+                        } else {
+                          databaseModelNoti.noti_eva = 0; 
+                        }
+                      
+                      final _evanoti = await DatabaseManager.databaseManager.getNotification();
+                      if(_evanoti == databaseModelNoti.noti_eva){
+                        await DatabaseManager.databaseManager.insertDailyNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully inserted');
+                      } else {
+                        await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully updated');
+                        debugPrint('$_evanoti');
+                      }
+                      // debugPrint('data is sucessfully updated');
+                      debugPrint('$_evanoti');
+              setState(()  {
 
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
                 _allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
@@ -169,7 +202,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                       CupertinoDatePicker(        //Opens white box in bottom of page
                         initialDateTime: _selectedDailyEvTime,        //Starts on selected time 
                         mode: CupertinoDatePickerMode.time,   //No date, only time
-                        //minuteInterval: 10,
+                        //minuteInterval: 1,
                         use24hFormat: true,                   //24h format
                         // This shows day of week alongside day of month
                         showDayOfWeek: false,
@@ -198,14 +231,35 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive a notification after using the on-demand function with UCon'),      //Subtitel
             isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
-            onChanged: (bool? value) {                                                                        //What happens when changed
-              setState(() async {
-                      //insert to database
-                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      debugPrint('data is sucessfully inserted');
-                      final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
-                      debugPrint('$ondemandnoti');
+            onChanged: (bool? value) async {     
+                      databaseModelNoti.noti_ondemand = 1; 
+                         //insert to database
+                      // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                      // debugPrint('data is sucessfully inserted');
+                      // final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                      // debugPrint('$ondemandnoti');
 
+                      if (_ondemand == true) {
+                        databaseModelNoti.noti_ondemand = 1;
+                        } else {
+                          databaseModelNoti.noti_ondemand = 0; 
+                        }
+                      
+                       final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                      if(ondemandnoti == databaseModelNoti.noti_ondemand){
+                        await DatabaseManager.databaseManager.insertDemandNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully inserted');
+                      } else {
+                        await DatabaseManager.databaseManager.updateOnDemandNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully updated');
+                      }
+                      
+                      debugPrint('ondemandnoti = $ondemandnoti');
+                      debugPrint('noti_ondemand = ${databaseModelNoti.noti_ondemand}');
+
+                                                                                 //What happens when changed
+              setState(()  {
+                  
                 _ondemand = value!;                                                                           //Changes switch value
                 _allnotifications = value ? value==true : value==false;                                       //Turns on all notifications, if off
               });

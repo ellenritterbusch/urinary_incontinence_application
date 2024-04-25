@@ -10,9 +10,9 @@ class DatabaseModel {
  late int? stimeTimeSetting;
  late int? id;
  late int? PIN;
- late bool? noti_all;
- late bool? noti_eva;
- late bool? noti_ondemand;
+ late int? noti_all;
+ late int? noti_eva;
+ late int? noti_ondemand;
 
 DatabaseModel.DE(this.dailyEvaluationScore, this.dailyEvaluationMemo, this.date);
 DatabaseModel.BD(this.date, this.time, this.accident);
@@ -67,14 +67,14 @@ DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
   ///TO/FROM MAP FOR NOTI
     Map<String,dynamic> toMapNoti(){
     var map = Map<String, dynamic>();
-    map['notification'] = noti_all;
-    map['notification'] = noti_eva;
-    map['notification'] = noti_ondemand;
+    map['allnotification'] = noti_all;
+    map['dailynotification'] = noti_eva;
+    map['ondemandnotification'] = noti_ondemand;
     return map;
   }
   DatabaseModel.fromMapObjectNoti(Map<String,dynamic> map){
-    this.noti_all= map['notification'];
-    this.noti_eva= map['notification'];
-    this.noti_ondemand = map['notification'];
+    this.noti_all= map['allnotification'];
+    this.noti_eva= map['dailynotification'];
+    this.noti_ondemand = map['ondemandnotification'];
   }
 }
