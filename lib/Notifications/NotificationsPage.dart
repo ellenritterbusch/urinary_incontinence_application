@@ -4,7 +4,7 @@ import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 
-DatabaseModel databaseModelNoti = DatabaseModel.Noti(1, 1, 1);
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(0, 0, 0);
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -66,11 +66,13 @@ class NotificationsSettings extends StatefulWidget {
 }
 
 class _NotificationsSettings extends State<NotificationsSettings> {
-  bool _allnotifications = true;     //Value for 
-  bool _dailyreminder = true;        //Value for daily reminder switch
-  bool _ondemand = true;             //Value for on-demand
+   bool _allnotifications = false;     //Value for 
+   bool _dailyreminder = false;        //Value for daily reminder switch
+  bool _ondemand = false;             //Value for on-demand
   int _selectedOnDemandTime = 0;
   DateTime _selectedDailyEvTime =  DateTime.now();
+  
+  DatabaseModel? get noti_ondemand => null;
 
   @override
   Widget build(BuildContext context) {
@@ -110,21 +112,24 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 value: _allnotifications,                                                                    //Switch value
                 onChanged: (bool? value) async {
 
-                     //databaseModelNoti.noti_all = true; 
+                     databaseModelNoti.noti_all = 1; 
                       if (_allnotifications == true) {
                         databaseModelNoti.noti_all = 1;
                         } else {
                           databaseModelNoti.noti_all = 0; 
                         }
                       
-                      final _allnoti = await DatabaseManager.databaseManager.getNotification();
-                      if(_allnoti == 0){
+                      final _allnoti = await DatabaseManager.databaseManager.getAllNotification();
+                      if(_allnoti == databaseModelNoti.noti_all){
                         await DatabaseManager.databaseManager.insertAllNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully inserted');
                       } else {
                         await DatabaseManager.databaseManager.updateAllNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully updated');
                       }
-                      debugPrint('data is sucessfully updated');
+                      // debugPrint('data is sucessfully updated');
                       debugPrint('$_allnoti');
+                      debugPrint('$_allnotifications');
 
                   setState(()  {
                     _allnotifications = value!;           //Ved ændring skift alle switch værdier
@@ -155,7 +160,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
               
 
-              databaseModelNoti.noti_eva = 1; 
+              databaseModelNoti.noti_eva = 0; 
                               //insert to database
                 // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
                 // debugPrint('data is sucessfully inserted');
@@ -173,7 +178,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                           databaseModelNoti.noti_eva = 0; 
                         }
                       
-                      final _evanoti = await DatabaseManager.databaseManager.getNotification();
+                      final _evanoti = await DatabaseManager.databaseManager.getDailyNotification();
                       if(_evanoti == databaseModelNoti.noti_eva){
                         await DatabaseManager.databaseManager.insertDailyNotification(databaseModelNoti);
                         debugPrint('data is sucessfully inserted');
@@ -245,7 +250,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                           databaseModelNoti.noti_ondemand = 0; 
                         }
                       
-                       final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                       final ondemandnoti = await DatabaseManager.databaseManager.getOnDemandNotification();
                       if(ondemandnoti == databaseModelNoti.noti_ondemand){
                         await DatabaseManager.databaseManager.insertDemandNotification(databaseModelNoti);
                         debugPrint('data is sucessfully inserted');
@@ -333,4 +338,16 @@ class _NotificationsSettings extends State<NotificationsSettings> {
       ),
     );
   }
+
+//  Future<bool> getOnDemandNotification() async {
+//      final ondemandnoti = await DatabaseManager.databaseManager.getOnDemandNotification();
+//      if(ondemandnoti == 1){
+//       _ondemand = true;
+//      }else{
+//       _ondemand = false;
+//      }
+//     return(_ondemand);
+//   }
+  
+
 }

@@ -148,8 +148,18 @@ Future <void> insertDemandNotification(DatabaseModel data) async {
   Database db = await databaseManager.databaseDB;
   await db.insert('Notification', data.toMapNoti(),conflictAlgorithm: ConflictAlgorithm.replace);
 }
-//RETRIEVE
-  Future<List<Map<String, dynamic>>> getNotification() async {
+//RETRIEVE aLL
+  Future<List<Map<String, dynamic>>> getAllNotification() async {
+    Database db = await databaseDB;
+    return await db.query(NotificationTable);
+  }
+  //RETRIEVE Daily
+  Future<List<Map<String, dynamic>>> getDailyNotification() async {
+    Database db = await databaseDB;
+    return await db.query(NotificationTable);
+  }
+  //RETRIEVE ON DEMAND
+  Future<List<Map<String, dynamic>>> getOnDemandNotification() async {
     Database db = await databaseDB;
     return await db.query(NotificationTable);
   }
