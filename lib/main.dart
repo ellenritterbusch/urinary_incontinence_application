@@ -5,7 +5,9 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:provider/provider.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
 void main() async {
@@ -17,15 +19,15 @@ void main() async {
   var initialNotification =
       await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (initialNotification?.didNotificationLaunchApp == true) {
-   
     Future.delayed(Duration(seconds: 1), () {
       navigatorKey.currentState!.pushNamed('/CalendarPage',
           arguments: initialNotification?.notificationResponse?.payload);
     });
   }
 
-  runApp(
- const MyApp());
+  runApp(ChangeNotifierProvider(
+      create: (context) => SwitchStateNotifier(),
+      child: const MyApp()));
 }
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -103,35 +105,5 @@ class _RootPageState extends State<RootPage> {
   }
 }
 
-class SnackBar extends StatefulWidget {
-  const SnackBar({super.key, required Text content});
 
-  @override
-  State<SnackBar> createState() => _SnackBar();
-}
-
-class _SnackBar extends State<SnackBar> {
-
-
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Flutter ShowDialog"),
-        ), // AppBar
-        body: Center(
-          child: Builder(builder: (context){
-            return ElevatedButton(
-              onPressed: () {
-                const snackBar = SnackBar(content: Text("Yay a snackbar"));
-              },
-              child: const Text('Show SnackBar'),
-            ); 
-          }), 
-        ), 
-        ), 
-      );
-  }
-}
 

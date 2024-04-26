@@ -52,22 +52,22 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
    openDialog() => showDialog(//method for creating the daily evaluation note. Called when Memo button is pressed
             context: context,
             builder:(context) => AlertDialog(
-              title: Text ('Daily Evaluation Note'), 
+              title: const Text('Daily Evaluation Note'), 
               
               content: TextField(
                 maxLines: null, //set to null so that note doesn't appear as one long line. 
                 autofocus: true, //Makes keyboard pop up automatically when textfield is opened
-                decoration: InputDecoration(hintText: 'Enter additional context for daily evaluation'),
+                decoration: const InputDecoration(hintText: 'Enter additional context for daily evaluation'),
                 controller: controller,
                 onSubmitted: (_) => submit(), //if user presses submit on keyboard, submit. 
                 ),
                 actions: [
                   TextButton(
                     onPressed: (close), 
-                    child: Text('Cancel')),
+                    child: const Text('Cancel')),
                     TextButton(
                     onPressed: (submit), 
-                    child: Text('Submit'))
+                    child: const Text('Submit'))
                 ],
             ),
           );
@@ -151,7 +151,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08), 
                        shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20))),  
-                    child: Text('Save', style: 
+                    child: const Text('Save', style: 
                     TextStyle(
                       color: Colors.black, fontSize: 28),),       
                         ),
@@ -172,7 +172,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15))
                     ),
 
-                    child: Icon(
+                    child: const Icon(
                         Icons.edit_note, size: 50.0, color: Colors.black,),
                     ),
                     ),

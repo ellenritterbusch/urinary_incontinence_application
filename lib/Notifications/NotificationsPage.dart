@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
+import 'package:provider/provider.dart';
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -28,17 +30,16 @@ class _NotificationPageState extends State<NotificationPage> {
 
 @override
 void initState(){
-  listenToNotifications();
+  listenToNotificationsAndNavigate();
   super.initState();
 }
 
-  listenToNotifications() {       //function for notification navigation
-    print("Listening to notification");
+  listenToNotificationsAndNavigate() {       //function for notification navigation
     SetNotifications.onClickNotification.stream.listen((event) {
-      print(event);
-      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
+      Navigator.pushNamed(context,'/CalendarPage', arguments: event);
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -60,27 +61,26 @@ class NotificationsSettings extends StatefulWidget {
   const NotificationsSettings({super.key});
 
   @override
-  State<NotificationsSettings> createState() => _NotificationsSettings();
-  
+  State<NotificationsSettings> createState() => _NotificationsSettingsState();
 }
 
-class _NotificationsSettings extends State<NotificationsSettings> {
-
+class _NotificationsSettingsState extends State<NotificationsSettings> {
 
   bool _allnotifications = false;     //Value for all notifications
-  bool _dailyreminder = false;        //Value for daily reminder switch
-  bool _ondemand = false;             //Value for on-demand
+  //bool dailyreminder = false;        //Value for daily reminder switch
+  bool _ondemand = false;            //Value for on-demand
   int _selectedOnDemandTime = 0;
   DateTime selectedDailyEvTime =  DateTime.now();
-
 
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-        const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
+      body: Consumer<SwitchStateNotifier>(        //Den holder øje med om notification er on eller ej
+        builder: (context, state, child){
+          return Column(
+          children: [
+          const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
                                                   //////////////////////////////// PROFILE TAB I TOPPEN ///////////////////////////////////////////7
         ListTile(
           tileColor: Colors.white,
@@ -112,7 +112,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 onChanged: (bool? value) {
                   setState(() {
                     _allnotifications = value!;           //Ved ændring skift alle switch værdier
-                    _dailyreminder = value;
+                   state.toggleDailySwitch(value);
                     _ondemand = value; 
                   });
                 },
@@ -124,7 +124,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
 
 
-                                                       ///////////////////////7///// Daily evaluation reminder ////////////////////////
+                                          //////////////////////////// Daily evaluation reminder ////////////////////////
 
           SwitchListTile( 
             activeColor: Colors.white,                            //Gør switch hvid
@@ -132,14 +132,12 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             tileColor: Colors.white,                              //Gør tile hvid                    
             title: const Text('Daily evaluation reminder', style: TextStyle(fontWeight: FontWeight.bold)),                           //Titel
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
-            value: _dailyreminder,                                                 //Switch value
-            onChanged: (bool? value) {
-              dailyReminderHour = selectedDailyEvTime.hour;
-              dailyReminderMin = selectedDailyEvTime.minute;
-              SetNotifications().scheduleDailyNotification();
+            value: state.dailyreminderSwitch,                                                 //Switch value
+            onChanged: (newvalue) {
               setState(() {
-                _dailyreminder = value!;                                          //ON/OFF daily reminder
-                _allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
+                state.toggleDailySwitch(newvalue);                                   //ON/OFF daily reminder
+
+                 //_allnotifications = newvalue ? newvalue==true : newvalue==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
           ),
@@ -162,6 +160,9 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                         // This is called when the user changes the date:
                         onDateTimeChanged: (DateTime newTime) {
                           setState(() => selectedDailyEvTime = newTime);
+                          dailyReminderHour = selectedDailyEvTime.hour;
+                          dailyReminderMin = selectedDailyEvTime.minute;
+                          state.updateSelectedtime(newTime);
                         },
                       ),
                 ),
@@ -169,10 +170,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             ),
 
 
-
-
           const Divider(height: 10,),          //Tilføjer mellemrum mellem, således at der kommer en streg
-
 
 
                                                  //////////////////////////////// After ON-DEMAND stimuli ////////////////////////////////
@@ -187,7 +185,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             onChanged: (bool? value) {                                                                        //What happens when changed
               setState(() {
                 _ondemand = value!;                                                                           //Changes switch value
-                _allnotifications = value ? value==true : value==false;                                       //Turns on all notifications, if off
+               // _allnotifications = value ? value==false : value==true;                                       //Turns on all notifications, if off
               });
             },
           ),
@@ -234,6 +232,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             const Divider(height: 10,),
 
         ]
+      ); }
       )
     );
   }

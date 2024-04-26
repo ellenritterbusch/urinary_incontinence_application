@@ -39,9 +39,6 @@ class ReceivedNotification {
   final String? title;
   final String? body;
   final String? payload;
-
-
-
 }
 
 String? selectedNotificationPayload;
@@ -111,19 +108,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationTap,
-  //           (NotificationResponse notificationResponse) async {
-  //     switch (notificationResponse.notificationResponseType) {
-  //       case NotificationResponseType.selectedNotification:
-  //         selectNotificationStream.add(notificationResponse.payload);
-  //         break;
-  //       case NotificationResponseType.selectedNotificationAction:
-  //         if (notificationResponse.actionId == navigationActionId) {
-  //           selectNotificationStream.add(notificationResponse.payload);
-  //         }
-  //         break;
-  //     }
-  //  },
-    onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
+      onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
   
  }
 
