@@ -19,7 +19,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
   late bool accident;
   late String date;
   late String time;
-  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0);
+  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0,null, null);
 
   bool yespressed = false; //Used for bordercolor of accident buttons
   bool nopressed = false; //Used for bordercolor of accident buttons

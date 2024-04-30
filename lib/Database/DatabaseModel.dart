@@ -7,7 +7,7 @@ class DatabaseModel {
  late String? time;
  late int? stimType;
  late int? stimIntensity;
- late int? stimeTimeSetting;
+ late int? stimTimeSetting;
  late int? id;
  late int? PIN;
  late bool? noti_all;
@@ -15,7 +15,7 @@ class DatabaseModel {
  late bool? noti_ondemand;
 
 DatabaseModel.DE(this.dailyEvaluationScore, this.dailyEvaluationMemo, this.date);
-DatabaseModel.BD(this.date, this.time, this.accident);
+DatabaseModel.BD(this.date, this.time, this.accident, this.stimType, this.stimTimeSetting);
 DatabaseModel.User(this.PIN);
 DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
 
@@ -52,7 +52,7 @@ DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
     date = map['date'];
     stimType = map['stimtype'];
     stimIntensity = map ['stimintensity'];
-    stimeTimeSetting = map ['stimtimesetting'];
+    stimTimeSetting = map ['stimtimesetting'];
 
   }/// TO/FROM MAP FOR USER
   Map<String,dynamic> toMapUser(){
