@@ -93,6 +93,12 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
     Database db = await databaseDB;
     return await db.query(BladderDiaryTable);
   }
+   //retriving only the date of bladderDiray
+  Future getBladderDiarydate(String date) async {
+  final db = await databaseDB;
+  var res = await db.rawQuery('SELECT * FROM $BladderDiaryTable WHERE $colDate =?', [date]);
+  return res;
+  }  
 //UPDATE
 Future <int> updateBladderDiary (DatabaseModel bladderDiary) async {
   Database db = await databaseManager.databaseDB;
