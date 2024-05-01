@@ -208,10 +208,9 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                                  content: Text('Daily evaluation is saved'),
                               );
                               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              //navigate to CalendarPage
+                              Navigator.pop(context);
                             }
-                          
-                            //navigate to CalendarPage
-                           Navigator.pop(context);
                           }, 
                           style: OutlinedButton.styleFrom(
                             fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 

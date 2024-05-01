@@ -81,6 +81,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
           padding: EdgeInsets.all(20.0),
           child: Time_picker(),
         ),
+
         ///// save button ////
         if (sliderChanged)
         Padding(
@@ -100,6 +101,18 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               debugPrint('data is sucessfully inserted');
               final diary = await DatabaseManager.databaseManager.getBladderDiary();
               debugPrint('$diary');
+              final diaryEntry = await DatabaseManager.databaseManager.getBladderDiarydate(date);
+
+               //snack bar//
+               if (diaryEntry != null){            //hvis der ligger en værdi for datoen har vi gemt evalueringen
+              const snackBar = SnackBar(
+                content: Text('Accident is saved'),
+              );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                 //navigate to CalendarPage
+                Navigator.pop(context);
+             }
+                          
           }),
         ),
       ]),
