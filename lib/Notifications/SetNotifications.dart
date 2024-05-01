@@ -109,18 +109,6 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationTap,
-  //           (NotificationResponse notificationResponse) async {
-  //     switch (notificationResponse.notificationResponseType) {
-  //       case NotificationResponseType.selectedNotification:
-  //         selectNotificationStream.add(notificationResponse.payload);
-  //         break;
-  //       case NotificationResponseType.selectedNotificationAction:
-  //         if (notificationResponse.actionId == navigationActionId) {
-  //           selectNotificationStream.add(notificationResponse.payload);
-  //         }
-  //         break;
-  //     }
-  //  },
     onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
   
  }

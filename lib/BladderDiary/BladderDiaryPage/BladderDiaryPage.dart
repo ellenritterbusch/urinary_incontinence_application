@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Accident_button.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Calendar_bar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Time_picker.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Save_button.dart';
+import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Slider.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
@@ -21,8 +21,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
   late String time;
   DatabaseModel databaseModelBD = DatabaseModel.BD('','',0,null, null);
 
-  bool yespressed = false; //Used for bordercolor of accident buttons
-  bool nopressed = false; //Used for bordercolor of accident buttons
+  bool sliderChanged = false; //Used for saving
 
   @override
   Widget build(BuildContext context) {
@@ -41,51 +40,52 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
     // Track Button navigates to Bladder Diary //
       Column(
       children: [
-        Calender_Bar(), 
-        Padding(
+        const Calender_Bar(), 
+        const Padding(
         padding: EdgeInsets.all(20.0)), 
-        Row(mainAxisAlignment: MainAxisAlignment.center,
-          children:[ 
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              ///////   accidentButton /////
-              child: Accident_Button(                      
-                accidentText: 'Accident',
-                icon: const Icon(Icons.water_drop, size: 90, color:  Colors.yellow),
-                bordercolor: yespressed? kDefaultIconDarkColor : Colors.yellow,
-              onPressed: () {setState(() {
-                yespressed = true;
-                nopressed = false;
-                databaseModelBD.accident = 1;
-              });}
-              ),
-            ),
-            /////// NO  accidentButton /////
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: No_Accident_Button(                           
-                accidentText: 'No accident',
-                icon: Icon(Icons.water_drop, size: 70, color:  Colors.yellow.withOpacity(0.6),),
-                stackIcon: Icon(Icons.dnd_forwardslash_outlined, size: 100,color: Colors.yellow,),
-                bordercolor: nopressed? kDefaultIconDarkColor : Colors.yellow,
-              onPressed: () {setState(() {
-                yespressed = false;
-                nopressed = true;
-                databaseModelBD.accident  = 2;
-              });}
-              ),
-            ),
-          ]
-        ),
+        Column(mainAxisAlignment: MainAxisAlignment.center,
+          children:[
+          //overskrift//
+          const Text('Severity of accident', style: 
+          TextStyle(fontSize: 25, fontWeight:FontWeight.bold),),
+
+          const SizedBox(height: 80,),
+
+          //slider//
+          SeveritySlider(
+            sliderChanged: (double value) {
+             setState(() {
+               currentSliderValue = value;
+             });
+             setSliderValue();
+            }
+          ),
+
+          //explaining text//
+          const Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text('Nothing'),
+              SizedBox(width: 70,),
+              Text('Some'),
+              SizedBox(width: 65,),
+              Text('Moderate'),
+              SizedBox(width: 60,),
+              Text('Much'),
+            ],
+          )   
+         ]),
         ////// time picker /////
+        const SizedBox(height: 60,),
         const Padding(
           padding: EdgeInsets.all(20.0),
           child: Time_picker(),
         ),
+
         ///// save button ////
-        if (yespressed | nopressed)
+        if (sliderChanged)
         Padding(
-          padding: EdgeInsets.all(25.0),
+          padding: const EdgeInsets.all(25.0),
           child: Save_Button(
             onpressed:() async {
               //set date//
@@ -101,9 +101,39 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               debugPrint('data is sucessfully inserted');
               final diary = await DatabaseManager.databaseManager.getBladderDiary();
               debugPrint('$diary');
+              final diaryEntry = await DatabaseManager.databaseManager.getBladderDiarydate(date);
+
+               //snack bar//
+               if (diaryEntry != null){            //hvis der ligger en værdi for datoen har vi gemt evalueringen
+              const snackBar = SnackBar(
+                content: Text('Accident is saved'),
+              );
+                ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                 //navigate to CalendarPage
+                Navigator.pop(context);
+             }
+                          
           }),
         ),
       ]),
     );
+  }
+
+
+  setSliderValue(){
+  sliderChanged = true;
+      if (currentSliderValue == 0){
+        databaseModelBD.accident = 0;
+      }
+      if (currentSliderValue == 1){
+        databaseModelBD.accident = 1;
+      }
+      if (currentSliderValue == 2){
+        databaseModelBD.accident = 2;
+      }
+      if (currentSliderValue == 3){
+        databaseModelBD.accident = 3;
+      }
+    
   }
 }
