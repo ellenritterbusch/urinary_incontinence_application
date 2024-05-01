@@ -6,6 +6,7 @@ import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/notificationsPage.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:urinary_incontinence_application/Visualization/HomePage/History_Box.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
 void main() async {
@@ -134,4 +135,12 @@ class _SnackBar extends State<SnackBar> {
       );
   }
 }
+
+//class History_Box extends State<History_Box> {
+ // return MaterialApp (
+
+ // )
+//}
+
+
 

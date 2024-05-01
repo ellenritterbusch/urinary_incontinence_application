@@ -154,4 +154,14 @@ Future <int> deleteNotification (int notifi) async {
   return res;
 }
 
+
+/////// CRUD Visualization ///////
+
+// RETRIEVE
+
+// SELECT?
+
+// UPDATE
+
+
 }
