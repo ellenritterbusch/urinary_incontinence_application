@@ -4,11 +4,10 @@ import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
-
-DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
 import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
 import 'package:provider/provider.dart';
 
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
   0, //Instant
