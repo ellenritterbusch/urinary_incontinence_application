@@ -14,7 +14,7 @@ class _Track_buttonState extends State<Track_button>{
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08)
+              fixedSize: Size(MediaQuery.of(context).size.width * 0.65, MediaQuery.of(context).size.height * 0.08)
             ),
             onPressed:() {
             debugPrint(today.toString());
@@ -25,9 +25,9 @@ class _Track_buttonState extends State<Track_button>{
             },
             icon: const Icon(Icons.add,
             size: 30,),
-            label: const Text("Track",
+            label: const Text("Track Accident",
             style: TextStyle(
-              fontSize: 24
+              fontSize: 22
             ),
             ),
           );

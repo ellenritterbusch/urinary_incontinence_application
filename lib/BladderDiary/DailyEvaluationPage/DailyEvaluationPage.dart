@@ -217,7 +217,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                             fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
                              shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),  
-                          child: Text('save', style: 
+                          child: Text('Save', style: 
                           TextStyle(
                             color: Colors.black, fontSize: 25),),       
                               ),
