@@ -113,14 +113,11 @@ Future insertNotifications(DatabaseModel data) async {
   await db.insert('Notification', data.toMapNoti(),conflictAlgorithm: ConflictAlgorithm.replace);
 }
 //RETRIEVE aLL
-  Future<bool> getAllNotification(int id) async {
+  Future<List<Map<String, dynamic>>> getAllNotification() async {
     Database db = await databaseDB;
-    var res = await db.query('Notification', where: "$colNotiID=?", whereArgs: [id]);
-    if (res.isNotEmpty) {
-    return res.first['allnotification'] == 1;
-    }
-    return false; 
+    return await db.rawQuery('SELECT $colNotiAll FROM $NotificationTable');
   }
+
   //RETRIEVE Daily
   Future<List<Map<String, dynamic>>> getDailyNotification() async {
     Database db = await databaseDB;

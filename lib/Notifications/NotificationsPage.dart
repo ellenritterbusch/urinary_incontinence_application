@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'dart:convert';
 
-DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,false,2,2);
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,2,2,2);
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -63,7 +64,6 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   bool _ondemand = false;             //Value for on-demand
   int _selectedOnDemandTime = 0;
   DateTime _selectedDailyEvTime =  DateTime.now();
-  late int results2;
 
   
   DatabaseModel? get noti_ondemand => null;
@@ -73,28 +73,28 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   super.initState();
   fetchSavedNotificationSettings(); 
   }
-   fetchSavedNotificationSettings() async {
-    bool state = await await DatabaseManager.databaseManager.getAllNotification(1); // Assuming 1 as your ID for this example
-    debugPrint('$state');
-    setState(() {
-      allnotifications = state;
-    });
-   }
 
-    //  final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
-    //  final results = changedAllNoti[0];
-    //  final results2 = results['allnotification'];
-    //  debugPrint('$results2');
-    // if (results2 == 1){
-    //     allnotifications = true;
-    //     debugPrint('results er $allnotifications');
-    // } else {
-    //     allnotifications = false;
-    //     debugPrint('results er $allnotifications');
-     
-  //}
-  //}
-
+   Future<void> fetchSavedNotificationSettings() async {
+    final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
+    final allNotiList = changedAllNoti[0];
+    final allNotiValue = allNotiList['allnotification'];
+    debugPrint('$allNotiValue');
+    if (allNotiValue == 1){
+      setState(() {
+        allnotifications = true;
+        _dailyreminder = true;
+        _ondemand = true;
+      });  
+        debugPrint('results er $allnotifications');
+    } else {
+        setState(() {
+        allnotifications = false;
+        _dailyreminder = false;
+        _ondemand = false;
+      });
+        debugPrint('results er $allnotifications');
+        }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -134,20 +134,22 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 value: allnotifications,                                                                    //Switch value
                 onChanged: (bool? value) async {
 
+                      if (allnotifications == true) {
+                        databaseModelNoti.noti_all = 2;
+                        } 
                       if (allnotifications == false) {
-                        databaseModelNoti.noti_all = false;
-                        } else {
-                          databaseModelNoti.noti_all = true; 
+                          databaseModelNoti.noti_all = 1; 
                         }
-                    
-                      final allnoti = await DatabaseManager.databaseManager.getAllNotification(1);
+                      
+                      final allnoti = await DatabaseManager.databaseManager.getAllNotification();
+                      if (allnoti.isEmpty){
+                        await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
+                      } else  {
                       await DatabaseManager.databaseManager.updateAllNotification(databaseModelNoti);
                       debugPrint('data is first $allnoti');
-                      final allnoti2 = await DatabaseManager.databaseManager.getAllNotification(2);
+                      final allnoti2 = await DatabaseManager.databaseManager.getAllNotification();
                       debugPrint('data is now $allnoti2');
-              
-                      //final number = allnoti2.toString.substring(0,5);
-                      //debugPrint('The number is $number');
+                      }
                     
                   setState(()  {
                     allnotifications = value!;           //Ved ændring skift alle switch værdier
@@ -160,9 +162,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
               ),
 
 
-
           const Divider(height: 10),              //Tilføjer mellemrum mellem, således at der kommer en streg
-
 
 
                                                        ///////////////////////7///// Daily evaluation reminder ////////////////////////

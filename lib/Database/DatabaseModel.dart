@@ -13,7 +13,7 @@ class DatabaseModel {
  late int? id;
  late int? PIN;
  late int? noti_id;
- late bool noti_all;
+ late int? noti_all;
  late int? noti_eva;
  late int? noti_ondemand;
 
@@ -71,7 +71,7 @@ DatabaseModel.Noti(this.noti_id, this.noti_all, this.noti_eva, this.noti_ondeman
     Map<String,dynamic> toMapNoti(){
     var map = Map<String, dynamic>();
     map['notificationID'] = noti_id;
-    map['allnotification'] = noti_all ? 1 : 0;
+    map['allnotification'] = noti_all;
     map['dailynotification'] = noti_eva;
     map['ondemandnotification'] = noti_ondemand;
     return map;
