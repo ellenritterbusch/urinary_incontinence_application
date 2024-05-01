@@ -61,22 +61,22 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
    openDialog() => showDialog(//method for creating the daily evaluation note. Called when Memo button is pressed
             context: context,
             builder:(context) => AlertDialog(
-              title: Text ('Daily Evaluation Note'), 
+              title: const Text('Daily Evaluation Note'), 
               
               content: TextField(
                 maxLines: null, //set to null so that note doesn't appear as one long line. 
                 autofocus: true, //Makes keyboard pop up automatically when textfield is opened
-                decoration: InputDecoration(hintText: 'Enter additional context for daily evaluation'),
+                decoration: const InputDecoration(hintText: 'Enter additional context for daily evaluation'),
                 controller: controller,
                 onSubmitted: (_) => submit(), //if user presses submit on keyboard, submit. 
                 ),
                 actions: [
                   TextButton(
                     onPressed: (close), 
-                    child: Text('Cancel')),
+                    child: const Text('Cancel')),
                     TextButton(
                     onPressed: (submit), 
-                    child: Text('Submit'))
+                    child: const Text('Submit'))
                 ],
             ),
           );

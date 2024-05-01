@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 
 DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
+import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
+import 'package:provider/provider.dart';
 
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
@@ -29,19 +31,19 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
+
 @override
 void initState(){
-  listenToNotifications();
+  listenToNotificationsAndNavigate();
   super.initState();
 }
 
-  listenToNotifications() {
-    print("Listening to notification");
+  listenToNotificationsAndNavigate() {       //function for notification navigation
     SetNotifications.onClickNotification.stream.listen((event) {
-      print(event);
-      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
+      Navigator.pushNamed(context,'/CalendarPage', arguments: event);
     });
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -49,8 +51,8 @@ void initState(){
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body:  const Center(
-        child: NotificationsSettings(),
+      body: const Center(
+        child:NotificationsSettings(),
         
       ),
 
@@ -63,24 +65,26 @@ class NotificationsSettings extends StatefulWidget {
   const NotificationsSettings({super.key});
 
   @override
-  State<NotificationsSettings> createState() => _NotificationsSettings();
+  State<NotificationsSettings> createState() => _NotificationsSettingsState();
 }
 
-class _NotificationsSettings extends State<NotificationsSettings> {
-  bool _allnotifications = false;     //Value for 
-  bool _dailyreminder = false;        //Value for daily reminder switch
-  bool _ondemand = false;             //Value for on-demand
+class _NotificationsSettingsState extends State<NotificationsSettings> {
+
+  bool _allnotifications = false;     //Value for all notifications
+  //bool dailyreminder = false;        //Value for daily reminder switch
+  bool _ondemand = false;            //Value for on-demand
   int _selectedOnDemandTime = 0;
-  DateTime _selectedDailyEvTime =  DateTime.now();
+  DateTime selectedDailyEvTime =  DateTime.now();
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-        const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
-
-
+      body: Consumer<SwitchStateNotifier>(        //Den holder øje med om notification er on eller ej
+        builder: (context, state, child){
+          return Column(
+          children: [
+          const Divider(height: 20),              //Tilføjer mellemrum mellem, således at der kommer en streg
                                                   //////////////////////////////// PROFILE TAB I TOPPEN ///////////////////////////////////////////7
         ListTile(
           tileColor: Colors.white,
@@ -108,7 +112,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                 tileColor: Colors.white,                        //Gør tile hvid    
                 title: const Text('Notifications', style: TextStyle(fontWeight: FontWeight.bold)),           //Titel
                 subtitle: const Text('Receive all notifications'),                                            //Subtitel
-                value: _allnotifications,                                                                    //Switch value
+                value: _allnotifications,                                                                   //Switch value
                 onChanged: (bool? value) {
                   setState(() async {
                     //databaseModelNoti.noti_all = true; 
@@ -120,9 +124,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                       debugPrint('$_allnoti');
 
                     _allnotifications = value!;           //Ved ændring skift alle switch værdier
-                    _dailyreminder = value;
+                   state.toggleDailySwitch(value);
                     _ondemand = value; 
-
                   });
                 },
               ),
@@ -133,7 +136,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
 
 
-                                                       ///////////////////////7///// Daily evaluation reminder ////////////////////////
+                                          //////////////////////////// Daily evaluation reminder ////////////////////////
 
           SwitchListTile( 
             activeColor: Colors.white,                            //Gør switch hvid
@@ -141,17 +144,12 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             tileColor: Colors.white,                              //Gør tile hvid                    
             title: const Text('Daily evaluation reminder', style: TextStyle(fontWeight: FontWeight.bold)),                           //Titel
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
-            value: _dailyreminder,                                                 //Switch value
-            onChanged: (bool? value) {
-              setState(() async {
-                //insert to database
-                await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                debugPrint('data is sucessfully inserted');
-                final _dailyremind = await DatabaseManager.databaseManager.getNotification();
-                debugPrint('$_dailyremind');
+            value: state.dailyreminderSwitch,                                                 //Switch value
+            onChanged: (newvalue) {
+              setState(() {
+                state.toggleDailySwitch(newvalue);                                   //ON/OFF daily reminder
 
-                _dailyreminder = value!;                                          //ON/OFF daily reminder
-                _allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
+                 //_allnotifications = newvalue ? newvalue==true : newvalue==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
           ),
@@ -161,10 +159,11 @@ class _NotificationsSettings extends State<NotificationsSettings> {
               subtitle:
                   const Text('Enter desired time of the day to receive the daily evaluation reminder'),               //Subtitle
               trailing: CupertinoButton(                                                                              //Textbutton in cupertinostyle like iphone
-                child: Text('${(_selectedDailyEvTime.hour < 10) ? ('0${_selectedDailyEvTime.hour}') : ('${_selectedDailyEvTime.hour}')}:${(_selectedDailyEvTime.minute < 10) ? ('0${_selectedDailyEvTime.minute}') : '${_selectedDailyEvTime.minute}'} ${(_selectedDailyEvTime.hour > 12) ? 'PM' : 'AM'}', style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
+                child: Text('${(selectedDailyEvTime.hour < 10) ? ('0${selectedDailyEvTime.hour}') : ('${selectedDailyEvTime.hour}')}:${(selectedDailyEvTime.minute < 10) ? ('0${selectedDailyEvTime.minute}') : '${selectedDailyEvTime.minute}'} ${(selectedDailyEvTime.hour > 12) ? 'PM' : 'AM'}',
+                style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
                 onPressed: () => _showDialog(
                       CupertinoDatePicker(        //Opens white box in bottom of page
-                        initialDateTime: _selectedDailyEvTime,        //Starts on selected time 
+                        initialDateTime: selectedDailyEvTime,        //Starts on selected time 
                         mode: CupertinoDatePickerMode.time,   //No date, only time
                         //minuteInterval: 10,
                         use24hFormat: true,                   //24h format
@@ -172,7 +171,10 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                         showDayOfWeek: false,
                         // This is called when the user changes the date:
                         onDateTimeChanged: (DateTime newTime) {
-                          setState(() => _selectedDailyEvTime = newTime);
+                          setState(() => selectedDailyEvTime = newTime);
+                          dailyReminderHour = selectedDailyEvTime.hour;
+                          dailyReminderMin = selectedDailyEvTime.minute;
+                          state.updateSelectedtime(newTime);
                         },
                       ),
                 ),
@@ -180,10 +182,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             ),
 
 
-
-
           const Divider(height: 10,),          //Tilføjer mellemrum mellem, således at der kommer en streg
-
 
 
                                                  //////////////////////////////// After ON-DEMAND stimuli ////////////////////////////////
@@ -204,7 +203,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                       debugPrint('$ondemandnoti');
 
                 _ondemand = value!;                                                                           //Changes switch value
-                _allnotifications = value ? value==true : value==false;                                       //Turns on all notifications, if off
+               // _allnotifications = value ? value==false : value==true;                                       //Turns on all notifications, if off
               });
             },
           ),
@@ -251,6 +250,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             const Divider(height: 10,),
 
         ]
+      ); }
       )
     );
   }
@@ -276,4 +276,5 @@ class _NotificationsSettings extends State<NotificationsSettings> {
       ),
     );
   }
+
 }
