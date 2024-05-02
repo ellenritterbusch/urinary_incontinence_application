@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
@@ -107,27 +108,27 @@ class _RootPageState extends State<RootPage> {
 
 
 
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Flutter ShowDialog"),
-        ), // AppBar
-        body: Center(
-          child: Builder(builder: (context){
-            return ElevatedButton(
-              onPressed: () {
-                const snackBar = SnackBar(content: Text("Yay a snackbar"));
-              },
-              child: const Text('Show SnackBar'),
-            ); 
-          }), 
-        ), 
-        ), 
-      );
-  }
-}
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       home: Scaffold(
+//         appBar: AppBar(
+//           title: Text("Flutter ShowDialog"),
+//         ), // AppBar
+//         body: Center(
+//           child: Builder(builder: (context){
+//             return ElevatedButton(
+//               onPressed: () {
+//                 const snackBar = SnackBar(content: Text("Yay a snackbar"));
+//               },
+//               child: const Text('Show SnackBar'),
+//             ); 
+//           }), 
+//         ), 
+//         ), 
+//       );
+//   }
+// }
 
 //class History_Box extends State<History_Box> {
  // return MaterialApp (
