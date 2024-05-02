@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:path/path.dart'; // Import for joining paths
-import 'package:urinary_incontinence_application/CreateFakeData.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 class DatabaseManager{
   DatabaseManager.privatecontructor();
   static final DatabaseManager databaseManager = DatabaseManager.privatecontructor();

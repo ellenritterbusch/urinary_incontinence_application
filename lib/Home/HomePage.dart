@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/bluetooth/find_devices.dart';
-import 'package:urinary_incontinence_application/CreateFakeData.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
