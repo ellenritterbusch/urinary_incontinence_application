@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:path/path.dart'; // Import for joining paths
+import 'package:urinary_incontinence_application/CreateFakeData.dart';
 class DatabaseManager{
   DatabaseManager.privatecontructor();
   static final DatabaseManager databaseManager = DatabaseManager.privatecontructor();
@@ -46,7 +47,7 @@ class DatabaseManager{
   void _createUDb(Database db, int newVersion) async { //Constructor for creating tables in database. 
     await db.execute('CREATE TABLE $UserTable($colPIN INTEGER PRIMARY KEY)');
     await db.execute('CREATE TABLE $DailyEvaluationTable($colDate STRING PRIMARY KEY, $colEvaluation INTEGER, $colMemo TEXT)');
-    await db.execute('CREATE TABLE $BladderDiaryTable($colID INTEGER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER)');
+    await db.execute('CREATE TABLE $BladderDiaryTable($colID INTEGER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER, $colStimType INTEGER, $colStimTimeSetting INTEGER)');
     await db.execute('CREATE TABLE $NotificationTable($colNoti INTEGER PRIMARY KEY)');
   }
 
@@ -88,6 +89,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
   Database db = await databaseManager.databaseDB;
   await db.insert('BladderDiary', data.toMapBD(),conflictAlgorithm: ConflictAlgorithm.replace);
 }
+
 //RETRIEVE
   Future<List<Map<String, dynamic>>> getBladderDiary() async {
     Database db = await databaseDB;

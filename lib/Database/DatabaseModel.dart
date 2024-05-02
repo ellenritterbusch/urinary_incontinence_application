@@ -41,9 +41,9 @@ DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
     map['accident'] = accident;
     map['time'] = time;
     map['date'] = date;
-   // map['stimtype']= stimType;
+   map['stimtype']= stimType;
     //map ['stimintensity']= stimIntensity;
-   // map ['stimtimesetting'] = stimeTimeSetting;
+   map ['stimtimesetting'] = stimTimeSetting;
     return map;
   }
   DatabaseModel.fromMapObjectBD(Map<String,dynamic> map){
@@ -54,7 +54,18 @@ DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
     stimIntensity = map ['stimintensity'];
     stimTimeSetting = map ['stimtimesetting'];
 
-  }/// TO/FROM MAP FOR USER
+  }
+   Map<String,dynamic> toMapFakeData(){
+    var map = Map<String, dynamic>();
+    map['accident'] = accident;
+    map['time'] = time;
+    map['date'] = date;
+    map['stimtype']= stimType;
+    map ['stimtimesetting'] = stimTimeSetting;
+    return map;
+  }
+  
+  /// TO/FROM MAP FOR USER
   Map<String,dynamic> toMapUser(){
     var map = Map<String, dynamic>();
     map['pin'] = PIN;
@@ -78,3 +89,5 @@ DatabaseModel.Noti(this.noti_all, this.noti_eva, this.noti_ondemand);
     this.noti_ondemand = map['notification'];
   }
 }
+
+
