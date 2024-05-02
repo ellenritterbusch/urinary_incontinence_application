@@ -19,6 +19,7 @@ int dailyReminderMin = 00;
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
+
 //for initialization
 final StreamController<ReceivedNotification> didReceiveLocalNotificationStream =
     StreamController<ReceivedNotification>.broadcast();
@@ -81,14 +82,17 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 
  static Future initializeNotification() async{
 
+  flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
+    AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
+
   const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
 
   final DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
         onDidReceiveLocalNotification: 
         (int id, String? title, String? body, String? payload) async{
           didReceiveLocalNotificationStream.add(
