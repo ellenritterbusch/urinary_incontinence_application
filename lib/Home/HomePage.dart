@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
+import 'package:urinary_incontinence_application/Visualization/bar_chart.dart';
 import 'package:urinary_incontinence_application/bluetooth/find_devices.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-      body: const FindDevice()
+      body: BarChart(),
     );
   }
 }
