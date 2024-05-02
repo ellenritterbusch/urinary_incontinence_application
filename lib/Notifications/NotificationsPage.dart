@@ -76,24 +76,33 @@ class _NotificationsSettings extends State<NotificationsSettings> {
 
    Future<void> fetchSavedNotificationSettings() async {
     final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
+    final changedDailyNoti = await DatabaseManager.databaseManager.getDailyNotification();
     final allNotiList = changedAllNoti[0];
+    final dailyNotiList = changedDailyNoti[0];
     final allNotiValue = allNotiList['allnotification'];
+    final dailyNotiValue = dailyNotiList['dailynotification'];
     debugPrint('$allNotiValue');
     if (allNotiValue == 1){
       setState(() {
         allnotifications = true;
         _dailyreminder = true;
         _ondemand = true;
-      });  
-        debugPrint('results er $allnotifications');
-    } else {
+      });
+      } else {
         setState(() {
-        allnotifications = false;
+          allnotifications = false;
         _dailyreminder = false;
         _ondemand = false;
-      });
-        debugPrint('results er $allnotifications');
-        }
+        }); }
+    if (dailyNotiValue == 1){
+      setState(() {
+        _dailyreminder = true;
+      }); 
+      } else{
+        setState(() {
+          _dailyreminder = false;
+        });
+      }
     }
 
   @override
@@ -191,7 +200,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                       }
               setState(()  {
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
-                allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
+              //  allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
           ),
