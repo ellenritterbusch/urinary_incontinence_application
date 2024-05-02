@@ -154,18 +154,15 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                   setState(()  {
                     allnotifications = value!;           //Ved ændring skift alle switch værdier
                     _dailyreminder = value;
-                    _ondemand = value; 
-
-                  }
+                    _ondemand = value; }
                   );
-                },
-              ),
+                }),
 
 
           const Divider(height: 10),              //Tilføjer mellemrum mellem, således at der kommer en streg
 
 
-                                                       ///////////////////////7///// Daily evaluation reminder ////////////////////////
+                                              //////////////////////////// Daily evaluation reminder ////////////////////////
 
           SwitchListTile( 
             activeColor: Colors.white,                            //Gør switch hvid
@@ -175,40 +172,24 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
             value: _dailyreminder,                                                 //Switch value
             onChanged: (bool? value) async {
-
-              
-
-              databaseModelNoti.noti_eva = 0; 
-                              //insert to database
-                // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                // debugPrint('data is sucessfully inserted');
-                // final _dailyremind = await DatabaseManager.databaseManager.getNotification();
-                // debugPrint('$_dailyremind');
-                         //insert to database
-                      // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      // debugPrint('data is sucessfully inserted');
-                      // final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
-                      // debugPrint('$ondemandnoti');
-                     //databaseModelNoti.noti_all = true; 
+                            
                       if (_dailyreminder == true) {
-                        databaseModelNoti.noti_eva = 1;
+                        databaseModelNoti.noti_eva = 2;
                         } else {
-                          databaseModelNoti.noti_eva = 0; 
+                          databaseModelNoti.noti_eva = 1; 
                         }
+                     
                       
-                      final _evanoti = await DatabaseManager.databaseManager.getDailyNotification();
-                      if(_evanoti == databaseModelNoti.noti_eva){
+                      final evanoti = await DatabaseManager.databaseManager.getDailyNotification();
+                      if(evanoti.isEmpty){
                         await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
                         debugPrint('data is sucessfully inserted');
                       } else {
-                        await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
-                        debugPrint('data is sucessfully updated');
-                        debugPrint('$_evanoti');
+                        final evanoti2 = await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
+                        debugPrint('daily reminder is now $evanoti2');
+                       
                       }
-                      // debugPrint('data is sucessfully updated');
-                      debugPrint('$_evanoti');
               setState(()  {
-
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
                 allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });

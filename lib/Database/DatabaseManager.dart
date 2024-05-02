@@ -121,7 +121,7 @@ Future insertNotifications(DatabaseModel data) async {
   //RETRIEVE Daily
   Future<List<Map<String, dynamic>>> getDailyNotification() async {
     Database db = await databaseDB;
-    return await db.rawQuery('SELECT * FROM $NotificationTable WHERE $colNotiDaily = ?');
+    return await db.rawQuery('SELECT $colNotiDaily FROM $NotificationTable');
   }
   //RETRIEVE ON DEMAND
   Future<List<Map<String, dynamic>>> getOnDemandNotification() async {
@@ -135,9 +135,9 @@ Future <int> updateAllNotification (DatabaseModel notificationID) async {
   return res;
 }
 //UPDATE Daily
-Future <int> updateDailyNotification (DatabaseModel dailynotification) async {
+Future <int> updateDailyNotification (DatabaseModel notificationID) async {
   Database db = await databaseManager.databaseDB;
-  var res = await db.update(NotificationTable, dailynotification.toMapNoti(), where :'$colNotiDaily= ?', whereArgs: [dailynotification.noti_eva]);
+  var res = await db.update(NotificationTable, notificationID.toMapNoti(), where :'$colNotiDaily= ?', whereArgs: [notificationID.noti_id]);
   return res;
 }
 //UPDATE ON DEMAND
