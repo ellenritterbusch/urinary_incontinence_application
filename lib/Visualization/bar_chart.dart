@@ -19,18 +19,19 @@ class BarChartState extends State<BarChart> {
     Widget build(BuildContext context) {
       
         final List<ChartData> chartData = [                         //We create our chartData here
-            ChartData(DateTime(2024, 5, 1, 12, 23), 35, 23),
-            ChartData(DateTime(2024, 5, 1, 13, 56), 38, 49),
-            ChartData(DateTime(2024, 5, 1, 15, 21), 34, 12),
-            ChartData(DateTime(2024, 5, 1, 17, 13), 52, 33),
-            ChartData(DateTime(2024, 5, 1, 20, 15), 40, 30),
-            ChartData(DateTime(2024, 5, 1, 21, 45), 16, 15),
-            ChartData(DateTime(2024, 5, 1, 22, 23), 23, 30),
-            ChartData(DateTime(2024, 5, 1, 23, 10), 40, 25),
-            ChartData(DateTime(2024, 5, 2, 02, 40), 20, 10),
-            ChartData(DateTime(2024, 5, 2, 05, 54), 23, 25),
-            ChartData(DateTime(2024, 5, 2, 07, 10), 5, 13),
-            ChartData(DateTime(2024, 5, 2, 10, 42), 2, 3),
+            ChartData(DateTime.now().subtract(const Duration(hours: 1, minutes: 43)), 35, 23),
+            ChartData(DateTime.now().subtract(const Duration(hours: 2, minutes: 24)), 38, 49),
+            ChartData(DateTime.now().subtract(const Duration(hours: 3)), 34, 12),
+            ChartData(DateTime.now().subtract(const Duration(hours: 4)), 52, 33),
+            ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
+            ChartData(DateTime.now().subtract(const Duration(hours: 9)), 16, 15),
+            ChartData(DateTime.now().subtract(const Duration(hours: 13)), 23, 30),
+            ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
+            ChartData(DateTime.now().subtract(const Duration(hours: 19)), 20, 10),
+            ChartData(DateTime.now().subtract(const Duration(hours: 20)), 23, 25),
+            ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
+            ChartData(DateTime.now().subtract(const Duration(hours: 22)), 2, 3),
+            ChartData(DateTime.now().subtract(const Duration(hours: 23)), 2, 3),
         ];
 
         return  SizedBox(                                                     //We create a sizedbox to insert graph in
