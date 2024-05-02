@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 
@@ -36,6 +37,12 @@ class BarChartState extends State<BarChart> {
           height: 350,
           width: double.infinity,
           child: SfCartesianChart(
+            title: const ChartTitle(text: 'Use of On-Demand'),
+            legend:  const Legend(
+              alignment: ChartAlignment.center,
+              isVisible: true,
+              position: LegendPosition.bottom,
+              ),
             margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
             primaryXAxis: DateTimeAxis(
               minimum: DateTime.now().subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
