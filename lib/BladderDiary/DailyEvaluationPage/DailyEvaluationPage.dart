@@ -190,20 +190,17 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                             databaseModelDE.date = date;
 
                             //set memo
-                      
                             dailyEvaluationMemo = memoController.text;
                             databaseModelDE.dailyEvaluationMemo = dailyEvaluationMemo;
-                            debugPrint(dailyEvaluationMemo);
               
                             //insert to database
                             await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                             debugPrint('data is sucessfully inserted');
                             final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();
-                            debugPrint('$evaluation');
                             final evaluationEntry = await DatabaseManager.databaseManager.getDailyEvaluationsdate(date);  //for snackbar
               
                             //snack bar//
-                            if (evaluationEntry != null){            //hvis der ligger en værdi for datoen har vi gemt evalueringen
+                            if (evaluationEntry != null){            
                               const snackBar = SnackBar(
                                  content: Text('Daily evaluation is saved'),
                               );

@@ -183,23 +183,21 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
             value: state.dailyreminderSwitch,                                                 //Switch value
             onChanged: (value) async {
-                      state.toggleDailySwitch(value);
-                      if (_dailyreminder == true) {
-                        databaseModelNoti.noti_eva = 2;
-                        } else {
-                          databaseModelNoti.noti_eva = 1; 
-                        }
-                     
+              state.toggleDailySwitch(value);
+                if (_dailyreminder == true) {
+                  databaseModelNoti.noti_eva = 2;
+                } else {
+                  databaseModelNoti.noti_eva = 1; 
+                  } 
                       
-                      final evanoti = await DatabaseManager.databaseManager.getDailyNotification();
-                      if(evanoti.isEmpty){
-                        await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
-                        debugPrint('data is sucessfully inserted');
-                      } else {
-                        final evanoti2 = await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
-                        debugPrint('daily reminder is now $evanoti2');
-                       
-                      }
+                  final evaNoti = await DatabaseManager.databaseManager.getDailyNotification();
+                  if(evaNoti.isEmpty){
+                    await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
+                    debugPrint('data is sucessfully inserted');
+                  } else {
+                    final evaNotiNew = await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
+                    debugPrint('daily reminder is now $evaNotiNew'); 
+                    }
               setState(()  {
                 _dailyreminder = value!;                                          //ON/OFF daily reminder
               //  allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
@@ -249,11 +247,6 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             value: _ondemand,                                                                                 //Switch value
             onChanged: (bool? value) async {     
                       databaseModelNoti.noti_ondemand = 1; 
-                         //insert to database
-                      // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      // debugPrint('data is sucessfully inserted');
-                      // final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
-                      // debugPrint('$ondemandnoti');
 
                       if (_ondemand == true) {
                         databaseModelNoti.noti_ondemand = 1;

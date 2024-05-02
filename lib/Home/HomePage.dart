@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/bluetooth/find_devices.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 
 import '../Visualization/HomePage/History_Box.dart';
 
@@ -18,7 +19,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text("Home"),
       ),
-      body: const FindDevice()
+      body: const Data_Button()
     );
   }
 
