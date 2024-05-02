@@ -190,30 +190,6 @@ Future <int> deletePIN (int PIN) async {
   return res;
 }
 
-/////// CRUD Notifications ///////
-//CREATE
-Future <void> insertNotification(DatabaseModel data) async {
-  Database db = await databaseManager.databaseDB;
-  await db.insert('Notification', data.toMapBD(),conflictAlgorithm: ConflictAlgorithm.replace);
-}
-//RETRIEVE
-  Future<List<Map<String, dynamic>>> getNotification() async {
-    Database db = await databaseDB;
-    return await db.query(NotificationTable);
-  }
-//UPDATE
-Future <int> updateNotification (DatabaseModel notification) async {
-  Database db = await databaseManager.databaseDB;
-  var res = await db.update(NotificationTable, notification.toMapBD(), where :'$colNoti= ?');
-  return res;
-}
-//DELETE 
-Future <int> deleteNotification (int notifi) async {
-  var db = await databaseManager.databaseDB;
-  int res = await db.rawDelete("DELETE FROM $NotificationTable WHERE $colNoti =?", [notifi]);
-  return res;
-}
-
 
 /////// CRUD Visualization ///////
 

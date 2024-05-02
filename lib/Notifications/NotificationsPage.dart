@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
+import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 
 DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,2,2,2);
@@ -21,11 +24,11 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
 
-@override
-void initState(){
+  @override
+  void initState(){
   listenToNotifications();  
   super.initState();
-}
+  }
 
   listenToNotifications() {
     debugPrint("Listening to notification");
@@ -57,30 +60,21 @@ class NotificationsSettings extends StatefulWidget {
   @override
   State<NotificationsSettings> createState() => _NotificationsSettings();
   
-  State<NotificationsSettings> createState() => _NotificationsSettingsState();
 }
 
 class _NotificationsSettings extends State<NotificationsSettings> {
   bool allnotifications = false;     //Value for all notification switch
   bool _dailyreminder = false;        //Value for daily reminder switch
   bool _ondemand = false;             //Value for on-demand
-class _NotificationsSettingsState extends State<NotificationsSettings> {
-
-  bool _allnotifications = false;     //Value for all notifications
-  //bool dailyreminder = false;        //Value for daily reminder switch
-  bool _ondemand = false;            //Value for on-demand
-  int _selectedOnDemandTime = 0;
   DateTime selectedDailyEvTime =  DateTime.now();
-
-
-  
+  int _selectedOnDemandTime = 0;
   DatabaseModel? get noti_ondemand => null;
 
-  @override
-  void initState(){
-  super.initState();
-  fetchSavedNotificationSettings(); 
-  }
+    @override
+    void initState(){
+    super.initState();
+    fetchSavedNotificationSettings(); 
+    }
 
    Future<void> fetchSavedNotificationSettings() async {
     final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
@@ -113,45 +107,6 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
       }
     }
 
-  
-  DatabaseModel? get noti_ondemand => null;
-
-  @override
-  void initState(){
-  super.initState();
-  fetchSavedNotificationSettings(); 
-  }
-
-   Future<void> fetchSavedNotificationSettings() async {
-    final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
-    final changedDailyNoti = await DatabaseManager.databaseManager.getDailyNotification();
-    final allNotiList = changedAllNoti[0];
-    final dailyNotiList = changedDailyNoti[0];
-    final allNotiValue = allNotiList['allnotification'];
-    final dailyNotiValue = dailyNotiList['dailynotification'];
-    debugPrint('$allNotiValue');
-    if (allNotiValue == 1){
-      setState(() {
-        allnotifications = true;
-        _dailyreminder = true;
-        _ondemand = true;
-      });
-      } else {
-        setState(() {
-          allnotifications = false;
-        _dailyreminder = false;
-        _ondemand = false;
-        }); }
-    if (dailyNotiValue == 1){
-      setState(() {
-        _dailyreminder = true;
-      }); 
-      } else{
-        setState(() {
-          _dailyreminder = false;
-        });
-      }
-    }
 
   @override
   Widget build(BuildContext context) {
@@ -226,9 +181,9 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
             tileColor: Colors.white,                              //Gør tile hvid                    
             title: const Text('Daily evaluation reminder', style: TextStyle(fontWeight: FontWeight.bold)),                           //Titel
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
-            value: _dailyreminder,                                                 //Switch value
-            onChanged: (bool? value) async {
-                            
+            value: state.dailyreminderSwitch,                                                 //Switch value
+            onChanged: (value) async {
+                      state.toggleDailySwitch(value);
                       if (_dailyreminder == true) {
                         databaseModelNoti.noti_eva = 2;
                         } else {
