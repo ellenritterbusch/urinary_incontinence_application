@@ -68,7 +68,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   bool _ondemand = false;             //Value for on-demand
   //DateTime selectedDailyEvTime =  DateTime.now();
   DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0);
-  int _selectedOnDemandTime = 0;
+  int _selectedOnDemandTime = 3;
   DatabaseModel? get noti_ondemand => null;
 
     @override
