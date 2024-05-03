@@ -15,32 +15,32 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table
 
 
 class BarChart extends StatefulWidget {  
-  final List<dynamic> accidents;
-  final List<dynamic> stimulations;
+  // final List<dynamic> accidents;
+  // final List<dynamic> stimulations;
   // ignore: prefer_const_constructors_in_immutables
  // BarChart({Key? key}) : super(key: key);
 
-const BarChart(this.accidents, this.stimulations);
+// const BarChart(this.accidents, this.stimulations);
 
 @override
   // ignore: no_logic_in_create_state
   BarChartState createState() => BarChartState(
-    accidents,
-    stimulations,
+    // accidents,
+    // stimulations,
   );
 }
 
 class BarChartState extends State<BarChart> {
   late List<ChartData> data;                                        //Define list of ChartData called data
-  final List<dynamic> accidents;                                    //Define accidents list
-  final List<dynamic> stimulations;                                 //Define stimulations list
+  // final List<dynamic> accidents;                                    //Define accidents list
+  // final List<dynamic> stimulations;                                 //Define stimulations list
   late TooltipBehavior _tooltip;                                    //Who knows
   
 
-  BarChartState(                                                    //Constructer
-    this.accidents, 
-    this.stimulations
-    );                                    
+  // BarChartState(                                                    //Constructer
+  //   this.accidents, 
+  //   this.stimulations
+  //   );                                    
                                
 
   @override
