@@ -66,7 +66,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   bool allnotifications = false;     //Value for all notification switch
   bool _dailyreminder = false;        //Value for daily reminder switch
   bool _ondemand = false;             //Value for on-demand
-  DateTime selectedDailyEvTime =  DateTime.now();
+  //DateTime selectedDailyEvTime =  DateTime.now();
+  DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0);
   int _selectedOnDemandTime = 0;
   DatabaseModel? get noti_ondemand => null;
 
