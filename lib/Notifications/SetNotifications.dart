@@ -139,7 +139,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
     tz.TZDateTime _nextInstanceOfChosenTime() {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
     tz.TZDateTime scheduledDate =
-        tz.TZDateTime(tz.local, now.year, now.month, now.day, dailyReminderHour, dailyReminderMin);       //dailyReminder variable is the preffered time
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, dailyReminderHour+2, dailyReminderMin);       //dailyReminder variable is the preffered time
     if (scheduledDate.isBefore(now)) {
       scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
