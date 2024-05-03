@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
-
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 class BarChart extends StatefulWidget {
   // ignore: prefer_const_constructors_in_immutables
   BarChart({Key? key}) : super(key: key);
@@ -14,6 +14,7 @@ class BarChart extends StatefulWidget {
 class BarChartState extends State<BarChart> {
   late List<ChartData> data;                                        //Define list of ChartData called data
   late TooltipBehavior _tooltip;                                    //Who knows
+                               
 
   @override
     Widget build(BuildContext context) {
@@ -23,15 +24,16 @@ class BarChartState extends State<BarChart> {
             ChartData(DateTime.now().subtract(const Duration(hours: 2, minutes: 24)), 38, 49),
             ChartData(DateTime.now().subtract(const Duration(hours: 3)), 34, 12),
             ChartData(DateTime.now().subtract(const Duration(hours: 4)), 52, 33),
-            ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
             ChartData(DateTime.now().subtract(const Duration(hours: 9)), 16, 15),
             ChartData(DateTime.now().subtract(const Duration(hours: 13)), 23, 30),
-            ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
             ChartData(DateTime.now().subtract(const Duration(hours: 19)), 20, 10),
             ChartData(DateTime.now().subtract(const Duration(hours: 20)), 23, 25),
-            ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
             ChartData(DateTime.now().subtract(const Duration(hours: 22)), 2, 3),
             ChartData(DateTime.now().subtract(const Duration(hours: 23)), 2, 3),
+            ChartData(DateTime(2024, 5, 1, 6, 2), 03, 31)
         ];
 
         return  SizedBox(                                                     //We create a sizedbox to insert graph in
@@ -46,8 +48,8 @@ class BarChartState extends State<BarChart> {
               ),
             margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
             primaryXAxis: DateTimeAxis(
-              minimum: DateTime.now().subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
-              maximum: DateTime.now(),                                        //Maximum time on graph is right now
+              minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
+              maximum: today,                                        //Maximum time on graph is chosen date
               dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
               desiredIntervals: 4,                                            //Here im truly lost
               interval: 4,                                                    //Interval of 4 hours
