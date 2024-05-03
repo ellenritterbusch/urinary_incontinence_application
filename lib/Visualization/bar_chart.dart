@@ -3,17 +3,44 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
-class BarChart extends StatefulWidget {
-  // ignore: prefer_const_constructors_in_immutables
-  BarChart({Key? key}) : super(key: key);
 
-  @override
-  BarChartState createState() => BarChartState();
+
+
+
+
+
+
+
+
+
+
+class BarChart extends StatefulWidget {  
+  final List<dynamic> accidents;
+  final List<dynamic> stimulations;
+  // ignore: prefer_const_constructors_in_immutables
+ // BarChart({Key? key}) : super(key: key);
+
+const BarChart(this.accidents, this.stimulations);
+
+@override
+  // ignore: no_logic_in_create_state
+  BarChartState createState() => BarChartState(
+    accidents,
+    stimulations,
+  );
 }
 
 class BarChartState extends State<BarChart> {
   late List<ChartData> data;                                        //Define list of ChartData called data
+  final List<dynamic> accidents;                                    //Define accidents list
+  final List<dynamic> stimulations;                                 //Define stimulations list
   late TooltipBehavior _tooltip;                                    //Who knows
+  
+
+  BarChartState(                                                    //Constructer
+    this.accidents, 
+    this.stimulations
+    );                                    
                                
 
   @override
@@ -61,8 +88,8 @@ class BarChartState extends State<BarChart> {
                     name:'Accidents',                                         //Name of bar
                     dataSource: chartData,                                    //We get data from chartData
                     width: 1,                                                 //Bar width
-                    xValueMapper: (ChartData data, _) => data.x,              //X value is data.x
-                    yValueMapper: (ChartData data, _) => data.y,              //Y value is data.y
+                    xValueMapper: (ChartData data, _) => data.time,              //X value is data.x
+                    yValueMapper: (ChartData data, _) => data.amount_stimulation,              //Y value is data.y
                     color: Colors.blue,                                     //COlor
                 ),
                 ColumnSeries<ChartData, DateTime>(                            //Second bar serie, "Stimulations"
@@ -70,8 +97,8 @@ class BarChartState extends State<BarChart> {
                     //opacity: 0.9,
                     width: 1,
                     dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.x,
-                    yValueMapper: (ChartData data, _) => data.y1,
+                    xValueMapper: (ChartData data, _) => data.time,
+                    yValueMapper: (ChartData data, _) => data.amount_accident,
                     color: Colors.yellow,
                 )
               ]
@@ -81,8 +108,15 @@ class BarChartState extends State<BarChart> {
     
 }
 class ChartData {                                                       //Create class ChartData
-        ChartData(this.x, this.y, this.y1);                             //ChartData consists of x,y,y1
-        final DateTime x;                                               //This one is dateTime
-        final num y;                                                    //This is num
-        final num y1;
-    }
+                                  //ChartData consists of x,y,y1
+        final DateTime time;                                               //This one is dateTime
+        // ignore: non_constant_identifier_names
+        final num amount_accident;                                                    //This is num
+        // ignore: non_constant_identifier_names
+        final num amount_stimulation;
+    ChartData(
+          this.time, 
+          this.amount_accident, 
+          this.amount_stimulation
+          );   
+}
