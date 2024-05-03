@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
+
 
 class History_Box extends StatefulWidget {
   const History_Box({super.key});
@@ -9,11 +13,46 @@ class History_Box extends StatefulWidget {
 
 class _History_BoxState extends State<History_Box> {
 
+//int amountAccident = 1;
+late int i;
+dynamic amountAccident;
+late String accident;
+
+
   @override
   Widget build(BuildContext context) {
-    return const Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [
+      children: [ Data_Button(),
+        SizedBox(height: 80),
+        Padding(
+          padding: EdgeInsets.all(10.0),
+          child: OutlinedButton (
+            onPressed : () async{
+              String date = '2024-05-01';
+              amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date);
+              amountAccident = amountAccident.value;
+              //List<String> allAccidents = [];
+              for ({i = 0}; i <=amountAccident.length;i++){
+
+                var checkAccident = amountAccident[i];
+              //String accident = checkAccident.toString().substring(0, 12);
+                
+              }
+            
+              debugPrint('$amountAccident');
+            },
+          style: OutlinedButton.styleFrom(
+          fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30))),  
+          child: Text('Update', style: 
+          TextStyle(
+            color: Colors.black, fontSize: 25),),
+  
+  )), 
+  
+
         SizedBox(
           width: double.infinity,
           height: 250.0,
@@ -27,16 +66,21 @@ class _History_BoxState extends State<History_Box> {
                 children: [
                   Text('Accidents', style:
                     TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  Text('5', style:
+                 
+                  Text('${amountAccident}', style:
                     TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     Padding(
                       padding: EdgeInsets.all(12.0)),
+
+
                   Text('On-demand stimulations', style:
                     TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   Text('22', style:
                     TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     Padding(
                       padding: EdgeInsets.all(12.0)),
+
+
                   Text('Continous stimulation', style:
                     TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                   Text('0 min', style:
@@ -55,11 +99,11 @@ class _History_BoxState extends State<History_Box> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text('Use of app', style:
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
                   Padding(
                     padding: EdgeInsets.all(20.0)),
                   Text('1h 3min', style:
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),]
+                    TextStyle(fontSize: 18, fontWeight: FontWeight.normal),),]
               )
           ], // children
           )),),
