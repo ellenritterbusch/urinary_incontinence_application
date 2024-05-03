@@ -1,26 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
 import 'package:provider/provider.dart';
+import 'dart:convert';
 
-DatabaseModel databaseModelNoti = DatabaseModel.Noti(true, true, true);
+DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,2,2,2);
+
 const double _kItemExtent = 32.0;
 List <int> timeOnDemand = <int> [
-  0, //Instant
-  1,
-  3,
-  5,
-  1, //change to hours
-  2,
-  4,
-  6,
-  8,
-  12,
-];
+  0,1,3,5,1,2,4,6,8,12,];
 class NotificationPage extends StatefulWidget {
 
   const NotificationPage({super.key});
@@ -31,17 +24,20 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPageState extends State<NotificationPage> {
 
-@override
-void initState(){
-  listenToNotificationsAndNavigate();
+  @override
+  void initState(){
+  listenToNotifications();  
   super.initState();
-}
+  }
 
-  listenToNotificationsAndNavigate() {       //function for notification navigation
+  listenToNotifications() {
+    debugPrint("Listening to notification");
     SetNotifications.onClickNotification.stream.listen((event) {
-      Navigator.pushNamed(context,'/CalendarPage', arguments: event);
+      debugPrint(event);
+      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
     });
   }
+
 
 
   @override
@@ -50,11 +46,9 @@ void initState(){
       appBar: AppBar(
         title: const Text("Settings"),
       ),
-      body: const Center(
-        child:NotificationsSettings(),
-        
+      body:  const Center(
+        child: NotificationsSettings(), 
       ),
-
     );
   }
 }
@@ -64,16 +58,54 @@ class NotificationsSettings extends StatefulWidget {
   const NotificationsSettings({super.key});
 
   @override
-  State<NotificationsSettings> createState() => _NotificationsSettingsState();
+  State<NotificationsSettings> createState() => _NotificationsSettings();
+  
 }
 
-class _NotificationsSettingsState extends State<NotificationsSettings> {
-
-  bool _allnotifications = false;     //Value for all notifications
-  //bool dailyreminder = false;        //Value for daily reminder switch
-  bool _ondemand = false;            //Value for on-demand
-  int _selectedOnDemandTime = 0;
+class _NotificationsSettings extends State<NotificationsSettings> {
+  bool allnotifications = false;     //Value for all notification switch
+  bool _dailyreminder = false;        //Value for daily reminder switch
+  bool _ondemand = false;             //Value for on-demand
   DateTime selectedDailyEvTime =  DateTime.now();
+  int _selectedOnDemandTime = 0;
+  DatabaseModel? get noti_ondemand => null;
+
+    @override
+    void initState(){
+    super.initState();
+    fetchSavedNotificationSettings(); 
+    }
+
+   Future<void> fetchSavedNotificationSettings() async {
+    final changedAllNoti = await DatabaseManager.databaseManager.getAllNotification();
+    final changedDailyNoti = await DatabaseManager.databaseManager.getDailyNotification();
+    final allNotiList = changedAllNoti[0];
+    final dailyNotiList = changedDailyNoti[0];
+    final allNotiValue = allNotiList['allnotification'];
+    final dailyNotiValue = dailyNotiList['dailynotification'];
+    debugPrint('$allNotiValue');
+    if (allNotiValue == 1){
+      setState(() {
+        allnotifications = true;
+        _dailyreminder = true;
+        _ondemand = true;
+      });
+      } else {
+        setState(() {
+          allnotifications = false;
+        _dailyreminder = false;
+        _ondemand = false;
+        }); }
+    if (dailyNotiValue == 1){
+      setState(() {
+        _dailyreminder = true;
+      }); 
+      } else{
+        setState(() {
+          _dailyreminder = false;
+        });
+      }
+    }
 
 
   @override
@@ -111,31 +143,37 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                 tileColor: Colors.white,                        //Gør tile hvid    
                 title: const Text('Notifications', style: TextStyle(fontWeight: FontWeight.bold)),           //Titel
                 subtitle: const Text('Receive all notifications'),                                            //Subtitel
-                value: _allnotifications,                                                                   //Switch value
-                onChanged: (bool? value) {
-                  setState(() async {
-                    //databaseModelNoti.noti_all = true; 
+                value: allnotifications,                                                                   //Switch value
+                onChanged: (bool? value) async {
 
-                      //insert to database
-                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      debugPrint('data is sucessfully inserted');
-                      final _allnoti = await DatabaseManager.databaseManager.getNotification();
-                      debugPrint('$_allnoti');
-
-                    _allnotifications = value!;           //Ved ændring skift alle switch værdier
+                      if (allnotifications == true) {
+                        databaseModelNoti.noti_all = 2;
+                        } 
+                      if (allnotifications == false) {
+                          databaseModelNoti.noti_all = 1; 
+                        }
+                      
+                      final allnoti = await DatabaseManager.databaseManager.getAllNotification();
+                      if (allnoti.isEmpty){
+                        await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
+                      } else  {
+                      await DatabaseManager.databaseManager.updateAllNotification(databaseModelNoti);
+                      debugPrint('data is first $allnoti');
+                      final allnoti2 = await DatabaseManager.databaseManager.getAllNotification();
+                      debugPrint('data is now $allnoti2');
+                      }
+                    
+                  setState(()  {
+                    allnotifications = value!;           //Ved ændring skift alle switch værdier
                    state.toggleDailySwitch(value);
-                    _ondemand = value; 
-                  });
-                },
-              ),
-
+                    _ondemand = value; }                  );
+                }),
 
 
           const Divider(height: 10),              //Tilføjer mellemrum mellem, således at der kommer en streg
 
 
-
-                                          //////////////////////////// Daily evaluation reminder ////////////////////////
+                                              //////////////////////////// Daily evaluation reminder ////////////////////////
 
           SwitchListTile( 
             activeColor: Colors.white,                            //Gør switch hvid
@@ -144,11 +182,27 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
             title: const Text('Daily evaluation reminder', style: TextStyle(fontWeight: FontWeight.bold)),                           //Titel
             subtitle: const Text('Receive notification for the daily reminder'),      //Subtitel
             value: state.dailyreminderSwitch,                                                 //Switch value
-            onChanged: (newvalue) {
-              setState(() {
-                state.toggleDailySwitch(newvalue);                                   //ON/OFF daily reminder
-
-                 //_allnotifications = newvalue ? newvalue==true : newvalue==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
+            onChanged: (value) async {
+                      state.toggleDailySwitch(value);
+                      if (_dailyreminder == true) {
+                        databaseModelNoti.noti_eva = 2;
+                        } else {
+                          databaseModelNoti.noti_eva = 1; 
+                        }
+                     
+                      
+                      final evanoti = await DatabaseManager.databaseManager.getDailyNotification();
+                      if(evanoti.isEmpty){
+                        await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
+                        debugPrint('data is sucessfully inserted');
+                      } else {
+                        final evanoti2 = await DatabaseManager.databaseManager.updateDailyNotification(databaseModelNoti);
+                        debugPrint('daily reminder is now $evanoti2');
+                       
+                      }
+              setState(()  {
+                _dailyreminder = value!;                                          //ON/OFF daily reminder
+              //  allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
           ),
@@ -164,7 +218,7 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
                       CupertinoDatePicker(        //Opens white box in bottom of page
                         initialDateTime: selectedDailyEvTime,        //Starts on selected time 
                         mode: CupertinoDatePickerMode.time,   //No date, only time
-                        //minuteInterval: 10,
+                        //minuteInterval: 1,
                         use24hFormat: true,                   //24h format
                         // This shows day of week alongside day of month
                         showDayOfWeek: false,
@@ -193,14 +247,35 @@ class _NotificationsSettingsState extends State<NotificationsSettings> {
             subtitle: const Text('Receive a notification after using the on-demand function with UCon'),      //Subtitel
             isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
-            onChanged: (bool? value) {                                                                        //What happens when changed
-              setState(() async {
-                      //insert to database
-                      await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
-                      debugPrint('data is sucessfully inserted');
-                      final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
-                      debugPrint('$ondemandnoti');
+            onChanged: (bool? value) async {     
+                      databaseModelNoti.noti_ondemand = 1; 
+                         //insert to database
+                      // await DatabaseManager.databaseManager.insertNotification(databaseModelNoti);
+                      // debugPrint('data is sucessfully inserted');
+                      // final ondemandnoti = await DatabaseManager.databaseManager.getNotification();
+                      // debugPrint('$ondemandnoti');
 
+                      if (_ondemand == true) {
+                        databaseModelNoti.noti_ondemand = 1;
+                        } else {
+                          databaseModelNoti.noti_ondemand = 0; 
+                        }
+                      
+                       final ondemandnoti = await DatabaseManager.databaseManager.getOnDemandNotification();
+                      if(ondemandnoti == databaseModelNoti.noti_ondemand){
+                        await DatabaseManager.databaseManager.insertNotifications(databaseModelNoti);
+                        debugPrint('data is sucessfully inserted');
+                      } else {
+                        await DatabaseManager.databaseManager.updateOnDemandNotification(databaseModelNoti);
+                        debugPrint('data is sucessfully updated');
+                      }
+                      
+                      debugPrint('ondemandnoti = $ondemandnoti');
+                      debugPrint('noti_ondemand = ${databaseModelNoti.noti_ondemand}');
+
+                                                                                 //What happens when changed
+              setState(()  {
+                  
                 _ondemand = value!;                                                                           //Changes switch value
                // _allnotifications = value ? value==false : value==true;                                       //Turns on all notifications, if off
               });

@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
             fontStyle: FontStyle.italic,
           ),
           bodyMedium: GoogleFonts.quicksand(),
-          displaySmall: GoogleFonts.pacifico(),
+          displaySmall: GoogleFonts.quicksand(),
       ),
        fontFamily: GoogleFonts.quicksand().fontFamily
         ),

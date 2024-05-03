@@ -25,7 +25,11 @@ class DatabaseManager{
   String colStimType = 'stimtype';//Used for Bladder Diary Table
   String colStimIntensity = 'stimintensity';//Used for Bladder Diary Table
   String colStimTimeSetting = 'stimtimesetting';//Used for Bladder Diary Table
-  String colNoti = 'notification'; //Used for notifications
+
+  String colNotiID = 'notificationID'; //used as key in notification table
+  String colNotiAll = 'allnotification'; //Used for all notifications
+  String colNotiDaily = 'dailynotification'; //Used for daily notifications
+  String colNotiDemand = 'ondemandnotification'; //Used for ondemand notifications
 
   String colPIN = 'pin'; // Used for User table
 
@@ -47,7 +51,8 @@ class DatabaseManager{
     await db.execute('CREATE TABLE $UserTable($colPIN INTEGER PRIMARY KEY)');
     await db.execute('CREATE TABLE $DailyEvaluationTable($colDate STRING PRIMARY KEY, $colEvaluation INTEGER, $colMemo TEXT)');
     await db.execute('CREATE TABLE $BladderDiaryTable($colID INTEGER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER)');
-    await db.execute('CREATE TABLE $NotificationTable($colNoti INTEGER PRIMARY KEY)');
+    await db.execute('CREATE TABLE $NotificationTable($colNotiID INTEGER PRIMARY KEY, $colNotiAll INTEGER, $colNotiDaily INTEGER, $colNotiDemand INTEGER)');
+    
   }
 
 
@@ -82,6 +87,8 @@ Future <int> deleteDailyEvaluation (String date) async {
   int res = await db.rawDelete("DELETE FROM $DailyEvaluationTable WHERE $colDate =?", [date]);
   return res;
 }
+
+
 /////// CRUD BLADDER DIARY ///////
 //CREATE
 Future <void> insertBladderDiary(DatabaseModel data) async {
@@ -112,6 +119,53 @@ Future <int> deleteBladderDiary (int id) async {
   return res;
 }
 
+/////// CRUD Notifications ///////
+//CREATE 
+Future insertNotifications(DatabaseModel data) async {
+  Database db = await databaseManager.databaseDB;
+  await db.insert('Notification', data.toMapNoti(),conflictAlgorithm: ConflictAlgorithm.replace);
+}
+//RETRIEVE aLL
+  Future<List<Map<String, dynamic>>> getAllNotification() async {
+    Database db = await databaseDB;
+    return await db.rawQuery('SELECT $colNotiAll FROM $NotificationTable');
+  }
+
+  //RETRIEVE Daily
+  Future<List<Map<String, dynamic>>> getDailyNotification() async {
+    Database db = await databaseDB;
+    return await db.rawQuery('SELECT $colNotiDaily FROM $NotificationTable');
+  }
+  //RETRIEVE ON DEMAND
+  Future<List<Map<String, dynamic>>> getOnDemandNotification() async {
+    Database db = await databaseDB;
+    return await db.rawQuery('SELECT * FROM $NotificationTable WHERE $colNotiDemand = ?');
+  }
+//UPDATE ALL
+Future <int> updateAllNotification (DatabaseModel notificationID) async {
+  Database db = await databaseManager.databaseDB;
+  var res = await db.update(NotificationTable, notificationID.toMapNoti(), where :'$colNotiID= ?', whereArgs: [notificationID.noti_id]);
+  return res;
+}
+//UPDATE Daily
+Future <int> updateDailyNotification (DatabaseModel notificationID) async {
+  Database db = await databaseManager.databaseDB;
+  var res = await db.update(NotificationTable, notificationID.toMapNoti(), where :'$colNotiDaily= ?', whereArgs: [notificationID.noti_id]);
+  return res;
+}
+//UPDATE ON DEMAND
+Future <int> updateOnDemandNotification (DatabaseModel demandnotification) async {
+  Database db = await databaseManager.databaseDB;
+  var res = await db.update(NotificationTable, demandnotification.toMapNoti(), where :'$colNotiDemand= ?', whereArgs: [demandnotification.noti_ondemand]);
+  return res;
+}
+//DELETE 
+Future <int> deleteNotification (int notifi) async {
+  var db = await databaseManager.databaseDB;
+  int res = await db.rawDelete("DELETE FROM $NotificationTable WHERE $colNotiAll =?", [notifi]);
+  return res;
+}
+
 /////// CRUD USER ///////
 //CREATE
 Future <void> insertPIN(DatabaseModel data) async {
@@ -133,30 +187,6 @@ Future <int> updatePIN (DatabaseModel user) async {
 Future <int> deletePIN (int PIN) async {
   var db = await databaseManager.databaseDB;
   int res = await db.rawDelete("DELETE FROM $UserTable WHERE $colPIN =?", [PIN]);
-  return res;
-}
-
-/////// CRUD Notifications ///////
-//CREATE
-Future <void> insertNotification(DatabaseModel data) async {
-  Database db = await databaseManager.databaseDB;
-  await db.insert('Notification', data.toMapBD(),conflictAlgorithm: ConflictAlgorithm.replace);
-}
-//RETRIEVE
-  Future<List<Map<String, dynamic>>> getNotification() async {
-    Database db = await databaseDB;
-    return await db.query(NotificationTable);
-  }
-//UPDATE
-Future <int> updateNotification (DatabaseModel notification) async {
-  Database db = await databaseManager.databaseDB;
-  var res = await db.update(NotificationTable, notification.toMapBD(), where :'$colNoti= ?');
-  return res;
-}
-//DELETE 
-Future <int> deleteNotification (int notifi) async {
-  var db = await databaseManager.databaseDB;
-  int res = await db.rawDelete("DELETE FROM $NotificationTable WHERE $colNoti =?", [notifi]);
   return res;
 }
 
