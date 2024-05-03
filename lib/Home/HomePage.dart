@@ -37,7 +37,7 @@ class _HomePageState extends State<HomePage> {
 
               const Calender_Bar(),
                
-              const Divider(height: 2,),
+              //const Divider(height: 2,),
                
               BarChart(),
 
