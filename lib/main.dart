@@ -8,7 +8,7 @@ import 'package:urinary_incontinence_application/Notifications/NotificationsPage
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
-import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
+//import 'package:urinary_incontinence_application/Visualization/HomePage/History_Box.dart';
 
 final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
 void main() async {
