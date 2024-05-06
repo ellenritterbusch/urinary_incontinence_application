@@ -16,7 +16,8 @@ class _History_BoxState extends State<History_Box> {
 //int amountAccident = 1;
 late int i;
 dynamic amountAccident;
-late String accident;
+//late int accident;
+int counter = 0;
 
 
   @override
@@ -30,18 +31,20 @@ late String accident;
           child: OutlinedButton (
             onPressed : () async{
               String date = '2024-05-01';
-              amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date);
-              amountAccident = amountAccident.value;
-              //List<String> allAccidents = [];
-              for ({i = 0}; i <=amountAccident.length;i++){
-
-                var checkAccident = amountAccident[i];
-              //String accident = checkAccident.toString().substring(0, 12);
-                
-              }
+              amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
+             //int amountAccidentlength = amountAccident.length;
             
-              debugPrint('$amountAccident');
-            },
+              for (int i = 0; i<= amountAccident.length; i++) {
+                amountAccident = amountAccident[i];
+                int accident = amountAccident['accident'] as int;
+                //debugPrint('$accident'); 
+                if (accident != 0) {
+                  counter = counter+1;
+                  debugPrint('$counter');
+                }
+              } 
+              
+              },
           style: OutlinedButton.styleFrom(
           fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
           shape: RoundedRectangleBorder(
@@ -67,7 +70,7 @@ late String accident;
                   Text('Accidents', style:
                     TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                  
-                  Text('${amountAccident}', style:
+                  Text('$counter', style:
                     TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     Padding(
                       padding: EdgeInsets.all(12.0)),
