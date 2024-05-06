@@ -34,8 +34,8 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
             Navigator.pop(context);
           },),
       ),
-      body:     
-  
+      body:  SingleChildScrollView(   
+        child: 
     
     // Track Button navigates to Bladder Diary //
       Column(
@@ -116,6 +116,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
           }),
         ),
       ]),
+      )
     );
   }
 

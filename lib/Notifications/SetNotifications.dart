@@ -8,9 +8,11 @@ import 'package:get/get.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
 import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
+import 'package:urinary_incontinence_application/main.dart';
 
 
 int id = 0;
@@ -73,14 +75,15 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 // Initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
  class SetNotifications {
 
-  static final onClickNotification = BehaviorSubject<String>();
+  // static final onClickNotification = BehaviorSubject<String>();
 
-  // on tap on any notification
-  static void onNotificationTap(NotificationResponse notificationResponse) {
-    onClickNotification.add(notificationResponse.payload!);
-  }
+  // // on tap on any notification
+  // static void onNotificationTap(NotificationResponse notificationResponse) {
+  //   onClickNotification.add(notificationResponse.payload!);
+  // }
 
- static Future initializeNotification() async{
+
+ void initializeNotification() {
 
   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
     AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
@@ -88,7 +91,7 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
   const AndroidInitializationSettings initializationSettingsAndroid =
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
 
-  final DarwinInitializationSettings initializationSettingsDarwin =
+   DarwinInitializationSettings initializationSettingsDarwin =
     DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -104,18 +107,23 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
         )); 
       });
         
-  final InitializationSettings initializationSettings = InitializationSettings(
+   InitializationSettings initializationSettings = InitializationSettings(
     android: initializationSettingsAndroid,
     iOS: initializationSettingsDarwin,
     macOS: initializationSettingsDarwin);
 
-    await flutterLocalNotificationsPlugin.initialize(
+    flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
       onDidReceiveNotificationResponse: onNotificationTap,
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
   
  }
-
+  
+Future onNotificationTap(NotificationResponse notificationResponse) async{
+  controller.index = 1;
+  navigatorKey.currentState?.pushNamed('/CalendarPage');
+  
+  }
        /////  functions  //////
 
 ///// daily notification ////

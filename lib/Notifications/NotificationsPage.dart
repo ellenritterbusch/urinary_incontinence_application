@@ -249,7 +249,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive a notification after using the on-demand function with UCon'),      //Subtitel
             isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
-            onChanged: (bool? value) async {     
+            onChanged: (bool? value) async { 
+                      SetNotifications().showNotification();
                       databaseModelNoti.noti_ondemand = 1; 
 
                       if (_ondemand == true) {
