@@ -214,7 +214,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
               subtitle:
                   const Text('Enter desired time of the day to receive the daily evaluation reminder'),               //Subtitle
               trailing: CupertinoButton(                                                                              //Textbutton in cupertinostyle like iphone
-                child: Text('${(selectedDailyEvTime.hour < 10) ? ('0${selectedDailyEvTime.hour}') : ('${selectedDailyEvTime.hour}')}:${(selectedDailyEvTime.minute < 10) ? ('0${selectedDailyEvTime.minute}') : '${selectedDailyEvTime.minute}'} ${(selectedDailyEvTime.hour > 12) ? 'PM' : 'AM'}',
+                child: Text('${(selectedDailyEvTime.hour < 10) ? ('0${selectedDailyEvTime.hour}') : ('${selectedDailyEvTime.hour}')}:${(selectedDailyEvTime.minute < 10) ? ('0${selectedDailyEvTime.minute}') : '${selectedDailyEvTime.minute}'}',// ${(selectedDailyEvTime.hour > 12) ? 'PM' : 'AM'}',
                 style: const TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),           //Tekst viser time og minut af newTime/_Selectid //Genovervej bold.
                 onPressed: () => _showDialog(
                       CupertinoDatePicker(        //Opens white box in bottom of page
