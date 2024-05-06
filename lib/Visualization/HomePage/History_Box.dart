@@ -14,7 +14,7 @@ class History_Box extends StatefulWidget {
 class _History_BoxState extends State<History_Box> {
 
 //int amountAccident = 1;
-late int i;
+//late int i;
 dynamic amountAccident;
 //late int accident;
 int counter = 0;
@@ -32,16 +32,16 @@ int counter = 0;
             onPressed : () async{
               String date = '2024-05-01';
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
-             //int amountAccidentlength = amountAccident.length;
+              int amountAccidentlength = amountAccident.length;
             
-              for (int i = 0; i<= amountAccident.length; i++) {
+              for (int i = 0; i<= amountAccidentlength; i++) {
                 amountAccident = amountAccident[i];
-                int accident = amountAccident['accident'] as int;
-                //debugPrint('$accident'); 
-                if (accident != 0) {
-                  counter = counter+1;
-                  debugPrint('$counter');
-                }
+                int accident = amountAccident['accident'];
+                debugPrint('$accident'); 
+               // if (accident != 0) {
+                 // counter = counter+1;
+                //  debugPrint('$counter');
+               // }
               } 
               
               },
