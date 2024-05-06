@@ -26,17 +26,18 @@ class _NotificationPageState extends State<NotificationPage> {
 
   @override
   void initState(){
-  listenToNotifications();  
+  //listenToNotifications();  
   super.initState();
   }
 
-  listenToNotifications() {
-    debugPrint("Listening to notification");
-    SetNotifications.onClickNotification.stream.listen((event) {
-      debugPrint(event);
-      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
-    });
-  }
+  // listenToNotifications() {
+  //   debugPrint("Listening to notification");
+  //   SetNotifications.onClickNotification.stream.listen((event) {
+  //     debugPrint(event);
+  //     //Navigator.of(context).popUntil(ModalRoute.withName("/CalendarPage"));
+  //     Navigator.pushNamed(context, '/CalendarPage', arguments: event);
+  //   });
+  // }
 
 
 
@@ -106,6 +107,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
           _dailyreminder = false;
         });
       }
+      dailyReminderHour = selectedDailyEvTime.hour;
+      dailyReminderMin = selectedDailyEvTime.minute;
     }
 
 
