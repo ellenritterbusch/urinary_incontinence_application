@@ -29,20 +29,21 @@ int counter = 0;
         Padding(
           padding: EdgeInsets.all(10.0),
           child: OutlinedButton (
-            onPressed : () async{
+            onPressed : () async{ 
+              counter = 0;
               String date = '2024-05-01';
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
               int amountAccidentlength = amountAccident.length;
-            
-              for (int i = 0; i<= amountAccidentlength; i++) {
-                amountAccident = amountAccident[i];
-                int accident = amountAccident['accident'];
+            debugPrint('$counter');
+              for (int i = 0; i< amountAccidentlength; i++) {
+                dynamic individualAccident = amountAccident[i];
+                int accident = individualAccident['accident'];
                 debugPrint('$accident'); 
-               // if (accident != 0) {
-                 // counter = counter+1;
-                //  debugPrint('$counter');
-               // }
-              } 
+               if (accident != 0) {
+                 counter = counter+1;
+                 
+               }
+              } debugPrint('$counter');
               
               },
           style: OutlinedButton.styleFrom(
