@@ -200,6 +200,10 @@ Future getBladderDiaryAccident(String date) async {
   var res = await db.rawQuery('SELECT $colAccident FROM $BladderDiaryTable WHERE $colDate =?', [date]);
   return res;
 }
-
+Future getBladderDiaryStimType(String date) async {
+  final db = await databaseDB;
+  var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colDate =?', [date]);
+  return res;
+}
 
 }
