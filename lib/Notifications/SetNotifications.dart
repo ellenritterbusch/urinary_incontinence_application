@@ -5,6 +5,7 @@ import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:get/get.dart';
+import 'package:provider/provider.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
@@ -75,14 +76,6 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 // Initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
  class SetNotifications {
 
-  // static final onClickNotification = BehaviorSubject<String>();
-
-  // // on tap on any notification
-  // static void onNotificationTap(NotificationResponse notificationResponse) {
-  //   onClickNotification.add(notificationResponse.payload!);
-  // }
-
-
  void initializeNotification() {
 
   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
@@ -120,10 +113,10 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
  }
   
 Future onNotificationTap(NotificationResponse notificationResponse) async{
-  controller.index = 1;
-  navigatorKey.currentState?.pushNamed('/CalendarPage');
-  
+   navigatorKey.currentState?.push(MaterialPageRoute(builder: (context) => const CalendarPage()));  
   }
+
+
        /////  functions  //////
 
 ///// daily notification ////
