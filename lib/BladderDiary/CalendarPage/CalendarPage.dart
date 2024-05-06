@@ -5,7 +5,8 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Track
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Evaluate_button.dart';
 
 class CalendarPage extends StatefulWidget {
-  const CalendarPage({super.key});
+  final String? payload;
+  const CalendarPage({this.payload});
 
   @override
   State<CalendarPage> createState() => _CalendarPageState();

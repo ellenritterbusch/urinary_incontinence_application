@@ -10,21 +10,13 @@ import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifi
 import 'package:timezone/data/latest_all.dart' as tz;
 //import 'package:urinary_incontinence_application/Visualization/HomePage/History_Box.dart';
 
+
 final navigatorKey = GlobalKey<NavigatorState>();     //for notification navigation
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //initialize database
   tz.initializeTimeZones();                 //initialize timezones
-  await SetNotifications.initializeNotification();    //initialize notifications
-
-  //  handle in terminated state
-  var initialNotification =
-      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-  if (initialNotification?.didNotificationLaunchApp == true) {
-    Future.delayed(Duration(seconds: 1), () {
-      navigatorKey.currentState!.pushNamed('/CalendarPage',
-          arguments: initialNotification?.notificationResponse?.payload);
-    });
-  }
+  SetNotifications setNotifications = SetNotifications();
+  setNotifications.initializeNotification();    //initialize notifications
 
   runApp(ChangeNotifierProvider(
       create: (context) => SwitchStateNotifier(),
@@ -37,6 +29,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       debugShowCheckedModeBanner: false, //fjerne "debug" markat
       theme: ThemeData(
         useMaterial3: true,
@@ -61,8 +54,10 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
         '/CalendarPage': (context) => const CalendarPage(),
+        '/RootPage': (context) => const RootPage(),
+        '/HomePage': (context) => const HomePage(),
       },
-      home: const RootPage()
+      home:  const RootPage(),
     );
   }
 }
@@ -76,25 +71,26 @@ class RootPage extends StatefulWidget { //vigtigt at denne er stateful - betyder
 
 
 class _RootPageState extends State<RootPage> {
-
   int currentPage = 0;
+
+  void setSelectedIndex(int index){
+    setState(() {
+      currentPage = index;
+    });
+  }
+
   List<Widget> pages = [
     const HomePage(),
     const CalendarPage(),
     const NotificationPage(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: pages[currentPage],
       bottomNavigationBar: NavigationBar(
-      onDestinationSelected: (int index) {
-          setState(() {
-            currentPage = index;
-          });
-        },
+      onDestinationSelected: setSelectedIndex,
         selectedIndex: currentPage,
         destinations: const [
         NavigationDestination(icon: Icon(Icons.home), label: "Home"),
@@ -105,27 +101,3 @@ class _RootPageState extends State<RootPage> {
     );
   }
 }
-
-
-
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       debugShowCheckedModeBanner: false,
-//       home: Scaffold(
-//         appBar: AppBar(
-//           title: Text("Flutter ShowDialog"),
-//         ), // AppBar
-//         body: Center(
-//           child: Builder(builder: (context){
-//             return ElevatedButton(
-//               onPressed: () {
-//                 const snackBar = SnackBar(content: Text("Yay a snackbar"));
-//               },
-//               child: const Text('Show SnackBar'),
-//             ); 
-//           }), 
-//         ), 
-//         ), 
-//       );
-//   }
-// }

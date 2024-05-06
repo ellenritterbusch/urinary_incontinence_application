@@ -7,7 +7,6 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
 import 'package:provider/provider.dart';
-import 'dart:convert';
 
 DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,2,2,2);
 
@@ -23,22 +22,6 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-
-  @override
-  void initState(){
-  listenToNotifications();  
-  super.initState();
-  }
-
-  listenToNotifications() {
-    debugPrint("Listening to notification");
-    SetNotifications.onClickNotification.stream.listen((event) {
-      debugPrint(event);
-      Navigator.pushNamed(context, '/CalendarPage', arguments: event);
-    });
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,10 +49,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
   bool allnotifications = false;     //Value for all notification switch
   bool _dailyreminder = false;        //Value for daily reminder switch
   bool _ondemand = false;             //Value for on-demand
-  //DateTime selectedDailyEvTime =  DateTime.now();
-  DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0);
-  int _selectedOnDemandTime = 3;
-  DatabaseModel? get noti_ondemand => null;
+  DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0); //daily reminder is default set to 8PM
+  int _selectedOnDemandTime = 3;                                                      //on demand is default set to 5 min
 
     @override
     void initState(){
@@ -106,6 +87,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
           _dailyreminder = false;
         });
       }
+      dailyReminderHour = selectedDailyEvTime.hour;
+      dailyReminderMin = selectedDailyEvTime.minute;
     }
 
 
@@ -200,7 +183,7 @@ class _NotificationsSettings extends State<NotificationsSettings> {
                     debugPrint('daily reminder is now $evaNotiNew'); 
                     }
               setState(()  {
-                _dailyreminder = value!;                                          //ON/OFF daily reminder
+                _dailyreminder = value;                                          //ON/OFF daily reminder
               //  allnotifications = value ? value==true : value==false;           //ON/OFF ALLE NOTIFIKATIONer = Hvis value er true, så gør den falsk.
               });
             },
@@ -246,7 +229,8 @@ class _NotificationsSettings extends State<NotificationsSettings> {
             subtitle: const Text('Receive a notification after using the on-demand function with UCon'),      //Subtitel
             isThreeLine: true,                                                                                //Makes it three lines of text worthy
             value: _ondemand,                                                                                 //Switch value
-            onChanged: (bool? value) async {     
+            onChanged: (bool? value) async { 
+                      SetNotifications().showNotification();
                       databaseModelNoti.noti_ondemand = 1; 
 
                       if (_ondemand == true) {
