@@ -22,6 +22,9 @@ dynamic stimType;
 int stimTypecounter = 0;
 dynamic stimTimeSetting;
 int stimTimecounter = 0;
+late int hours;
+late int minutes;
+String totalStimTime = '';
 
 
   @override
@@ -34,7 +37,7 @@ int stimTimecounter = 0;
           padding: const EdgeInsets.all(10.0),
           child: OutlinedButton (
             onPressed : () async{ 
-              String date = '2024-05-01';
+              String date = '2024-02-20';
                
               accidentcounter = 0; // accidentcounter
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
@@ -85,19 +88,32 @@ int stimTimecounter = 0;
                 stimTimecounter += stimTime;
               }
 
-              if (stimTimecounter > 60) {
-              int hours = stimTimecounter ~/ 60; // Get the number of hours
-              int minutes = stimTimecounter % 60; // Get the remaining minutes
-                debugPrint('$hours timer $minutes minutter');
-              } else {
-                debugPrint('$stimTimecounter minutter');
+              if (stimTimecounter >= 60) {
+                int hours = stimTimecounter ~/ 60; // Get the number of hours
+                int minutes = stimTimecounter % 60; // Get the remaining minutes
+                debugPrint('$hours hour(s) $minutes minutes');
+
+                  setState(() {
+                  stimTimecounter = stimTimecounter;
+                   if (minutes == 0) {
+                    totalStimTime = ('$hours hour(s)');
+                }  else {
+                totalStimTime = ('$hours hour(s) $minutes minutes');
               }
+                  
+              });
+              } else {
+                minutes = stimTimecounter;
+                setState(() {
+                  totalStimTime = ('$minutes minutes');
+                });
+                
+
+              }
+                //debugPrint('$stimTimecounter minutter');
              //debugPrint('$stimTimecounter');
-
-             } setState(() {
-                stimTimecounter = stimTimecounter;
-              }); 
-
+                
+   } 
             },
           style: OutlinedButton.styleFrom(
           //fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
@@ -137,7 +153,7 @@ int stimTimecounter = 0;
 
                   const Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  Text('$stimTimecounter', style:
+                  Text(totalStimTime, style:
                     TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
           ],),
 
