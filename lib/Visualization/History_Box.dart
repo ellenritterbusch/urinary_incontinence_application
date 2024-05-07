@@ -27,7 +27,7 @@ class _History_BoxState extends State<History_Box> {
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
-      children: [ const Data_Button(),
+      children: [//[ const Data_Button(),
         const SizedBox(height: 80),
         Padding(
           padding: const EdgeInsets.all(10.0),
