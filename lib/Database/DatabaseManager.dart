@@ -205,5 +205,11 @@ Future getBladderDiaryStimType(String date) async {
   var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colDate =?', [date]);
   return res;
 }
+Future getBladderDiaryStimTimeSetting(String date) async {
+  final db = await databaseDB;
+  var res = await db.rawQuery('SELECT $colStimTimeSetting FROM $BladderDiaryTable WHERE $colStimType = 2 AND $colDate =?', [date]);
+  return res;
+}
+
 
 }

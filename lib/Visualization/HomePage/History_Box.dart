@@ -1,5 +1,6 @@
 import 'dart:ffi';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
@@ -19,6 +20,8 @@ dynamic amountAccident;
 int accidentcounter = 0;
 dynamic stimType;
 int stimTypecounter = 0;
+dynamic stimTimeSetting;
+int stimTimecounter = 0;
 
 
   @override
@@ -31,7 +34,7 @@ int stimTypecounter = 0;
           padding: const EdgeInsets.all(10.0),
           child: OutlinedButton (
             onPressed : () async{ 
-              String date = '2024-05-03';
+              String date = '2024-05-01';
                
               accidentcounter = 0; // accidentcounter
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
@@ -53,21 +56,47 @@ int stimTypecounter = 0;
 
               stimTypecounter = 0; // Resetting stimTypecounter
               stimType = await DatabaseManager.databaseManager.getBladderDiaryStimType(date); // Retrieving data from the database
-              debugPrint('$stimType');
+              //debugPrint('$stimType');
               int stimTypelength = stimType.length;
-              debugPrint('$stimTypelength');
-              for (int i = 0; i < stimTypelength ; i++) {
+         
+              for (int i = 0; i < stimTypelength; i++) {
                 dynamic individualStimType = stimType[i];
                 int stim = individualStimType['stimtype']; // Renamed to avoid conflict
-                  debugPrint('$stimType'); 
+                  //debugPrint('$stimType'); 
               if (stim == 1) {
                 stimTypecounter++;
                }
               } setState(() {
                 stimTypecounter = stimTypecounter;
               });
-              debugPrint('$stimTypecounter');
-             
+              //debugPrint('$stimTypecounter');
+
+
+             stimTimecounter = 0; // Resetting stimTimecounter
+             stimTimeSetting = await DatabaseManager.databaseManager.getBladderDiaryStimTimeSetting(date); // Retrieving data from the database
+             //debugPrint('$stimTimeSetting');
+             int stimTimeSettinglength = stimTimeSetting.length;
+
+             for (int i = 0; i < stimTimeSettinglength; i++) {
+              dynamic individualStimTimeSetting = stimTimeSetting[i];
+              int stimTime = individualStimTimeSetting['stimtimesetting'];
+                debugPrint('$stimTimeSetting');
+              if (stimTime != 0) {
+                stimTimecounter += stimTime;
+              }
+
+              if (stimTimecounter > 60) {
+              int hours = stimTimecounter ~/ 60; // Get the number of hours
+              int minutes = stimTimecounter % 60; // Get the remaining minutes
+                debugPrint('$hours timer $minutes minutter');
+              } else {
+                debugPrint('$stimTimecounter minutter');
+              }
+             //debugPrint('$stimTimecounter');
+
+             } setState(() {
+                stimTimecounter = stimTimecounter;
+              }); 
 
             },
           style: OutlinedButton.styleFrom(
@@ -86,29 +115,29 @@ int stimTypecounter = 0;
           height: 250.0,
           child: Card(color: const Color.fromARGB(255, 207, 208, 207),
           child: 
-          Row(
+          Row( 
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Text('Accidents', style: //printer antal accidents
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text('$accidentcounter', style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
                       padding: EdgeInsets.all(12.0)),
 
                   const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text('$stimTypecounter', style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
                       padding: EdgeInsets.all(12.0)),
 
-                  const Text('Continous stimulation', style: //printer samlede tid contnínous stimulering
-                    TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
-                  const Text('0 min', style:
+                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  Text('$stimTimecounter', style:
                     TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
           ],),
 
@@ -129,7 +158,12 @@ int stimTypecounter = 0;
                  // Text('1h 3min', style:
                    // TextStyle(fontSize: 18, fontWeight: FontWeight.normal),),),],
               //)
-    ])))]); // children
+            ]   
+          )
+          )
+        )
+      ]
+    ); // children
         
   }
 }
