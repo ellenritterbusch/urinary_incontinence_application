@@ -1,11 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
-
 
 class History_Box extends StatefulWidget {
   const History_Box({super.key});
@@ -16,15 +12,15 @@ class History_Box extends StatefulWidget {
 
 class _History_BoxState extends State<History_Box> {
 
-dynamic amountAccident;
-int accidentcounter = 0;
-dynamic stimType;
-int stimTypecounter = 0;
-dynamic stimTimeSetting;
-int stimTimecounter = 0;
-late int hours;
-late int minutes;
-String totalStimTime = '';
+  dynamic amountAccident;
+  int accidentcounter = 0;
+  dynamic stimType;
+  int stimTypecounter = 0;
+  dynamic stimTimeSetting;
+  int stimTimecounter = 0;
+  late int hours;
+  late int minutes;
+  String totalStimTime = '';
 
 
   @override
@@ -43,7 +39,6 @@ String totalStimTime = '';
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
               int amountAccidentlength = amountAccident.length;
                 //debugPrint('$accidentcounter');
-                
               for (int i = 0; i< amountAccidentlength; i++) {
                 dynamic individualAccident = amountAccident[i];
                 int accident = individualAccident['accident'];
@@ -54,14 +49,12 @@ String totalStimTime = '';
               } setState(() {
                 accidentcounter = accidentcounter;
               },);
-
               //debugPrint('$accidentcounter');
 
               stimTypecounter = 0; // Resetting stimTypecounter
               stimType = await DatabaseManager.databaseManager.getBladderDiaryStimType(date); // Retrieving data from the database
               //debugPrint('$stimType');
               int stimTypelength = stimType.length;
-         
               for (int i = 0; i < stimTypelength; i++) {
                 dynamic individualStimType = stimType[i];
                 int stim = individualStimType['stimtype']; // Renamed to avoid conflict
@@ -79,7 +72,6 @@ String totalStimTime = '';
              stimTimeSetting = await DatabaseManager.databaseManager.getBladderDiaryStimTimeSetting(date); // Retrieving data from the database
              //debugPrint('$stimTimeSetting');
              int stimTimeSettinglength = stimTimeSetting.length;
-
              for (int i = 0; i < stimTimeSettinglength; i++) {
               dynamic individualStimTimeSetting = stimTimeSetting[i];
               int stimTime = individualStimTimeSetting['stimtimesetting'];
@@ -87,30 +79,24 @@ String totalStimTime = '';
               if (stimTime != 0) {
                 stimTimecounter += stimTime;
               }
-
               if (stimTimecounter >= 60) {
                 int hours = stimTimecounter ~/ 60; // Get the number of hours
                 int minutes = stimTimecounter % 60; // Get the remaining minutes
                 debugPrint('$hours hour(s) $minutes minutes');
-
                   setState(() {
                   stimTimecounter = stimTimecounter;
                    if (minutes == 0) {
                     totalStimTime = ('$hours hour(s)');
                 }  else {
                 totalStimTime = ('$hours hour(s) $minutes minutes');
-              }
-                  
+              } 
               });
               } else {
                 minutes = stimTimecounter;
                 setState(() {
                   totalStimTime = ('$minutes minutes');
                 });
-                
-
               }
-                
    } 
             },
           style: OutlinedButton.styleFrom(
@@ -120,10 +106,8 @@ String totalStimTime = '';
           child: const Text('Update', style: 
           TextStyle(
             color: Colors.black, fontSize: 25),),
-  
-  )), 
-  
-
+  )
+  ),
         SizedBox(
           width: double.infinity, 
           height: 220.0,
@@ -141,20 +125,18 @@ String totalStimTime = '';
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
                       padding: EdgeInsets.all(8.0)),
-
                   const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text('$stimTypecounter', style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
                       padding: EdgeInsets.all(8.0)),
-
                   const Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text(totalStimTime, style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
-          ],),
-
+          ],
+          ),
                 const VerticalDivider( //den lodrette linje der skiller information i boxen
                   width: 100,
                   thickness: 2,
@@ -177,7 +159,6 @@ String totalStimTime = '';
           )
         )
       ]
-    ); // children
-        
+    ); // children 
   }
 }
