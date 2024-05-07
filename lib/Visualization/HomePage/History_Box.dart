@@ -110,8 +110,6 @@ String totalStimTime = '';
                 
 
               }
-                //debugPrint('$stimTimecounter minutter');
-             //debugPrint('$stimTimecounter');
                 
    } 
             },
@@ -127,8 +125,8 @@ String totalStimTime = '';
   
 
         SizedBox(
-          width: double.infinity,
-          height: 250.0,
+          width: double.infinity, 
+          height: 220.0,
           child: Card(color: const Color.fromARGB(255, 207, 208, 207),
           child: 
           Row( 
@@ -142,14 +140,14 @@ String totalStimTime = '';
                   Text('$accidentcounter', style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
-                      padding: EdgeInsets.all(12.0)),
+                      padding: EdgeInsets.all(8.0)),
 
                   const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text('$stimTypecounter', style:
                     const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
                     const Padding(
-                      padding: EdgeInsets.all(12.0)),
+                      padding: EdgeInsets.all(8.0)),
 
                   const Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
