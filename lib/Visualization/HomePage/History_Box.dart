@@ -152,7 +152,7 @@ String totalStimTime = '';
                   const Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                   Text(totalStimTime, style:
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
           ],),
 
                 const VerticalDivider( //den lodrette linje der skiller information i boxen
