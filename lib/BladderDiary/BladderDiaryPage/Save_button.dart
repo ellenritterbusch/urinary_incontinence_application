@@ -14,16 +14,16 @@ class _Save_ButtonState extends State<Save_Button> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.08),
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20))
+          borderRadius: BorderRadius.circular(30))
          ),
 
         onPressed: widget.onpressed,
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Save", style: TextStyle(fontSize: 28, color: Colors.black),),],
+                Text("Save", style: TextStyle(fontSize: 25, color: Colors.black),),],
           ));
   }
 }
