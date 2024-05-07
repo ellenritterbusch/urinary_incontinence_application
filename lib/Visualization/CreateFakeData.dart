@@ -16,7 +16,7 @@ class Data_Button extends StatefulWidget {
   State<Data_Button> createState() => _Data_ButtonState();
 }
 class FakeData{
-  late String? date;
+ late String? date;
  late int? accident;
  late String? time;
  late int? stimType;
