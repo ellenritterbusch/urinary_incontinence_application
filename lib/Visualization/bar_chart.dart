@@ -1,68 +1,147 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter/widgets.dart';
+import 'package:get/get.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 
 
-
-
-
-
-
-
-
-
-
+// ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
-  // final List<dynamic> accidents;
-  // final List<dynamic> stimulations;
-  // ignore: prefer_const_constructors_in_immutables
- // BarChart({Key? key}) : super(key: key);
 
-// const BarChart(this.accidents, this.stimulations);
-
-@override
+   // ignore: prefer_const_constructors_in_immutables
+   BarChart(
+    {super.key}
+    );
+  
+  @override
   // ignore: no_logic_in_create_state
-  BarChartState createState() => BarChartState(
-    // accidents,
-    // stimulations,
-  );
+  State<BarChart> createState() => BarChartState();
+
+
+ //BarChart({super.key});
+  // ignore: no_logic_in_create_state
+  // BarChartState createState() => BarChartState(
+  //   accident,
+  //   stimulations,
+  // );
 }
 
 class BarChartState extends State<BarChart> {
-  late List<ChartData> data;                                        //Define list of ChartData called data
-  // final List<dynamic> accidents;                                    //Define accidents list
-  // final List<dynamic> stimulations;                                 //Define stimulations list
-  late TooltipBehavior _tooltip;                                    //Who knows
-  
+late List accident = [];
+late Future <List<ChartData>> chartData;
+late List<ChartData> mapLiveData;
+late dynamic stimulation = [];
+late dynamic accidentValue;
+late dynamic timeValue;
+late dynamic stimulationValue;
 
-  // BarChartState(                                                    //Constructer
-  //   this.accidents, 
-  //   this.stimulations
-  //   );                                    
-                               
+
+    // Future getAccident() async {
+    //   final date = today.toString().substring(0,10);
+    //   final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(date);
+    //   final accidenta =  anAccident;
+    //   // debugPrint(accidenta);
+    //   // final int allaccident = accidenta['accident'];
+      
+    //   for (int i = 0; i > anAccident.length; i++){
+    //     dynamic individualAccident = anAccident[i];
+    //     accidentValue = individualAccident['accident'];
+    //   }
+    //   debugPrint('$anAccident');
+      
+    //   // setState(()  {
+    //   //   accident = allaccident;
+    //   //   debugPrint('Accidents: $accident');
+    //   // });
+    //   // return anAccident;
+    //   // debugPrint('${getAccident} accidents');
+    //   // final uheld = getAccident[0];
+    //   // return accidenta;
+      
+    //   }
+
+  //  Future <dynamic> getStimulation() async {
+  //     final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
+  //     final stimulationa = amountStimulation;
+  //     setState(() {
+  //       stimulation = stimulationa[0];
+  //       debugPrint('Stimulations: $stimulation');
+  //     });
+  //     // debugPrint('$today');
+  //     // final num stimulationa = amountStimulation ;
+  //     // return amountStimulation;
+  //     // debugPrint('${amountStimulation} stimulations');
+  //     // return  amountStimulation;
+  //   }
+
+    // Future<List<ChartData>> returnvalue() async {
+    //   // dynamic stimuli = await getStimulation();
+    //   // dynamic accidenta = await getAccident();
+    //    List<ChartData> chartData = [                                 //Our data. Here we choose our data.
+    //       ChartData(today, accident, stimulation)
+    //   ];
+    //   return chartData;
+    // }
+
+              
+
+@override //Brug future! eller lav en funktion som bliver kaldt herinde
+   void initState() {
+    chartData = getChartData();
+    super.initState();
+    chartData = mapLiveData;
+    //  getAccident();
+    // getStimulation();
+    // returnvalue();
+}           
+
+
+Future<List<ChartData>> getChartData() async {
+  List<ChartData> mapChartData = [];
+  final dato = today.toString().substring(0,10);
+  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
+  final time = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
+
+
+  for (int i = 0; i > anAccident.length; i++){
+
+    dynamic individualAccident = anAccident[i];
+    accidentValue = individualAccident['accident'];
+
+    dynamic individualTime = time;
+    timeValue = individualTime['time'];
+    String date = ('$dato + $time')[i];
+
+
+    dynamic individualStimulation = amountStimulation[i];
+    stimulationValue = individualStimulation['stimType'];
+    // DateTime datoo = DateTime.parse(date);
+    mapChartData.add(
+          ChartData(
+            date: date[i],
+            accident: accidentValue[i],
+            amount_stimulation: stimulationValue[i],
+          )
+    );
+  }
+  return mapChartData;
+}
+
+
+
 
   @override
     Widget build(BuildContext context) {
-      
-        final List<ChartData> chartData = [                         //We create our chartData here
-            ChartData(DateTime.now().subtract(const Duration(hours: 1, minutes: 43)), 35, 23),
-            ChartData(DateTime.now().subtract(const Duration(hours: 2, minutes: 24)), 38, 49),
-            ChartData(DateTime.now().subtract(const Duration(hours: 3)), 34, 12),
-            ChartData(DateTime.now().subtract(const Duration(hours: 4)), 52, 33),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
-            ChartData(DateTime.now().subtract(const Duration(hours: 9)), 16, 15),
-            ChartData(DateTime.now().subtract(const Duration(hours: 13)), 23, 30),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
-            ChartData(DateTime.now().subtract(const Duration(hours: 19)), 20, 10),
-            ChartData(DateTime.now().subtract(const Duration(hours: 20)), 23, 25),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
-            ChartData(DateTime.now().subtract(const Duration(hours: 22)), 2, 3),
-            ChartData(DateTime.now().subtract(const Duration(hours: 23)), 2, 3),
-            ChartData(DateTime(2024, 5, 1, 6, 2), 03, 31)
-        ];
-
+        // getChartData();
+      // getAccident();
+      // getStimulation();
+// List<ChartData> chartData = [
+//   ChartData();
+// ];
+      // return ElevatedButton(onPressed: getAccident, child: Text('hello'));}
         return  SizedBox(                                                     //We create a sizedbox to insert graph in
           height: 350,
           width: double.infinity,
@@ -83,40 +162,45 @@ class BarChartState extends State<BarChart> {
             ),
             enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
              plotAreaBorderWidth: 0,                                          //Creates at border around the graph
-              series: <CartesianSeries<ChartData, DateTime>>[                 //We create bar series
-                ColumnSeries<ChartData, DateTime>(                            //First bar serie "Accidents"
+              series: <CartesianSeries<ChartData, DateTime>> [                 //We create bar series
+                
+                ColumnSeries<ChartData, DateTime> (                            //First bar serie "Accidents"
                     name:'Accidents',                                         //Name of bar
                     dataSource: chartData,                                    //We get data from chartData
                     width: 1,                                                 //Bar width
-                    xValueMapper: (ChartData data, _) => data.time,              //X value is data.x
-                    yValueMapper: (ChartData data, _) => data.amount_stimulation,              //Y value is data.y
-                    color: Colors.blue,                                     //COlor
+                    xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),              //X value is data.x
+                    yValueMapper: (ChartData chartData, _) => chartData.accident,   //Y value    data.y
+                    color: Colors.yellow,                                     //COlor
                 ),
+                
                 ColumnSeries<ChartData, DateTime>(                            //Second bar serie, "Stimulations"
                     name: 'Stimulations',
                     //opacity: 0.9,
                     width: 1,
-                    dataSource: chartData,
-                    xValueMapper: (ChartData data, _) => data.time,
-                    yValueMapper: (ChartData data, _) => data.amount_accident,
-                    color: Colors.yellow,
+                    dataSource: mapChartData,
+                    xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),
+                    yValueMapper: (ChartData chartData, _) => chartData.amount_stimulation,
+                    color: Colors.blue,
                 )
               ]
           ),
         );
-    }
-    
+    } 
 }
-class ChartData {                                                       //Create class ChartData
-                                  //ChartData consists of x,y,y1
-        final DateTime time;                                               //This one is dateTime
+class ChartData {       
+        final String date;                                               //This one is dateTime
         // ignore: non_constant_identifier_names
-        final num amount_accident;                                                    //This is num
+        final num? accident;                                                    //This is num
         // ignore: non_constant_identifier_names
-        final num amount_stimulation;
+        final num? amount_stimulation;
+
+        List<dynamic>? mappedData;
     ChartData(
-          this.time, 
-          this.amount_accident, 
-          this.amount_stimulation
-          );   
+          {required this.date, 
+          this.accident, 
+          // ignore: non_constant_identifier_names
+          this.amount_stimulation,
+          this.mappedData,}
+          );
+          
 }

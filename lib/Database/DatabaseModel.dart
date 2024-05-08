@@ -4,7 +4,7 @@ class DatabaseModel {
 
  late int? dailyEvaluationScore;
  late String? dailyEvaluationMemo;
- late String? date;
+ late String date;
  late int? accident;
  late String? time;
  late int? stimType;
