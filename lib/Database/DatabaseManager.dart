@@ -211,5 +211,4 @@ Future getBladderDiaryStimTimeSetting(String date) async {
   return res;
 }
 
-
 }

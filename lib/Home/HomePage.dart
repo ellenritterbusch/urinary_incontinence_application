@@ -24,8 +24,9 @@ class _HomePageState extends State<HomePage> {
         ElevatedButton(onPressed: () {  }, child: const Text('Month')),
         ElevatedButton(onPressed: () {  }, child: const Text('3 Months'))
       ],),
-      body: 
-           Column(
+    body : 
+        SingleChildScrollView(
+           child: Column(
              children: [
               const Calender_Bar(),
                
@@ -38,7 +39,7 @@ class _HomePageState extends State<HomePage> {
               //Tooltip(),
              ],
            )
-    );
+    ));
   }
 
   // @override

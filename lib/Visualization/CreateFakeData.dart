@@ -3,8 +3,10 @@ import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Database/database.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+
   
-DateTime today = DateTime.now();
+//DateTime today = DateTime.now();
 
  List<String> allDates = [];
    
