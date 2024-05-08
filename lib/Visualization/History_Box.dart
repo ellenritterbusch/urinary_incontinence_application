@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 
 
 class History_Box extends StatefulWidget {
@@ -23,17 +25,14 @@ class _History_BoxState extends State<History_Box> {
 
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [//[ const Data_Button(),
-        const SizedBox(height: 80),
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: OutlinedButton (
-            onPressed : () async{ 
-              String date = '2024-05-01';
-              //debugPrint(date);
+  void initState() {
+    super.initState();
+    updateData();
+  }
+
+  void updateData()  async{
+              String date = today.toString().substring(0 ,10);
+              debugPrint(date);
                
               accidentcounter = 0; // accidentcounter
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
@@ -98,16 +97,14 @@ class _History_BoxState extends State<History_Box> {
                 });
               }
    } 
-            },
-          style: OutlinedButton.styleFrom(
-          //fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
-          shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30))),  
-          child: const Text('Update', style: 
-          TextStyle(
-            color: Colors.black, fontSize: 25),),
-  )
-  ),
+            }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [ //const Data_Button(),
+        const SizedBox(height: 80),
         SizedBox(
           width: double.infinity, 
           height: 220.0,
