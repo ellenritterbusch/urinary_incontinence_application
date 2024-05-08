@@ -1,17 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
-import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
+
 
 class History_Box extends StatefulWidget {
-  const History_Box({super.key});
+  const History_Box({Key? key}) : super(key: key);
 
   @override
   State<History_Box> createState() => _History_BoxState();
 }
 
 class _History_BoxState extends State<History_Box> {
-
   dynamic amountAccident;
   int accidentcounter = 0;
   dynamic stimType;
@@ -33,7 +32,8 @@ class _History_BoxState extends State<History_Box> {
           padding: const EdgeInsets.all(10.0),
           child: OutlinedButton (
             onPressed : () async{ 
-              String date = '2024-02-20';
+              String date = '2024-05-01';
+              //debugPrint(date);
                
               accidentcounter = 0; // accidentcounter
               amountAccident = await DatabaseManager.databaseManager.getBladderDiaryAccident(date); //snak med database
