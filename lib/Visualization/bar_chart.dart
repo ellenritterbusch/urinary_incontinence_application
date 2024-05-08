@@ -5,15 +5,6 @@ import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
 
-
-
-
-
-
-
-
-
-
 class BarChart extends StatefulWidget {  
   // final List<dynamic> accidents;
   // final List<dynamic> stimulations;
