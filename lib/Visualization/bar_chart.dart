@@ -47,20 +47,24 @@ class BarChartState extends State<BarChart> {
     Widget build(BuildContext context) {
       
         final List<ChartData> chartData = [                         //We create our chartData here
-            ChartData(DateTime.now().subtract(const Duration(hours: 1, minutes: 43)), 35, 23),
-            ChartData(DateTime.now().subtract(const Duration(hours: 2, minutes: 24)), 38, 49),
-            ChartData(DateTime.now().subtract(const Duration(hours: 3)), 34, 12),
-            ChartData(DateTime.now().subtract(const Duration(hours: 4)), 52, 33),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
-            ChartData(DateTime.now().subtract(const Duration(hours: 9)), 16, 15),
-            ChartData(DateTime.now().subtract(const Duration(hours: 13)), 23, 30),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
-            ChartData(DateTime.now().subtract(const Duration(hours: 19)), 20, 10),
-            ChartData(DateTime.now().subtract(const Duration(hours: 20)), 23, 25),
-            // ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
-            ChartData(DateTime.now().subtract(const Duration(hours: 22)), 2, 3),
-            ChartData(DateTime.now().subtract(const Duration(hours: 23)), 2, 3),
-            ChartData(DateTime(2024, 5, 1, 6, 2), 03, 31)
+            ChartData(DateTime.parse('2024-05-08 13:02:04Z'), 35, 23),
+            ChartData(DateTime.parse('2024-05-08 12:02:04Z'), 20, 5),
+            ChartData(DateTime.parse('2024-05-08 11:02:04Z'), 3, 15),
+            ChartData(DateTime.parse('2024-05-08 10:02:04Z'), 10, 4),
+            ChartData(DateTime.parse('2024-05-08 08:02:04Z'), 35, 23),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 2, minutes: 24)), 38, 49),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 3)), 34, 12),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 4)), 52, 33),
+            // // ChartData(DateTime.now().subtract(const Duration(hours: 6)), 40, 30),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 9)), 16, 15),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 13)), 23, 30),
+            // // ChartData(DateTime.now().subtract(const Duration(hours: 15)), 40, 25),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 19)), 20, 10),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 20)), 23, 25),
+            // // ChartData(DateTime.now().subtract(const Duration(hours: 21)), 5, 13),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 22)), 2, 3),
+            // ChartData(DateTime.now().subtract(const Duration(hours: 23)), 2, 3),
+            // ChartData(DateTime(2024, 5, 1, 6, 2), 03, 31)
         ];
 
         return  SizedBox(                                                     //We create a sizedbox to insert graph in
@@ -75,11 +79,12 @@ class BarChartState extends State<BarChart> {
               ),
             margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
             primaryXAxis: DateTimeAxis(
-              minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
-              maximum: today,                                        //Maximum time on graph is chosen date
+              //minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
+              // maximum: today,      
+              intervalType: DateTimeIntervalType.auto,                                  //Maximum time on graph is chosen date
               dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
-              desiredIntervals: 4,                                            //Here im truly lost
-              interval: 4,                                                    //Interval of 4 hours
+              //desiredIntervals: 4,                                            //Here im truly lost
+              //interval: 4,                                                    //Interval of 4 hours
             ),
             enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
              plotAreaBorderWidth: 0,                                          //Creates at border around the graph
