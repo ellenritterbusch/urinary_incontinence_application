@@ -98,37 +98,17 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
     Widget build(BuildContext context) {
         return  Column(
           children: [
-        TableCalendar(
-        locale: "en_US",
-        rowHeight: MediaQuery.of(context).size.height * 0.07,
-        headerStyle: const HeaderStyle(
-          formatButtonVisible: false,
-          titleCentered: true,
-        ),
-        availableGestures: AvailableGestures.all,
-
-        ///Udseende detaljer///
-        calendarStyle: CalendarStyle(     
-          selectedDecoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.primary,
-            shape: BoxShape.circle),
-           todayDecoration: BoxDecoration(
-            color: Colors.transparent,
-            border: Border.all(),
-            shape: BoxShape.circle),
-            todayTextStyle: const TextStyle(
-              color: Colors.black)
-           ),
-        
-        ///day specifications///
-        firstDay:DateTime.utc(2024,01,01),
-        lastDay: DateTime.now(),
-        focusedDay: today,
-        onDaySelected: _onDaySelected, 
-        selectedDayPredicate: (day) => isSameDay(day, today),
-        calendarFormat: CalendarFormat.week,
-
-      ),
+        // table calendar //
+        Table_calendar(
+          yourCalendarFormat: CalendarFormat.week, 
+          onDaySelected: (DateTime newdate, DateTime focusedDay){
+            setState(() {
+            today = newdate;
+            debugPrint('$today');
+            });
+            chartData = getChartData(today);
+          }),
+          // bar chart //
           SizedBox(
           height: 350,
           width: double.infinity,
