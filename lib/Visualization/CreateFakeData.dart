@@ -46,7 +46,7 @@ class _Data_ButtonState extends State<Data_Button> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.2),
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20))
          ),
@@ -55,7 +55,7 @@ class _Data_ButtonState extends State<Data_Button> {
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Make data", style: TextStyle(fontSize: 28, color: Colors.black),),],
+                Text("Make data", style: TextStyle(fontSize: 12, color: Colors.black),),],
           ));
   }
 

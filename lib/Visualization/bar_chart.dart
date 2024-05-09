@@ -89,101 +89,118 @@ late dynamic stimulationValue;
 
 @override //Brug future! eller lav en funktion som bliver kaldt herinde
    void initState() {
-    chartData = getChartData();
     super.initState();
-    chartData = mapLiveData;
+    chartData = getChartData2();
     //  getAccident();
     // getStimulation();
     // returnvalue();
 }           
 
-
-Future<List<ChartData>> getChartData() async {
-  List<ChartData> mapChartData = [];
-  final dato = today.toString().substring(0,10);
-  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
-  final time = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
-  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
-
-
-  for (int i = 0; i > anAccident.length; i++){
-
-    dynamic individualAccident = anAccident[i];
-    accidentValue = individualAccident['accident'];
-
-    dynamic individualTime = time;
-    timeValue = individualTime['time'];
-    String date = ('$dato + $time')[i];
-
-
-    dynamic individualStimulation = amountStimulation[i];
-    stimulationValue = individualStimulation['stimType'];
-    // DateTime datoo = DateTime.parse(date);
-    mapChartData.add(
-          ChartData(
-            date: date[i],
-            accident: accidentValue[i],
-            amount_stimulation: stimulationValue[i],
-          )
-    );
-  }
-  return mapChartData;
+Future<List<ChartData>> getChartData2() async {
+  final List<ChartData> chartData = [
+            ChartData(date:'2024-05-09 06:00:04Z',accident:20, amount_stimulation: 35),
+             ChartData(date:'2024-05-09 06:30:04Z',accident:10, amount_stimulation: 20),
+              ChartData(date:'2024-05-09 05:00:04Z',accident:20, amount_stimulation: 35),
+               ChartData(date:'2024-05-09 05:30:04Z',accident:15, amount_stimulation: 10),
+        ];
+  return chartData;
 }
+
+
+// Future<List<ChartData>> getChartData() async {
+//   List<ChartData> mapChartData = [];
+//   final dato = today.toString().substring(0,10);
+//   final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
+//   final time = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
+//   final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
+
+
+//   for (int i = 0; i > anAccident.length; i++){
+
+//     dynamic individualAccident = anAccident[i];
+//     accidentValue = individualAccident['accident'];
+
+//     dynamic individualTime = time;
+//     timeValue = individualTime['time'];
+//     String date = ('$dato + $time')[i];
+
+
+//     dynamic individualStimulation = amountStimulation[i];
+//     stimulationValue = individualStimulation['stimType'];
+//     // DateTime datoo = DateTime.parse(date);
+//     mapChartData.add(
+//           ChartData(
+//             date: date[i],
+//             accident: accidentValue[i],
+//             amount_stimulation: stimulationValue[i],
+//           )
+//     );
+//   }
+//   return mapChartData;
+// }
 
 
 
 
   @override
     Widget build(BuildContext context) {
-        // getChartData();
-      // getAccident();
-      // getStimulation();
-// List<ChartData> chartData = [
-//   ChartData();
-// ];
-      // return ElevatedButton(onPressed: getAccident, child: Text('hello'));}
-        return  SizedBox(                                                     //We create a sizedbox to insert graph in
+        return  SizedBox(
           height: 350,
           width: double.infinity,
-          child: SfCartesianChart(
-            title: const ChartTitle(text: 'Use of On-Demand'),
-            legend:  const Legend(
-              alignment: ChartAlignment.center,
-              isVisible: true,
-              position: LegendPosition.bottom,
-              ),
-            margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
-            primaryXAxis: DateTimeAxis(
-              minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
-              maximum: today,                                        //Maximum time on graph is chosen date
-              dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
-              desiredIntervals: 4,                                            //Here im truly lost
-              interval: 4,                                                    //Interval of 4 hours
-            ),
-            enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
-             plotAreaBorderWidth: 0,                                          //Creates at border around the graph
-              series: <CartesianSeries<ChartData, DateTime>> [                 //We create bar series
-                
-                ColumnSeries<ChartData, DateTime> (                            //First bar serie "Accidents"
-                    name:'Accidents',                                         //Name of bar
-                    dataSource: chartData,                                    //We get data from chartData
-                    width: 1,                                                 //Bar width
-                    xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),              //X value is data.x
-                    yValueMapper: (ChartData chartData, _) => chartData.accident,   //Y value    data.y
-                    color: Colors.yellow,                                     //COlor
+          child: Scaffold(                                                     //We create a sizedbox to insert graph in
+            // height: 350,
+            // width: double.infinity,
+            body: FutureBuilder<List<ChartData>>(
+              future: chartData,
+              builder: (context, snapshot){
+                if (snapshot.hasData){
+                  return SfCartesianChart(
+              title: const ChartTitle(text: 'Use of On-Demand'),
+              legend:  const Legend(
+                alignment: ChartAlignment.center,
+                isVisible: true,
+                position: LegendPosition.bottom,
                 ),
-                
-                ColumnSeries<ChartData, DateTime>(                            //Second bar serie, "Stimulations"
-                    name: 'Stimulations',
-                    //opacity: 0.9,
-                    width: 1,
-                    dataSource: mapChartData,
-                    xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),
-                    yValueMapper: (ChartData chartData, _) => chartData.amount_stimulation,
-                    color: Colors.blue,
-                )
-              ]
-          ),
+              margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
+              primaryXAxis: DateTimeAxis(
+                minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
+                maximum: today,                                        //Maximum time on graph is chosen date
+                dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
+                desiredIntervals: 4,                                            //Here im truly lost
+                interval: 4,                                                    //Interval of 4 hours
+              ),
+              enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
+               plotAreaBorderWidth: 0,                                          //Creates at border around the graph
+                series: <CartesianSeries<ChartData, DateTime>> [                 //We create bar series
+                  
+                  ColumnSeries<ChartData, DateTime> (                            //First bar serie "Accidents"
+                      name:'Accidents',                                         //Name of bar
+                      dataSource: snapshot.data!,                                    //We get data from chartData
+                      width: 1,                                                 //Bar width
+                      xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),              //X value is data.x
+                      yValueMapper: (ChartData chartData, _) => chartData.accident,   //Y value    data.y
+                      color: Colors.yellow,                                     //COlor
+                  ),
+                  
+                  ColumnSeries<ChartData, DateTime>(                            //Second bar serie, "Stimulations"
+                      name: 'Stimulations',
+                      //opacity: 0.9,
+                      width: 1,
+                      dataSource: snapshot.data!,
+                      xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),
+                      yValueMapper: (ChartData chartData, _) => chartData.amount_stimulation,
+                      color: Colors.blue,
+                  )
+                ]
+            );
+            }
+            else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return CircularProgressIndicator();
+           }
+           ),
+                ),
         );
     } 
 }

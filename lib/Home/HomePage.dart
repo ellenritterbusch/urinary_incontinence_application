@@ -45,8 +45,8 @@ class _HomePageState extends State<HomePage> {
                
               BarChart(),
 
-              const Divider(height: 2,),
-               Data_Button(),
+              const Divider(height: 3,),
+              const Data_Button(),
               
               //History_Box()
               //Tooltip(),
