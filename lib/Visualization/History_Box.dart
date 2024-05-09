@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
@@ -98,48 +100,58 @@ class _History_BoxState extends State<History_Box> {
               }
    } 
             }
-
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [ //const Data_Button(),
-        const SizedBox(height: 80),
-        SizedBox(
-          width: double.infinity, 
-          height: 220.0,
-          child: Card(color: const Color.fromARGB(255, 207, 208, 207),
-          child: 
-          Row( 
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [    //const Data_Button(), kan indkommenteres hvis vi skal hente data fra i dag
+        SizedBox(height: 20),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.all(8.0),),
+            Text('History', style:
+            TextStyle(fontSize: 35, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144))),
+          ]
+        ),
+          SizedBox(
+            width: 350,
+            height: 300.0,
+          child: Card(
+            color: const Color.fromARGB(255, 242, 245, 248),
+            child: Row( 
             children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Text('Accidents', style: //printer antal accidents
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                  Text('Accidents', style: //printer antal accidents
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text('$accidentcounter', style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
-                    const Padding(
+                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    Padding(
                       padding: EdgeInsets.all(8.0)),
-                  const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  Text('$stimTypecounter', style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
-                    const Padding(
+                  Text('On-demand stimulations', style: //printer antal on demand stimuleringer
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
+                  Text('$stimTypecounter', style: //
+                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    Padding(
                       padding: EdgeInsets.all(8.0)),
-                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-                  Text(totalStimTime, style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.normal),),
+                  Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
+                  Text(totalStimTime, style: //
+                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
           ],
           ),
-                const VerticalDivider( //den lodrette linje der skiller information i boxen
-                  width: 100,
-                  thickness: 2,
-                  indent: 0,
-                  endIndent: 0,
-                  color: Color.fromARGB(255, 142, 141, 141),),
+                //VerticalDivider( //den lodrette linje der skiller information i boxen
+                  //width: 100,
+                  //thickness: 2,
+                  //indent: 0,
+                  //endIndent: 0,
+                  //color: Color.fromARGB(255, 40, 85, 162),),
 
              // const Column(
               //  mainAxisAlignment: MainAxisAlignment.center,
@@ -154,8 +166,9 @@ class _History_BoxState extends State<History_Box> {
             ]   
           )
           )
-        )
-      ]
-    ); // children 
+    )
+          ]
+    );
+    // children 
   }
 }
