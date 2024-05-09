@@ -106,7 +106,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
 //RETRIEVE only the accidents                                           //////////////////////////
    Future<List<Map<String, dynamic>>> getAccidentBladderDiary(String date) async {
      Database db = await databaseDB;
-    var res = await db.rawQuery('SELECT $colAccident + $colTime FROM $BladderDiaryTable WHERE $colDate=?', [date]);
+    var res = await db.rawQuery('SELECT $colAccident FROM $BladderDiaryTable WHERE $colDate=?', [date]);
     // var res = await db.rawQuery('SELECT $colNotiAll FROM $NotificationTable');
     return res;
   }
@@ -126,9 +126,9 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
   }
 
     //RETRIEVE only the stimtype = 1                                                              /////////////////////////
-   Future getOnDemandBladderDiary(String date) async {
+   Future<List<Map<String, dynamic>>> getOnDemandBladderDiary(String date) async {
     final Database db = await databaseDB;
-    var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colStimType =1 AND $colDate=?', [date]);
+    var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colStimType AND $colDate=?', [date]);
     return res; 
   }
 
