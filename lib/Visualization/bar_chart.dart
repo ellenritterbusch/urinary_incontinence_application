@@ -19,7 +19,6 @@ class BarChart extends StatefulWidget {
 }
 
 class BarChartState extends State<BarChart> {
-late List accident = [];
 late Future <List<ChartData>> chartData;
 late List<ChartData> mapLiveData;
 
@@ -27,7 +26,6 @@ late List<ChartData> mapLiveData;
  List<dynamic>? individualTime;
  List<dynamic>? individualStimulation;
 
-late dynamic stimulation = [];
 dynamic accidentValue;
 dynamic timeValue;
 dynamic stimulationValue;
