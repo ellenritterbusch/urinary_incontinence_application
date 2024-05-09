@@ -5,87 +5,58 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 
 // ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
 
-   // ignore: prefer_const_constructors_in_immutables
-   BarChart(
-    {super.key}
-    );
+   const BarChart({Key? key}) : super(key: key);
   
   @override
   // ignore: no_logic_in_create_state
   State<BarChart> createState() => BarChartState();
 
-
- //BarChart({super.key});
-  // ignore: no_logic_in_create_state
-  // BarChartState createState() => BarChartState(
-  //   accident,
-  //   stimulations,
-  // );
 }
 
 class BarChartState extends State<BarChart> {
-late List accident = [];
-late Future <List<ChartData>> chartData;
-late List<ChartData> mapLiveData;
+
+late Future <List<ChartData>> chartData; 
 
  List<dynamic>? individualAccident;
  List<dynamic>? individualTime;
  List<dynamic>? individualStimulation;
 
-late dynamic stimulation = [];
-dynamic accidentValue;
-dynamic timeValue;
-dynamic stimulationValue;
-// String? datoo;
+ dynamic accidentValue;
+ dynamic timeValue;
+ dynamic stimulationValue;
+      
 
+ @override //Brug future! eller lav en funktion som bliver kaldt herinde
+   void initState() {
+    super.initState();
+    chartData = getChartData(today);
+} 
 
-    // Future getAccident() async {
-    //   final date = today.toString().substring(0,10);
-    //   final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(date);
-    //   final accidenta =  anAccident;
-    //   // debugPrint(accidenta);
-    //   // final int allaccident = accidenta['accident'];
-      
-    //   for (int i = 0; i > anAccident.length; i++){
-    //     dynamic individualAccident = anAccident[i];
-    //     accidentValue = individualAccident['accident'];
-    //   }
-    //   debugPrint('$anAccident');
-      
-      // setState(()  {
-      //   accident = allaccident;
-      //   debugPrint('Accidents: $accident');
-      // });
-      // return anAccident;
-      // debugPrint('${getAccident} accidents');
-      // final uheld = getAccident[0];
-      // return accidenta;
-      
-List<ChartData> mapChartData = [];
-  // late individualAccident;
-  // late individualTime;
-  // late individualStimulation;
-Future<List<ChartData>> getChartData() async {
  
-  final dato = today.toString().substring(0,10);
-  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
-  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
-  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dato);
+Future<List<ChartData>> getChartData(DateTime date) async {
+  List<ChartData> mapChartData = [];
+ 
+  final dateString = today.toString().substring(0,10);
+  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dateString);
+  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString);
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);
 
 
-  for (var i = 0; i < anAccident.length-1; i++){
+  for (var i = 0; i < anAccident.length; i++){
 
     final individualAccident = anAccident[i];
     accidentValue = individualAccident['accident'];
 
     final  individualTime = timer[i];
     timeValue = individualTime['time'];
-    final datoo = '$dato $timeValue';
+    final dateTime = '$dateString $timeValue';
+    date = DateTime.parse(dateTime);
 
     final individualStimulation = amountStimulation[i];
     stimulationValue = individualStimulation['stimtype'];
@@ -99,7 +70,7 @@ if (stimulationValue > 1) {
 
     mapChartData.add(
           ChartData(
-            date: datoo,
+            date: dateTime,
             accident: accidentValue,
             amount_stimulation: stimulationValue,
           )
@@ -112,71 +83,56 @@ if (stimulationValue > 1) {
 
   // debugPrint('$stimulationValue');
   return mapChartData;
+}       
+
+void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
+  setState(() {
+    today = selectedDay;
+    debugPrint('$today');
+  });
+  chartData = getChartData(today);
 }
-
-
-  //  Future <dynamic> getStimulation() async {
-  //     final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
-  //     final stimulationa = amountStimulation;
-  //     setState(() {
-  //       stimulation = stimulationa[0];
-  //       debugPrint('Stimulations: $stimulation');
-  //     });
-  //     // debugPrint('$today');
-  //     // final num stimulationa = amountStimulation ;
-  //     // return amountStimulation;
-  //     // debugPrint('${amountStimulation} stimulations');
-  //     // return  amountStimulation;
-  //   }
-
-    // Future<List<ChartData>> returnvalue() async {
-    //   // dynamic stimuli = await getStimulation();
-    //   // dynamic accidenta = await getAccident();
-    //    List<ChartData> chartData = [                                 //Our data. Here we choose our data.
-    //       ChartData(today, accident, stimulation)
-    //   ];
-    //   return chartData;
-    // }
-
-              
-
-@override //Brug future! eller lav en funktion som bliver kaldt herinde
-   void initState() {
-    super.initState();
-    chartData = getChartData();
-
-  //   List<String> stars = [];
-  // for (int i = 0; i < 100; i++) {
-  //   stars.add('Hej');
-  //   debugPrint('$stars');
-  // }
-    //  getAccident();
-    // getStimulation();
-    // returnvalue();
-}           
-
-// Future<List<ChartData>> getChartData2() async {
-//   final List<ChartData> chartData = [
-//        ChartData(date:'2024-05-08 10:00:04Z',accident:20, amount_stimulation: 35),
-//         ChartData(date:'2024-05-08 12:30:04Z',accident:10, amount_stimulation: 20),
-//         ChartData(date:'2024-05-08 14:00:04Z',accident:20, amount_stimulation: 35),
-//         ChartData(date:'2024-05-08 18:30:04Z',accident:15, amount_stimulation: 10),
-//             ChartData(date:'2024-05-09 06:00:04Z',accident:20, amount_stimulation: 35),
-//              ChartData(date:'2024-05-09 06:30:04Z',accident:10, amount_stimulation: 20),
-//               ChartData(date:'2024-05-09 05:00:04Z',accident:20, amount_stimulation: 35),
-//                ChartData(date:'2024-05-09 05:30:04Z',accident:15, amount_stimulation: 10),
-//         ];
-//   return chartData;
-// }
-
 
 
   @override
     Widget build(BuildContext context) {
-        return  SizedBox(
+        return  Column(
+          children: [
+        TableCalendar(
+        locale: "en_US",
+        rowHeight: MediaQuery.of(context).size.height * 0.07,
+        headerStyle: const HeaderStyle(
+          formatButtonVisible: false,
+          titleCentered: true,
+        ),
+        availableGestures: AvailableGestures.all,
+
+        ///Udseende detaljer///
+        calendarStyle: CalendarStyle(     
+          selectedDecoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.primary,
+            shape: BoxShape.circle),
+           todayDecoration: BoxDecoration(
+            color: Colors.transparent,
+            border: Border.all(),
+            shape: BoxShape.circle),
+            todayTextStyle: const TextStyle(
+              color: Colors.black)
+           ),
+        
+        ///day specifications///
+        firstDay:DateTime.utc(2024,01,01),
+        lastDay: DateTime.now(),
+        focusedDay: today,
+        onDaySelected: _onDaySelected, 
+        selectedDayPredicate: (day) => isSameDay(day, today),
+        calendarFormat: CalendarFormat.week,
+
+      ),
+          SizedBox(
           height: 350,
           width: double.infinity,
-          child: Scaffold(                                                     //We create a sizedbox to insert graph in
+        child: Scaffold(                                                     //We create a sizedbox to insert graph in
             // height: 350,
             // width: double.infinity,
             body: FutureBuilder<List<ChartData>>(
@@ -230,6 +186,7 @@ if (stimulationValue > 1) {
            }
            ),
                 ),
+        )]
         );
     } 
 }

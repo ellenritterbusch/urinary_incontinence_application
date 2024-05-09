@@ -15,27 +15,15 @@ class Table_calendar extends StatefulWidget {
 } 
 
 class Table_calendarState extends State<Table_calendar> {
-  BarChartState barchartManager = BarChartState();
-  //store the evaluations created
-  // Map<DateTime, List<Evaluation>> evaluations = DatabaseManager.databaseManager.getDailyEvaluations();
-  // late final ValueNotifier<List<Evaluation>> _selectedEvaluation;
+  BarChart barchartManager = BarChart();
 
-  // @override
-  // void initState(){
-  //   super.initState();
-  //   _selectedEvaluation = ValueNotifier(getEvaluationForDay(today));
-  // }
-
-
-
-void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
   setState(() {
     today = selectedDay;
-    BarChartState().chartData = barchartManager.getChartData2();
     debugPrint('$today');
   });
+  
 }
-
 
   @override
   Widget build(BuildContext context) {
@@ -69,23 +57,10 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
         focusedDay: today,
         onDaySelected: _onDaySelected, 
         selectedDayPredicate: (day) => isSameDay(day, today),
-
         calendarFormat: widget.yourCalendarFormat,
-
-        //builders
-        // calendarBuilders: CalendarBuilders(
-        //   markerBuilder:
-        // ),
 
       ),
     );
   }
-  
-
-}
-
-class Evaluation {
-  final String title;
-  Evaluation(this.title);
 }
 
