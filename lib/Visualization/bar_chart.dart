@@ -32,10 +32,16 @@ class BarChartState extends State<BarChart> {
 late List accident = [];
 late Future <List<ChartData>> chartData;
 late List<ChartData> mapLiveData;
+
+ List<dynamic>? individualAccident;
+ List<dynamic>? individualTime;
+ List<dynamic>? individualStimulation;
+
 late dynamic stimulation = [];
-late dynamic accidentValue;
-late dynamic timeValue;
-late dynamic stimulationValue;
+dynamic accidentValue;
+dynamic timeValue;
+dynamic stimulationValue;
+// String? datoo;
 
 
     // Future getAccident() async {
@@ -51,16 +57,63 @@ late dynamic stimulationValue;
     //   }
     //   debugPrint('$anAccident');
       
-    //   // setState(()  {
-    //   //   accident = allaccident;
-    //   //   debugPrint('Accidents: $accident');
-    //   // });
-    //   // return anAccident;
-    //   // debugPrint('${getAccident} accidents');
-    //   // final uheld = getAccident[0];
-    //   // return accidenta;
+      // setState(()  {
+      //   accident = allaccident;
+      //   debugPrint('Accidents: $accident');
+      // });
+      // return anAccident;
+      // debugPrint('${getAccident} accidents');
+      // final uheld = getAccident[0];
+      // return accidenta;
       
-    //   }
+List<ChartData> mapChartData = [];
+  // late individualAccident;
+  // late individualTime;
+  // late individualStimulation;
+Future<List<ChartData>> getChartData() async {
+ 
+  final dato = today.toString().substring(0,10);
+  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
+  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dato);
+
+
+  for (var i = 0; i < anAccident.length-1; i++){
+
+    final individualAccident = anAccident[i];
+    accidentValue = individualAccident['accident'];
+
+    final  individualTime = timer[i];
+    timeValue = individualTime['time'];
+    final datoo = '$dato $timeValue';
+
+    final individualStimulation = amountStimulation[i];
+    stimulationValue = individualStimulation['stimtype'];
+
+if (stimulationValue > 1) {
+  setState(() {
+    stimulationValue = 0;
+  });
+
+}
+
+    mapChartData.add(
+          ChartData(
+            date: datoo,
+            accident: accidentValue,
+            amount_stimulation: stimulationValue,
+          )
+    );
+
+    // debugPrint('${amountStimulation}');
+
+    
+  }
+
+  // debugPrint('$stimulationValue');
+  return mapChartData;
+}
+
 
   //  Future <dynamic> getStimulation() async {
   //     final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
@@ -90,59 +143,31 @@ late dynamic stimulationValue;
 @override //Brug future! eller lav en funktion som bliver kaldt herinde
    void initState() {
     super.initState();
-    chartData = getChartData2();
+    chartData = getChartData();
+
+  //   List<String> stars = [];
+  // for (int i = 0; i < 100; i++) {
+  //   stars.add('Hej');
+  //   debugPrint('$stars');
+  // }
     //  getAccident();
     // getStimulation();
     // returnvalue();
 }           
 
-Future<List<ChartData>> getChartData2() async {
-  final List<ChartData> chartData = [
-       ChartData(date:'2024-05-08 10:00:04Z',accident:20, amount_stimulation: 35),
-        ChartData(date:'2024-05-08 12:30:04Z',accident:10, amount_stimulation: 20),
-        ChartData(date:'2024-05-08 14:00:04Z',accident:20, amount_stimulation: 35),
-        ChartData(date:'2024-05-08 18:30:04Z',accident:15, amount_stimulation: 10),
-            ChartData(date:'2024-05-09 06:00:04Z',accident:20, amount_stimulation: 35),
-             ChartData(date:'2024-05-09 06:30:04Z',accident:10, amount_stimulation: 20),
-              ChartData(date:'2024-05-09 05:00:04Z',accident:20, amount_stimulation: 35),
-               ChartData(date:'2024-05-09 05:30:04Z',accident:15, amount_stimulation: 10),
-        ];
-  return chartData;
-}
-
-
-// Future<List<ChartData>> getChartData() async {
-//   List<ChartData> mapChartData = [];
-//   final dato = today.toString().substring(0,10);
-//   final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dato);
-//   final time = await DatabaseManager.databaseManager.getTimeBladderDiary(dato);
-//   final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(today.toString());
-
-
-//   for (int i = 0; i > anAccident.length; i++){
-
-//     dynamic individualAccident = anAccident[i];
-//     accidentValue = individualAccident['accident'];
-
-//     dynamic individualTime = time;
-//     timeValue = individualTime['time'];
-//     String date = ('$dato + $time')[i];
-
-
-//     dynamic individualStimulation = amountStimulation[i];
-//     stimulationValue = individualStimulation['stimType'];
-//     // DateTime datoo = DateTime.parse(date);
-//     mapChartData.add(
-//           ChartData(
-//             date: date[i],
-//             accident: accidentValue[i],
-//             amount_stimulation: stimulationValue[i],
-//           )
-//     );
-//   }
-//   return mapChartData;
+// Future<List<ChartData>> getChartData2() async {
+//   final List<ChartData> chartData = [
+//        ChartData(date:'2024-05-08 10:00:04Z',accident:20, amount_stimulation: 35),
+//         ChartData(date:'2024-05-08 12:30:04Z',accident:10, amount_stimulation: 20),
+//         ChartData(date:'2024-05-08 14:00:04Z',accident:20, amount_stimulation: 35),
+//         ChartData(date:'2024-05-08 18:30:04Z',accident:15, amount_stimulation: 10),
+//             ChartData(date:'2024-05-09 06:00:04Z',accident:20, amount_stimulation: 35),
+//              ChartData(date:'2024-05-09 06:30:04Z',accident:10, amount_stimulation: 20),
+//               ChartData(date:'2024-05-09 05:00:04Z',accident:20, amount_stimulation: 35),
+//                ChartData(date:'2024-05-09 05:30:04Z',accident:15, amount_stimulation: 10),
+//         ];
+//   return chartData;
 // }
-
 
 
 
@@ -201,7 +226,7 @@ Future<List<ChartData>> getChartData2() async {
             else if (snapshot.hasError) {
               return Text("${snapshot.error}");
             }
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
            }
            ),
                 ),
@@ -215,13 +240,12 @@ class ChartData {
         // ignore: non_constant_identifier_names
         final num? amount_stimulation;
 
-        List<dynamic>? mappedData;
     ChartData(
           {required this.date, 
-          this.accident, 
+          required this.accident, 
           // ignore: non_constant_identifier_names
-          this.amount_stimulation,
-          this.mappedData,}
+          required this.amount_stimulation,
+          }
           );
           
 }
