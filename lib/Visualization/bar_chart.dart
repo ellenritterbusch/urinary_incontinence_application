@@ -98,6 +98,10 @@ late dynamic stimulationValue;
 
 Future<List<ChartData>> getChartData2() async {
   final List<ChartData> chartData = [
+       ChartData(date:'2024-05-08 10:00:04Z',accident:20, amount_stimulation: 35),
+        ChartData(date:'2024-05-08 12:30:04Z',accident:10, amount_stimulation: 20),
+        ChartData(date:'2024-05-08 14:00:04Z',accident:20, amount_stimulation: 35),
+        ChartData(date:'2024-05-08 18:30:04Z',accident:15, amount_stimulation: 10),
             ChartData(date:'2024-05-09 06:00:04Z',accident:20, amount_stimulation: 35),
              ChartData(date:'2024-05-09 06:30:04Z',accident:10, amount_stimulation: 20),
               ChartData(date:'2024-05-09 05:00:04Z',accident:20, amount_stimulation: 35),
@@ -163,8 +167,8 @@ Future<List<ChartData>> getChartData2() async {
                 ),
               margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
               primaryXAxis: DateTimeAxis(
-                minimum: today.subtract(const Duration(days: 1)),      //Minimum time on graph is yesterday at current time.
-                maximum: today,                                        //Maximum time on graph is chosen date
+                minimum: DateTime(today.year, today.month, today.day, 00, 0),      //Minimum time on graph is yesterday at current time.
+                maximum: DateTime(today.year, today.month, today.day, 24, 0),                                        //Maximum time on graph is chosen date
                 dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
                 desiredIntervals: 4,                                            //Here im truly lost
                 interval: 4,                                                    //Interval of 4 hours
