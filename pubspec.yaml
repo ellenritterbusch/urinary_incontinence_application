@@ -52,6 +52,9 @@ dependencies:
   provider: ^6.1.2
   syncfusion_flutter_charts: ^25.1.42+1
   persistent_bottom_nav_bar: ^5.0.2
+  youtube_player_flutter: ^9.0.1
+  video_player: ^2.8.6
+video_player: ^2.8.6
   
 
 dev_dependencies:
@@ -80,8 +83,8 @@ flutter:
   # the material Icons class.
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  # - assets/
+  assets:
+  - assets/video/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
