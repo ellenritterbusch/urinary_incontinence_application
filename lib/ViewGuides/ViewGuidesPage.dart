@@ -22,20 +22,25 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
       body: SingleChildScrollView( 
         child: Column(
         children: <Widget>[
-          Card.filled(
-            child: ExpansionTile(
-              title: Text("Guide to UCon"),
+          Divider(color: Theme.of(context).colorScheme.primary),
+          Theme(data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+           child: ExpansionTile(
+              title: const Text("Guide to UCon", 
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
               trailing: Icon(
                   _uconExpanded
-                    ? Icons.keyboard_arrow_down_outlined
-                   : Icons.keyboard_arrow_right_outlined),
+                  ? Icons.keyboard_arrow_down_outlined
+                  : Icons.keyboard_arrow_right_outlined),
                 
-              children: [
-                ListTile_DropDown(
+              children: const [
+               ListTile_DropDown(
                   tile_Title: 'UCon Overview', 
-                  tile_Text: 'Here is an overview of the UCon devices and the various buttons it has'),
+                  tile_Text: 'The picture below illustrates an overview of the UCon device, its remote and the various buttons it has:'),
                 ListTile_DropDown(  
-                  tile_Title: 'On/Off Button', 
+                  tile_Title: 'Electode Placement', 
+                  tile_Text: ''),
+                  ListTile_DropDown(  
+                  tile_Title: 'Alarm Guide', 
                   tile_Text: 'Press this button to turn on the UCon device'),
                   ],
               onExpansionChanged: (bool expanded) {
@@ -43,11 +48,12 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
                       _uconExpanded = expanded;
                    });
                 },
-              ),
-            ),
-          Card.filled(
-            child: ExpansionTile(
-              title: Text("Guide to app"),
+              ),),
+            Divider(color: Theme.of(context).colorScheme.primary),
+          
+          Theme(data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+           child:ExpansionTile(
+              title: const Text("Guide to app", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
               trailing: Icon(
                   _appExpanded
                   ? Icons.keyboard_arrow_down_outlined
@@ -56,15 +62,15 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
               children: const [
                 ListTile_DropDown(
                   tile_Title: 'App Overview', 
-                  tile_Text: 'Here you can see an overview of the app'),
+                  tile_Text: 'Below you will find a video guide taking you through the use of the app:'),
                     ],
               onExpansionChanged: (bool expanded) {
                 setState(() {
                     _appExpanded = expanded;
                   });
                },
-              ),
-            ),
+           )),
+           Divider(color: Theme.of(context).colorScheme.primary),
           ],
         ),
       )
