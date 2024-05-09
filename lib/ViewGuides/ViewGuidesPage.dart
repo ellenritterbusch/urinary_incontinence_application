@@ -11,7 +11,8 @@ class ViewGuidesPage extends StatefulWidget {
 
 class _ViewGuidesPageState extends State<ViewGuidesPage> {
   bool _appExpanded = false;
-  bool _uconExpanded = false;  
+  bool _uconExpanded = false;
+  bool showVideo= false;  
   String text = '';
 
   @override
