@@ -117,7 +117,7 @@ class _History_BoxState extends State<History_Box> {
         ),
           SizedBox(
             width: 350,
-            height: 300.0,
+            height: 270.0,
           child: Card(
             color: const Color.fromARGB(255, 242, 245, 248),
             child: Row( 
@@ -131,19 +131,19 @@ class _History_BoxState extends State<History_Box> {
                   Text('Accidents', style: //printer antal accidents
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text('$accidentcounter', style:
-                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
                     Padding(
                       padding: EdgeInsets.all(8.0)),
                   Text('On-demand stimulations', style: //printer antal on demand stimuleringer
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text('$stimTypecounter', style: //
-                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
                     Padding(
                       padding: EdgeInsets.all(8.0)),
                   Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text(totalStimTime, style: //
-                    TextStyle(fontSize: 35, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
           ],
           ),
                 //VerticalDivider( //den lodrette linje der skiller information i boxen
