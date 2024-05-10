@@ -13,9 +13,19 @@ class _ImageAssetState extends State<ImageAsset> {
   @override
   Widget build(BuildContext context) {
     return  Center(
-        child: Image(
-          image: AssetImage(widget.imageAsset),
-       ),
-      );
+      
+        child: checkForImage()
+    );}
+    Widget checkForImage() {
+  if (widget.imageAsset == '') {
+    // If image asset is empty, return an empty Text widget
+    return Text('');
+  } else {
+    // If image asset is not empty, return an AssetImage widget
+    return Image.asset(widget.imageAsset);
   }
 }
+
+}
+
+
