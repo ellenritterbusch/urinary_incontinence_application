@@ -19,13 +19,13 @@ class BarChart extends StatefulWidget {
 
 class BarChartState extends State<BarChart> {
 
-late Future <List<ChartData>> chartData; 
+late Future <List<ChartData>> chartData;                          //Define chartdata
 
- List<dynamic>? individualAccident;
- List<dynamic>? individualTime;
- List<dynamic>? individualStimulation;
+ List<dynamic>? individualAccident;                              //Define list of accidents
+ List<dynamic>? individualTime;                                 //Define list of times for incidents
+ List<dynamic>? individualStimulation;                          //Define list of stimulations
 
- dynamic accidentValue;
+ dynamic accidentValue;                                         //Define individual incidents
  dynamic timeValue;
  dynamic stimulationValue;
       
@@ -38,23 +38,23 @@ late Future <List<ChartData>> chartData;
 
  
 Future<List<ChartData>> getChartData(DateTime date) async {
-  List<ChartData> mapChartData = [];
+  List<ChartData> mapChartData = [];                                                                      //Define list mapChartData
  
-  final dateString = today.toString().substring(0,10);
-  final anAccident = await DatabaseManager.databaseManager.getAccidentBladderDiary(dateString);
-  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString);
-  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);
+  final dateString = today.toString().substring(0,10);                                                    //Chosen date on calendar_bar as string 
+  final accidents = await DatabaseManager.databaseManager.getAccidentBladderDiary(dateString);            //Fetch accidents from database
+  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString);                    //Fetch time of incidents from database
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);    //Fetch ALL stimulations from database
 
 
-  for (var i = 0; i < anAccident.length; i++){
+  for (var i = 0; i < accidents.length; i++){                             //For loop counter going from 0 - amount of accidents.
 
-    final individualAccident = anAccident[i];
+    final individualAccident = accidents[i];                              
     accidentValue = individualAccident['accident'];
 
     final  individualTime = timer[i];
     timeValue = individualTime['time'];
     final dateTime = '$dateString $timeValue';
-    date = DateTime.parse(dateTime);
+
 
     final individualStimulation = amountStimulation[i];
     stimulationValue = individualStimulation['stimtype'];
@@ -66,17 +66,17 @@ if (stimulationValue > 1) {                                                //Sti
 
 }
 
-    mapChartData.add(
+    mapChartData.add(                                                       //We insert the data into the variables from the ChartData class
           ChartData(
             date: dateTime,
             accident: accidentValue,
-            amount_stimulation: stimulationValue,
+            amount_stimulation: stimulationValue,                           
           )
     );
 
-    debugPrint('acci: ${accidentValue}');                                     //If these print, we enter the for loop.
-    debugPrint('time: ${dateTime}');
-    debugPrint('Stim: ${stimulationValue}');
+    debugPrint('acci: $accidentValue');                                     //If these print, we enter the for loop.
+    debugPrint('time: $dateTime');
+    debugPrint('Stim: $stimulationValue');
 
     
   }
@@ -142,20 +142,34 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
                       width: 1,                                                                 //Bar width (between 0-1)
                       xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date), //X value is data.x
                       yValueMapper: (ChartData chartData, _) => chartData.accident,             //Y value is data.y
-                      color: const Color.fromARGB(255, 220, 202, 0),                          //Color of barseries
+                      color:  Colors.yellow,                                                  //Color of barseries
                       borderColor: Colors.yellow,                                             //Bordercolor in hope of thicker bars
-                      borderWidth: 2,                                                           //Borderwidth = 2 pixels
+                      borderWidth: 3,                                                           //Borderwidth = 3 pixels
+                      // dataLabelSettings:
+                      //   const DataLabelSettings(
+                      //     showZeroValue: false,
+                      //     isVisible : true,
+                      //     // useSeriesColor: true,
+                      //     labelAlignment: ChartDataLabelAlignment.top
+                      //   ),                                                       
                   ),
                   
                   ColumnSeries<ChartData, DateTime>(                             //Second bar serie, "Stimulations"
                       name: 'Stimulations',                                      //title
                       width: 1,                                                  //barwidth (must be between 0-1)
                       borderColor: Colors.blue,                               //bordercolor
-                      borderWidth: 2,                                           //borderwidth = 2 pixels in hope of thick bars
+                      borderWidth: 3,                                           //borderwidth = 2 pixels in hope of thick bars
                       dataSource: snapshot.data!,                               //Datasource 
                       xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),   //x-value
                       yValueMapper: (ChartData chartData, _) => chartData.amount_stimulation,     //y-value
                       color: Colors.blue,                                                       //color of bar
+                      // dataLabelSettings:
+                      //   const DataLabelSettings(
+                      //     isVisible : true,
+                      //     // useSeriesColor: true,
+                      //     showZeroValue: false,
+                      //     labelAlignment: ChartDataLabelAlignment.top
+                      //   ),                                             
                   )
                 ]
             );
