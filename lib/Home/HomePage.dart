@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/Calendar_bar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
-import 'package:urinary_incontinence_application/Visualization/bar_chart.dart';
+import 'package:urinary_incontinence_application/Visualization/Bar_chart.dart';
 import 'package:urinary_incontinence_application/bluetooth/find_devices.dart';
 import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 
