@@ -23,37 +23,26 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
   
   @override
   Widget build(BuildContext context) {
-    return Card(child:
-            Column(
-              children: [
-                ExpansionTile(
-                  title: Text(widget.tile_Title),
-                  trailing: Icon(
+    return Column(
+      children: [
+       // Divider(color: Theme.of(context).colorScheme.secondary),
+            ExpansionTile(
+              title: Text(widget.tile_Title),
+              trailing: Icon(
                 _tileExpanded
-                    ? Icons.keyboard_arrow_down_outlined
-                    : Icons.keyboard_arrow_right_outlined),
-                    
-                          children: [
-                            Text(widget.tile_Text),
-                            ImageAsset(imageAsset: 'assets/image/image_example.png'),
-                           const Card(
-                              child: VideoAsset(videoAssetString: 'assets/video/video_example.mp4', videoLink:''),
-                                  ),
-                          
-                      ],
-                          onExpansionChanged: (bool expanded) {
-                setState(() {
-                  _tileExpanded = expanded;
-                }
-                 ); 
-                 }
-                 ),
-                 const Card(
-                  child: Text('data')
-                 ),
-                 
-],
-            )
-    );
+                ? Icons.keyboard_arrow_down_outlined
+                : Icons.keyboard_arrow_right_outlined),
+                
+          children: [
+            Text(
+            widget.tile_Text, 
+            textAlign: TextAlign.left,),],
+          onExpansionChanged: (bool expanded) {
+            setState(() {
+              _tileExpanded = expanded;
+            });}
+        ),
+      ]
+    );  
   }
 }
