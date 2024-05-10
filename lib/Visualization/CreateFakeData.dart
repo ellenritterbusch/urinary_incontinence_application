@@ -48,7 +48,7 @@ class _Data_ButtonState extends State<Data_Button> {
   Widget build(BuildContext context) {
     return OutlinedButton(
       style: OutlinedButton.styleFrom(
-        fixedSize: Size(MediaQuery.of(context).size.width * 0.40, MediaQuery.of(context).size.height * 0.2),
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20))
          ),
@@ -57,7 +57,7 @@ class _Data_ButtonState extends State<Data_Button> {
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text("Make data", style: TextStyle(fontSize: 28, color: Colors.black),),],
+                Text("Make data", style: TextStyle(fontSize: 12, color: Colors.black),),],
           ));
   }
 
@@ -69,7 +69,7 @@ class _Data_ButtonState extends State<Data_Button> {
       allDates.add(date);
       }
 databaseModelBD.date = allDates[89]; databaseModelBD.time = '06:20'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[89]; databaseModelBD.time = '13:15'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[89]; databaseModelBD.time = '22:15'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[89]; databaseModelBD.time = '14:30'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[89]; databaseModelBD.time = '12:45'; databaseModelBD.accident= 1; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[89]; databaseModelBD.time = '16:05'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 030; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
@@ -1024,7 +1024,7 @@ databaseModelBD.date = allDates[00]; databaseModelBD.time = '14:40'; databaseMod
 databaseModelBD.date = allDates[00]; databaseModelBD.time = '16:15'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[00]; databaseModelBD.time = '18:25'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[00]; databaseModelBD.time = '13:50'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '15:25'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '22:25'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
    
    
    

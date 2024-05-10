@@ -25,14 +25,21 @@ class _CalendarPageState extends State<CalendarPage> {
       body: 
 
       ////////// Opbygning af siden //////////
-      const Column(
+      Column(
       children: [
-        Table_calendar(yourCalendarFormat: CalendarFormat.month,),         //Henviser til Table_calender klassen
-        Padding(
+        Table_calendar(
+          yourCalendarFormat: CalendarFormat.month,
+          onDaySelected: (DateTime newdate, DateTime focusedDay){
+            setState(() {
+            today = newdate;
+            debugPrint('$today');
+            });
+          }),         //Henviser til Table_calender klassen
+        const Padding(
           padding: EdgeInsets.all(8.0),
           child: Evaluate_button()     //Henviser til Evaluate_button klassen
         ),
-        Padding(
+        const Padding(
           padding: EdgeInsets.all(8.0),
           child: Track_button()       //Henviser til Track_button klassen
           )

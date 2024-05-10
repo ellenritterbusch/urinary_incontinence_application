@@ -12,6 +12,12 @@ class Calender_Bar extends StatefulWidget {
 class _Calender_BarState extends State<Calender_Bar> {
   @override
   Widget build(BuildContext context) {
-    return Table_calendar(yourCalendarFormat: CalendarFormat.week,);
+    return Table_calendar(yourCalendarFormat: CalendarFormat.week,
+    onDaySelected: (DateTime newdate, DateTime focusedDay){
+            setState(() {
+            today = newdate;
+            debugPrint('$today');
+            });
+          });
   }
 }
