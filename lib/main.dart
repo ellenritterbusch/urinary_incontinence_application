@@ -7,6 +7,7 @@ import 'package:urinary_incontinence_application/Home/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
 import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifier.dart';
+import 'package:urinary_incontinence_application/ViewGuides/ViewGuidesPage.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 //import 'package:urinary_incontinence_application/Visualization/HomePage/History_Box.dart';
 
@@ -82,6 +83,7 @@ class _RootPageState extends State<RootPage> {
   List<Widget> pages = [
     const HomePage(),
     const CalendarPage(),
+    const ViewGuidesPage(),
     const NotificationPage(),
   ];
 
@@ -95,6 +97,7 @@ class _RootPageState extends State<RootPage> {
         destinations: const [
         NavigationDestination(icon: Icon(Icons.home), label: "Home"),
         NavigationDestination(icon: Icon(Icons.calendar_month_outlined), label: "Calendar"),
+        NavigationDestination(icon: Icon(Icons.book_outlined), label: "Guides"),
         NavigationDestination(icon: Icon(Icons.settings_outlined), label: "Settings")
       ],        
       ),
