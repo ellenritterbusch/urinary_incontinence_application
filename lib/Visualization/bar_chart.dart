@@ -45,9 +45,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
   final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString);                    //Fetch time of incidents from database
   final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);    //Fetch ALL stimulations from database
 
-
-  for (var i = 0; i < accidents.length; i++){                             //For loop counter going from 0 - amount of accidents.
-
+  for (var i = 0; i < accidents.length; i++){                    //For loop counter going from 0 - amount of accidents.
     final individualAccident = accidents[i];                              
     accidentValue = individualAccident['accident'];
 
@@ -55,32 +53,25 @@ Future<List<ChartData>> getChartData(DateTime date) async {
     timeValue = individualTime['time'];
     final dateTime = '$dateString $timeValue';
 
-
     final individualStimulation = amountStimulation[i];
     stimulationValue = individualStimulation['stimtype'];
 
-if (stimulationValue > 1) {                                                //Stimulation data can be 1 or 2. We only want 1.
-  setState(() {                                                            //We set stimulation data = 2 to be 0.
+    if (stimulationValue > 1) {                                   //Stimulation data can be 1 or 2. We only want 1.
+      setState(() {                                               //We set stimulation data = 2 to be 0.
     stimulationValue = 0;
-  });
+    });}
 
-}
+    mapChartData.add(                                             //We insert the data into the variables from the ChartData class
+      ChartData(
+        date: dateTime,
+        accident: accidentValue,
+        amount_stimulation: stimulationValue,                           
+      ));
 
-    mapChartData.add(                                                       //We insert the data into the variables from the ChartData class
-          ChartData(
-            date: dateTime,
-            accident: accidentValue,
-            amount_stimulation: stimulationValue,                           
-          )
-    );
-
-    debugPrint('acci: $accidentValue');                                     //If these print, we enter the for loop.
+    debugPrint('acci: $accidentValue');                           //If these print, we enter the for loop. Also used for testing
     debugPrint('time: $dateTime');
-    debugPrint('Stim: $stimulationValue');
-
-    
+    debugPrint('Stim: $stimulationValue');    
   }
-
   return mapChartData;
 }       
 
