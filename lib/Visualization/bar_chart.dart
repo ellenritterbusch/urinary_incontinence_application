@@ -4,11 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:urinary_incontinence_application/Home/HomePage.dart';
 
 
+// DateTime? maximum;                                         //Max lenght of graph
+// DateTime? minimum;                                         //Min lenght of graph
+
+  
 // ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
 
+// void dayButton() {
+//     maximum = DateTime(today.year, today.month, today.day, 24, 0);
+//     minimum = DateTime(today.year, today.month, today.day, 00, 0);
+//   }
    const BarChart({Key? key}) : super(key: key);
   
   @override
@@ -20,7 +29,6 @@ class BarChart extends StatefulWidget {
 class BarChartState extends State<BarChart> {
 
 late Future <List<ChartData>> chartData;                          //Define chartdata
-
  List<dynamic>? individualAccident;                              //Define list of accidents
  List<dynamic>? individualTime;                                 //Define list of times for incidents
  List<dynamic>? individualStimulation;                          //Define list of stimulations
@@ -29,12 +37,19 @@ late Future <List<ChartData>> chartData;                          //Define chart
  dynamic timeValue;
  dynamic stimulationValue;
       
-
+  // void dayButton() {
+  //   maximum = DateTime(today.year, today.month, today.day, 24, 0);
+  //   minimum = DateTime(today.year, today.month, today.day, 00, 0);
+  // }
+  
  @override //Brug future! eller lav en funktion som bliver kaldt herinde
    void initState() {
     super.initState();
     chartData = getChartData(today);
 } 
+
+
+
 
  
 Future<List<ChartData>> getChartData(DateTime date) async {
@@ -127,10 +142,10 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
                 ),
               margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
               primaryXAxis: DateTimeAxis(                                       //Primaryaxis is a DateTimeAxis (x-axis)
-                minimum: DateTime(today.year, today.month, today.day, 00, 0),   //
+                minimum: DateTime(today.year, today.month, today.day, 00, 0), //today.subtract(const Duration(days: 3)),   //
                 maximum: DateTime(today.year, today.month, today.day, 24, 0),   //
                 dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
-                interval: 4,                                                    //Interval of 4 hours
+                // interval: 4,                                                    //Interval of 4 hours
               ),
               enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
                plotAreaBorderWidth: 0,                                          //Creates at border around the graph
@@ -148,8 +163,8 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
                       // dataLabelSettings:
                       //   const DataLabelSettings(
                       //     showZeroValue: false,
-                      //     isVisible : true,
-                      //     // useSeriesColor: true,
+                      //     isVisible : true,                                              //When data is fix, add in
+                      //     useSeriesColor: true,
                       //     labelAlignment: ChartDataLabelAlignment.top
                       //   ),                                                       
                   ),
@@ -166,7 +181,7 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
                       // dataLabelSettings:
                       //   const DataLabelSettings(
                       //     isVisible : true,
-                      //     // useSeriesColor: true,
+                      //     useSeriesColor: true,                                      //When data is fix, add in
                       //     showZeroValue: false,
                       //     labelAlignment: ChartDataLabelAlignment.top
                       //   ),                                             

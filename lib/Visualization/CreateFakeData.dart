@@ -46,19 +46,19 @@ class _Data_ButtonState extends State<Data_Button> {
   FakeData fakedData = FakeData();
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20))
-         ),
-
-        onPressed: uploadFakeData,
-          child: const Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Make data", style: TextStyle(fontSize: 12, color: Colors.black),),],
-          ));
+    return SizedBox( 
+      width: 60,
+      child: TextButton(
+        // style: OutlinedButton.styleFrom(
+          // fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(20))
+          //  ),
+      
+          onPressed: uploadFakeData,
+            child: const Text("Make data", textAlign: TextAlign.center ,style: TextStyle(fontSize: 12, color: Colors.black),),
+            ),
+    );
   }
 
   uploadFakeData() async {

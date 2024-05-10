@@ -105,7 +105,7 @@ class _History_BoxState extends State<History_Box> {
     return Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [    //const Data_Button(), kan indkommenteres hvis vi skal hente data fra i dag
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         const Row(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
