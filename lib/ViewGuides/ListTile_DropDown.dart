@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 import 'package:urinary_incontinence_application/ViewGuides/VideoPlayer.dart';
+import 'package:urinary_incontinence_application/ViewGuides/ImageAsset.dart';
 class ListTile_DropDown extends StatefulWidget {
   final String tile_Title;
   final String tile_Text;
@@ -32,7 +33,14 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
                     ? Icons.keyboard_arrow_down_outlined
                     : Icons.keyboard_arrow_right_outlined),
                     
-                          children: [Text(widget.tile_Text),],
+                          children: [
+                            Text(widget.tile_Text),
+                            ImageAsset(imageAsset: 'assets/image/image_example.png'),
+                           const Card(
+                              child: VideoAsset(videoAssetString: 'assets/video/video_example.mp4', videoLink:''),
+                                  ),
+                          
+                      ],
                           onExpansionChanged: (bool expanded) {
                 setState(() {
                   _tileExpanded = expanded;
@@ -41,12 +49,8 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
                  }
                  ),
                  const Card(
-                  child: Image(image: 
-                  AssetImage('assets/image_example.png')),
+                  child: Text('data')
                  ),
-               const Card(
-                  child: VideoAsset(videoAssetString: 'assets/video/video_example.mp4', videoLink:''),
-                 ), 
                  
 ],
             )
