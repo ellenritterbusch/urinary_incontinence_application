@@ -83,7 +83,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
         ),
 
         ///// save button ////
-        if (sliderChanged)
+
         Padding(
           padding: const EdgeInsets.all(25.0),
           child: Save_Button(
@@ -122,7 +122,6 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
 
 
   setSliderValue(){
-  sliderChanged = true;
       if (currentSliderValue == 0){
         databaseModelBD.accident = 0;
       }
