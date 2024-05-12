@@ -81,7 +81,7 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
                   tile_Text: 'In this app, you can record bladder diaries which automatically receive data from your UCon device. If you want, you can also see data about your use of the system, so you can see how it affects your condition.', 
                   tile_Text2: 'Below you will find a video guide taking you through the use of the app',
                    imageAsset: '',
-                   videoAsset: '',),
+                   videoAsset: 'assets/video/UseofAppVideo.mp4',),
                   
                     ],
               onExpansionChanged: (bool expanded) {
