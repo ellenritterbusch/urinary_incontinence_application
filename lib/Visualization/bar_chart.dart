@@ -4,24 +4,18 @@ import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
 
-
-// ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
 
-  
   const BarChart({super.key});
-  
   @override
-  // ignore: no_logic_in_create_state
   State<BarChart> createState() => BarChartState();
-
 }
 
 class BarChartState extends State<BarChart> {
-final History_BoxState historyBoxState = History_BoxState();
-
+final Data_ButtonState databutton = Data_ButtonState();
 late Future <List<ChartData>> chartData;                          //Define chartdata
 
  List<dynamic>? individualAccident;                              //Define list of accidents
@@ -79,12 +73,11 @@ Future<List<ChartData>> getChartData(DateTime date) async {
 }       
 
 
-
   @override
     Widget build(BuildContext context) {
         return  Column(
           children: [
-        // table calendar //
+        // Table calendar //
         Table_calendar(
           yourCalendarFormat: CalendarFormat.week, 
           onDaySelected: (DateTime newdate, DateTime focusedDay){
@@ -94,12 +87,11 @@ Future<List<ChartData>> getChartData(DateTime date) async {
             });
             chartData = getChartData(today);
             final History_BoxState?  historyBoxState = historyBoxKey.currentState;
-        if (historyBoxState != null) {
-          historyBoxState.fetchBladderDiaryData();
-        }
-            debugPrint('jeg henter');
+              if (historyBoxState != null) {
+                historyBoxState.fetchBladderDiaryData();
+              }
           }),
-          // bar chart //
+          /////// Bar chart /////
           SizedBox(
           height: 350,
           width: double.infinity,
@@ -163,18 +155,34 @@ Future<List<ChartData>> getChartData(DateTime date) async {
                       //     labelAlignment: ChartDataLabelAlignment.top
                       //   ),                                             
                   )
-                ]
-            );
-            }
-            else if (snapshot.hasError) {                                        //Error!
+                ],
+                annotations: [
+                  CartesianChartAnnotation(
+                    widget: snapshot.data!.isEmpty? const Text('No data available'): const Text(''), x: 180, y: 70)
+                ],     //if data is empty we print that is not available
+            );}
+            else if (snapshot.hasError) {                            
               return Text("${snapshot.error}");
+              } 
+              return const CircularProgressIndicator();                           //Returns loading indicator
             }
-            return const CircularProgressIndicator();                           //Returns loading indicator
-           }
            ),
-                ),
-        )]
-        );
+         
+          ),
+        ),
+        ////////////// data button ////////////////
+         Data_Button(onButtonPressed: (){
+          databutton.uploadFakeData();
+          Future.delayed(Duration(seconds: 12)).then((_){       // we wait 12 seconds for the data to upload
+            chartData = getChartData(today);
+            final History_BoxState?  historyBoxState = historyBoxKey.currentState;
+              if (historyBoxState != null) {
+                historyBoxState.fetchBladderDiaryData();
+              }  
+         });
+        })
+          
+        ]);
     } 
 }
 class ChartData {                                                        //Class ChartData is our data

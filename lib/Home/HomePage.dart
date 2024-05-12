@@ -40,22 +40,12 @@ class _HomePageState extends State<HomePage> {
         SingleChildScrollView(
            child: Column(
              children: [
-               
-              BarChart(),
-
+              const BarChart(),
               //const Divider(height: 3,),
-              const Data_Button(),
-              
+              //const Data_Button(),
               History_Box(key: historyBoxKey)
              ],
            )
     ));
   }
-
-  // @override
-  // Widget build(BuildContext context) {
-  //    return const Scaffold(
-  //     body: History_Box(),
-  //    );
-  // }
 }
