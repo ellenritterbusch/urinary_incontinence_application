@@ -29,10 +29,10 @@ class _History_BoxState extends State<History_Box> {
   @override
   void initState() {
     super.initState();
-    updateData();
+    fetchBladderDiaryData();
   }
 
-  void updateData()  async{
+  void fetchBladderDiaryData()  async{
               String date = today.toString().substring(0 ,10);
               debugPrint(date);
                
