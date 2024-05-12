@@ -6,15 +6,15 @@ import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
 
-
+final GlobalKey<History_BoxState> historyBoxKey = GlobalKey<History_BoxState>();
 class History_Box extends StatefulWidget {
   const History_Box({Key? key}) : super(key: key);
 
   @override
-  State<History_Box> createState() => _History_BoxState();
+  State<History_Box> createState() => History_BoxState();
 }
 
-class _History_BoxState extends State<History_Box> {
+class History_BoxState extends State<History_Box> {
   dynamic amountAccident;
   int accidentcounter = 0;
   dynamic stimType;
@@ -128,24 +128,23 @@ class _History_BoxState extends State<History_Box> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Accidents', style: //printer antal accidents
+                  const Text('Accidents', style: //printer antal accidents
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text('$accidentcounter', style:
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-                    Padding(
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    const Padding(
                       padding: EdgeInsets.all(8.0)),
-                  Text('On-demand stimulations', style: //printer antal on demand stimuleringer
+                  const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text('$stimTypecounter', style: //
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-                    Padding(
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+                    const Padding(
                       padding: EdgeInsets.all(8.0)),
-                  Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text(totalStimTime, style: //
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-          ],
-          ),
+                    const TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
+          ],),
                 //VerticalDivider( //den lodrette linje der skiller information i boxen
                   //width: 100,
                   //thickness: 2,
@@ -165,10 +164,8 @@ class _History_BoxState extends State<History_Box> {
               //)
             ]   
           )
-          )
+        )
     )
-          ]
-    );
-    // children 
+   ]); 
   }
 }

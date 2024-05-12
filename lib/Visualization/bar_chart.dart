@@ -4,12 +4,14 @@ import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:table_calendar/table_calendar.dart';
+import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
 
 
 // ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
 
-   const BarChart({Key? key}) : super(key: key);
+  
+  const BarChart({super.key});
   
   @override
   // ignore: no_logic_in_create_state
@@ -18,6 +20,7 @@ class BarChart extends StatefulWidget {
 }
 
 class BarChartState extends State<BarChart> {
+final History_BoxState historyBoxState = History_BoxState();
 
 late Future <List<ChartData>> chartData;                          //Define chartdata
 
@@ -75,13 +78,6 @@ Future<List<ChartData>> getChartData(DateTime date) async {
   return mapChartData;
 }       
 
-void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
-  setState(() {
-    today = selectedDay;
-    debugPrint('$today');
-  });
-  chartData = getChartData(today);
-}
 
 
   @override
@@ -97,6 +93,11 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
             debugPrint('$today');
             });
             chartData = getChartData(today);
+            final History_BoxState?  historyBoxState = historyBoxKey.currentState;
+        if (historyBoxState != null) {
+          historyBoxState.fetchBladderDiaryData();
+        }
+            debugPrint('jeg henter');
           }),
           // bar chart //
           SizedBox(

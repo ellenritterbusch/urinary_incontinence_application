@@ -46,8 +46,7 @@ class _HomePageState extends State<HomePage> {
               //const Divider(height: 3,),
               const Data_Button(),
               
-              History_Box()
-              //Tooltip(),
+              History_Box(key: historyBoxKey)
              ],
            )
     ));
