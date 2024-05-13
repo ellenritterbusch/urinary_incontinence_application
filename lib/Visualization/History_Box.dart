@@ -147,7 +147,7 @@ class History_BoxState extends State<History_Box> {
                     const Padding(
                       padding: EdgeInsets.all(8.0)),
 
-                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                  const Text('Total time-limited stimulation time', style: //printer samlede tid continous stimulering
                     TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
