@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+//This class is used as the template for the video asset in the ListTile_DropDown tile. 
+//Its attribute "videoAssetString" is given as "String videoAsset" in LT_DD.
 class VideoAsset extends StatefulWidget {
-  final String videoAssetString;
-  final String ? videoLink;
+  final String videoAssetString; //Location of video in the "video" sub-folder in assets folder. Should take the form of "assets/video/VIDEOFILENAME.mp4"
 
-  const VideoAsset({required this.videoAssetString, this.videoLink});
+
+
+  const VideoAsset({required this.videoAssetString});
   @override
   State<VideoAsset> createState() => _VideoAssetState();
 }
@@ -14,6 +17,7 @@ class _VideoAssetState extends State<VideoAsset> {
   @override
   void initState(){
     super.initState();
+    //Initialize when there is a video, prevents it from freaking out when it can't find the video right away
     videoPlayerController = VideoPlayerController.asset(
       widget.videoAssetString
     )..initialize().then((_){
@@ -30,9 +34,12 @@ class _VideoAssetState extends State<VideoAsset> {
             AspectRatio(
               aspectRatio: videoPlayerController.value.aspectRatio,
 
-              child: VideoPlayer(videoPlayerController)),
+              child: VideoPlayer(videoPlayerController)),// this is the video itself
 
-            Row(mainAxisAlignment: MainAxisAlignment.center,children: [ElevatedButton(
+            Row( //row of play, pause, ffwd, and rwd buttons
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton( //Rewind button
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -43,15 +50,15 @@ class _VideoAssetState extends State<VideoAsset> {
                 onPressed: (){
                   videoPlayerController.seekTo(
                     Duration(
-                      seconds: videoPlayerController.value.position.inSeconds -1
+                      seconds: videoPlayerController.value.position.inSeconds -1 //Only goes back 1 second each time it's pressed
                     )
                   );
                 },
                child: const Icon(Icons.fast_rewind_outlined)),
                
-              const Padding(padding: EdgeInsets.all(2)),
+              const Padding(padding: EdgeInsets.all(2)), //Room between buttons
 
-              ElevatedButton(
+              ElevatedButton( //Pause button
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -62,9 +69,9 @@ class _VideoAssetState extends State<VideoAsset> {
                 }, 
                 child: const Icon(Icons.pause_outlined)),
 
-              const Padding(padding: EdgeInsets.all(2)),
+              const Padding(padding: EdgeInsets.all(2)), //Room between buttons
 
-              ElevatedButton(
+              ElevatedButton(//Play button
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -76,9 +83,9 @@ class _VideoAssetState extends State<VideoAsset> {
                child: const Icon(Icons.play_arrow_outlined)),
 
                
-              const Padding(padding: EdgeInsets.all(2)),
+              const Padding(padding: EdgeInsets.all(2)), //Room between buttons
 
-               ElevatedButton(
+               ElevatedButton(//Fastforward button. 
                 style: ButtonStyle(
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
@@ -87,7 +94,7 @@ class _VideoAssetState extends State<VideoAsset> {
                 onPressed: (){
                   videoPlayerController.seekTo(
                     Duration(
-                      seconds: videoPlayerController.value.position.inSeconds +1));
+                      seconds: videoPlayerController.value.position.inSeconds +1)); //Only goes forward 1 second each time it's pressed
                 },
                child: const Icon(Icons.fast_forward_outlined)),
                ],

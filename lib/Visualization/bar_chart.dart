@@ -4,31 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'package:urinary_incontinence_application/Home/HomePage.dart';
+import 'package:urinary_incontinence_application/Visualization/CreateFakeData.dart';
+import 'package:urinary_incontinence_application/Visualization/History_Box.dart';
 
-
-// DateTime? maximum;                                         //Max lenght of graph
-// DateTime? minimum;                                         //Min lenght of graph
-
-  
-// ignore: must_be_immutable
 class BarChart extends StatefulWidget {  
 
-// void dayButton() {
-//     maximum = DateTime(today.year, today.month, today.day, 24, 0);
-//     minimum = DateTime(today.year, today.month, today.day, 00, 0);
-//   }
-   const BarChart({Key? key}) : super(key: key);
-  
+  const BarChart({super.key});
   @override
-  // ignore: no_logic_in_create_state
   State<BarChart> createState() => BarChartState();
-
 }
 
 class BarChartState extends State<BarChart> {
+final Data_ButtonState databutton = Data_ButtonState();
+static late Future <List<ChartData>> chartData;                          //Define chartdata
 
-late Future <List<ChartData>> chartData;                          //Define chartdata
  List<dynamic>? individualAccident;                              //Define list of accidents
  List<dynamic>? individualTime;                                 //Define list of times for incidents
  List<dynamic>? individualStimulation;                          //Define list of stimulations
@@ -40,14 +29,9 @@ late Future <List<ChartData>> chartData;                          //Define chart
   // void dayButton() {
   //   maximum = DateTime(today.year, today.month, today.day, 24, 0);
   //   minimum = DateTime(today.year, today.month, today.day, 00, 0);
-  // }
-  
- @override //Brug future! eller lav en funktion som bliver kaldt herinde
-   void initState() {
     super.initState();
     chartData = getChartData(today);
 } 
-
 
 
 
@@ -90,20 +74,12 @@ Future<List<ChartData>> getChartData(DateTime date) async {
   return mapChartData;
 }       
 
-void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der sætter den valgte dag til den dag der skal være i fokus
-  setState(() {
-    today = selectedDay;
-    debugPrint('$today');
-  });
-  chartData = getChartData(today);
-}
-
 
   @override
     Widget build(BuildContext context) {
         return  Column(
           children: [
-        // table calendar //
+        // Table calendar //
         Table_calendar(
           yourCalendarFormat: CalendarFormat.week, 
           onDaySelected: (DateTime newdate, DateTime focusedDay){
@@ -112,8 +88,12 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
             debugPrint('$today');
             });
             chartData = getChartData(today);
+            final History_BoxState?  historyBoxState = historyBoxKey.currentState;
+              if (historyBoxState != null) {
+                historyBoxState.fetchBladderDiaryData();
+              }
           }),
-          // bar chart //
+          /////// Bar chart /////
           SizedBox(
           height: 350,
           width: double.infinity,
@@ -177,18 +157,34 @@ void _onDaySelected(DateTime selectedDay, DateTime focusedDay){ //funktion der s
                       //     labelAlignment: ChartDataLabelAlignment.top
                       //   ),                                             
                   )
-                ]
-            );
-            }
-            else if (snapshot.hasError) {                                        //Error!
+                ],
+                annotations: [
+                  CartesianChartAnnotation(
+                    widget: snapshot.data!.isEmpty? const Text('No data available'): const Text(''), x: 180, y: 70)
+                ],     //if data is empty we print that is not available
+            );}
+            else if (snapshot.hasError) {                            
               return Text("${snapshot.error}");
+              } 
+              return const CircularProgressIndicator();                           //Returns loading indicator
             }
-            return const CircularProgressIndicator();                           //Returns loading indicator
-           }
            ),
-                ),
-        )]
-        );
+         
+          ),
+        ),
+        ////////////// data button ////////////////
+         Data_Button(onButtonPressed: (){
+          databutton.uploadFakeData();
+          Future.delayed(Duration(seconds: 24)).then((_){       // we wait 12 seconds for the data to upload
+            chartData = getChartData(today);
+            final History_BoxState?  historyBoxState = historyBoxKey.currentState;
+              if (historyBoxState != null) {
+                historyBoxState.fetchBladderDiaryData();
+              }  
+         });
+        })
+          
+        ]);
     } 
 }
 class ChartData {                                                        //Class ChartData is our data

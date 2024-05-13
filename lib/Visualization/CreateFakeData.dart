@@ -5,17 +5,15 @@ import 'package:urinary_incontinence_application/Database/database.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
-  
-//DateTime today = DateTime.now();
 
  List<String> allDates = [];
    
 class Data_Button extends StatefulWidget {
- 
-  const Data_Button({super.key});
+ final Function() onButtonPressed;
+  const Data_Button({super.key, required this.onButtonPressed});
 
   @override
-  State<Data_Button> createState() => _Data_ButtonState();
+  State<Data_Button> createState() => Data_ButtonState();
 }
 class FakeData{
  late String? date;
@@ -30,10 +28,9 @@ class FakeData{
     this.accident, 
     this.stimType, 
     this.stimTimeSetting});
-    
 
 }
-class _Data_ButtonState extends State<Data_Button> {
+class Data_ButtonState extends State<Data_Button> {
   late bool accident;
   late String date;
   late String time;
@@ -46,19 +43,19 @@ class _Data_ButtonState extends State<Data_Button> {
   FakeData fakedData = FakeData();
   @override
   Widget build(BuildContext context) {
-    return SizedBox( 
-      width: 60,
-      child: TextButton(
-        // style: OutlinedButton.styleFrom(
-          // fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(20))
-          //  ),
-      
-          onPressed: uploadFakeData,
-            child: const Text("Make data", textAlign: TextAlign.center ,style: TextStyle(fontSize: 12, color: Colors.black),),
-            ),
-    );
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        fixedSize: Size(MediaQuery.of(context).size.width * 0.30, MediaQuery.of(context).size.height * 0.05),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20))
+         ),
+
+        onPressed: widget.onButtonPressed,        
+          child: const Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Make data", style: TextStyle(fontSize: 12, color: Colors.black),),],
+          ));
   }
 
   uploadFakeData() async {
@@ -1013,17 +1010,17 @@ databaseModelBD.date = allDates[01]; databaseModelBD.time = '14:15'; databaseMod
 databaseModelBD.date = allDates[01]; databaseModelBD.time = '16:55'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[01]; databaseModelBD.time = '17:40'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[01]; databaseModelBD.time = '18:45'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '13:45'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '15:20'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '14:10'; databaseModelBD.accident= 0; databaseModelBD.stimType= 2; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '16:30'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '07:45'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '09:20'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '10:10'; databaseModelBD.accident= 0; databaseModelBD.stimType= 2; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '11:30'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[00]; databaseModelBD.time = '12:55'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '12:30'; databaseModelBD.accident= 0; databaseModelBD.stimType= 2; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '17:10'; databaseModelBD.accident= 1; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '14:40'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '16:15'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '18:25'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
-databaseModelBD.date = allDates[00]; databaseModelBD.time = '13:50'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '13:30'; databaseModelBD.accident= 0; databaseModelBD.stimType= 2; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '14:10'; databaseModelBD.accident= 1; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '15:40'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '20:15'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '17:25'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
+databaseModelBD.date = allDates[00]; databaseModelBD.time = '18:50'; databaseModelBD.accident= 0; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
 databaseModelBD.date = allDates[00]; databaseModelBD.time = '22:25'; databaseModelBD.accident= 2; databaseModelBD.stimType= 1; databaseModelBD.stimTimeSetting= 240; await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD); 
    
    
@@ -1036,7 +1033,7 @@ databaseModelBD.date = allDates[00]; databaseModelBD.time = '22:25'; databaseMod
    
    
    
-      // debugPrint('allData List created');
+       debugPrint('allData List created');
       // debugPrint('$mapCount');
     //   for ({i = 0}; i <allData.length;i++){
     // FakeData fakedDataInstance= allData[i];

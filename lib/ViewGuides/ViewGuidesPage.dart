@@ -10,10 +10,8 @@ class ViewGuidesPage extends StatefulWidget {
 }
 
 class _ViewGuidesPageState extends State<ViewGuidesPage> {
-  bool _appExpanded = false;
-  bool _uconExpanded = false;
-  bool showVideo= false;  
-  String text = '';
+  bool _appExpanded = false; //Boolean for the App guide super tile being expanded. Each instance of the LT_DD tile for the App guide will be visible when true
+  bool _uconExpanded = false; //Boolean for the UCon guide super tile being expanded. Each instance of the LT_DD tile for the UCon guide will be visible when true
 
   @override
   
@@ -26,14 +24,14 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
           Divider(color: Theme.of(context).colorScheme.primary),
           Theme(data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
            child: ExpansionTile(
-              title: const Text("Guide to UCon", 
+              title: const Text("Guide to UCon", //The UCon guide super tile. Put each instance of LT_DD with UCon guides in here
               style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
               trailing: Icon(
-                  _uconExpanded
+                  _uconExpanded //Arrow icon points right when the tile isn't expanded and down when it is.
                   ? Icons.keyboard_arrow_down_outlined
                   : Icons.keyboard_arrow_right_outlined),
                 
-              children: const [
+              children: const [ //Here are all of the individual tiles with guide info
                ListTile_DropDown(
                   tile_Title: 'UCon Overview', 
                   tile_Text: 'The picture below illustrates an overview of the UCon device, its remote and the various buttons it has:',
@@ -69,19 +67,20 @@ class _ViewGuidesPageState extends State<ViewGuidesPage> {
           
           Theme(data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
            child:ExpansionTile(
-              title: const Text("Guide to app", style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
+              title: const Text("Guide to app", //The app guide super tile. Put each instance of LT_DD with app guides in here
+              style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
               trailing: Icon(
-                  _appExpanded
-                  ? Icons.keyboard_arrow_down_outlined
+                  _appExpanded //Arrow icon points right when the tile isn't expanded and down when it is.
+                  ? Icons.keyboard_arrow_down_outlined 
                   : Icons.keyboard_arrow_right_outlined),
                 
-              children: const [
+              children: const [ //Here are all of the individual tiles with guide info
                 ListTile_DropDown(
                   tile_Title: 'App Overview', 
                   tile_Text: 'In this app, you can record bladder diaries which automatically receive data from your UCon device. If you want, you can also see data about your use of the system, so you can see how it affects your condition.', 
                   tile_Text2: 'Below you will find a video guide taking you through the use of the app',
                    imageAsset: '',
-                   videoAsset: '',),
+                   videoAsset: 'assets/video/UseofAppVideo.mp4',),
                   
                     ],
               onExpansionChanged: (bool expanded) {
