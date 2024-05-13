@@ -5,17 +5,15 @@ import 'package:urinary_incontinence_application/Database/database.dart';
 import 'package:urinary_incontinence_application/BladderDiary/BladderDiaryPage/BladderDiaryPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
-  
-//DateTime today = DateTime.now();
 
  List<String> allDates = [];
    
 class Data_Button extends StatefulWidget {
- 
-  const Data_Button({super.key});
+ final Function() onButtonPressed;
+  const Data_Button({super.key, required this.onButtonPressed});
 
   @override
-  State<Data_Button> createState() => _Data_ButtonState();
+  State<Data_Button> createState() => Data_ButtonState();
 }
 class FakeData{
  late String? date;
@@ -30,10 +28,9 @@ class FakeData{
     this.accident, 
     this.stimType, 
     this.stimTimeSetting});
-    
 
 }
-class _Data_ButtonState extends State<Data_Button> {
+class Data_ButtonState extends State<Data_Button> {
   late bool accident;
   late String date;
   late String time;
@@ -53,7 +50,7 @@ class _Data_ButtonState extends State<Data_Button> {
           borderRadius: BorderRadius.circular(20))
          ),
 
-        onPressed: uploadFakeData,
+        onPressed: widget.onButtonPressed,        
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -1036,7 +1033,7 @@ databaseModelBD.date = allDates[00]; databaseModelBD.time = '22:25'; databaseMod
    
    
    
-      // debugPrint('allData List created');
+       debugPrint('allData List created');
       // debugPrint('$mapCount');
     //   for ({i = 0}; i <allData.length;i++){
     // FakeData fakedDataInstance= allData[i];
