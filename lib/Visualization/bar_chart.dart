@@ -173,7 +173,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
         ////////////// data button ////////////////
          Data_Button(onButtonPressed: (){
           databutton.uploadFakeData();
-          Future.delayed(Duration(seconds: 12)).then((_){       // we wait 12 seconds for the data to upload
+          Future.delayed(Duration(seconds: 24)).then((_){       // we wait 12 seconds for the data to upload
             chartData = getChartData(today);
             final History_BoxState?  historyBoxState = historyBoxKey.currentState;
               if (historyBoxState != null) {
