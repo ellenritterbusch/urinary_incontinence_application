@@ -19,7 +19,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
   late bool accident;
   late String date;
   late String time;
-  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0,null, null);
+  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0,0, 0);
 
   bool sliderChanged = false; //Used for saving
 
