@@ -7,7 +7,7 @@ class VideoAsset extends StatefulWidget {
 
 
 
-  const VideoAsset({required this.videoAssetString});
+  const VideoAsset({required this.videoAssetString, required String videoLink});
   @override
   State<VideoAsset> createState() => _VideoAssetState();
 }

@@ -16,7 +16,7 @@ class BarChart extends StatefulWidget {
 
 class BarChartState extends State<BarChart> {
 final Data_ButtonState databutton = Data_ButtonState();
-static late Future <List<ChartData>> chartData;                          //Define chartdata
+ late Future <List<ChartData>> chartData;                          //Define chartdata
 
  List<dynamic>? individualAccident;                              //Define list of accidents
  List<dynamic>? individualTime;                                 //Define list of times for incidents
@@ -26,6 +26,9 @@ static late Future <List<ChartData>> chartData;                          //Defin
  dynamic timeValue;
  dynamic stimulationValue;
       
+  // void dayButton() {
+  //   maximum = DateTime(today.year, today.month, today.day, 24, 0);
+  //   minimum = DateTime(today.year, today.month, today.day, 00, 0);
 
  @override
    void initState() {
@@ -111,10 +114,10 @@ Future<List<ChartData>> getChartData() async {
                 ),
               margin: const EdgeInsets.all(25),                                 //Margin aroung graph, so it fits
               primaryXAxis: DateTimeAxis(                                       //Primaryaxis is a DateTimeAxis (x-axis)
-                minimum: DateTime(today.year, today.month, today.day, 00, 0),   //
+                minimum: DateTime(today.year, today.month, today.day, 00, 0), //today.subtract(const Duration(days: 3)),   //
                 maximum: DateTime(today.year, today.month, today.day, 24, 0),   //
                 dateFormat: DateFormat.Hm(),                                    //We want dateformat in forced 00:00
-                interval: 4,                                                    //Interval of 4 hours
+                // interval: 4,                                                    //Interval of 4 hours
               ),
               enableSideBySideSeriesPlacement: true,                            //Makes the bars be beside each other, instead of on top of.
                plotAreaBorderWidth: 0,                                          //Creates at border around the graph
