@@ -140,7 +140,7 @@ class History_BoxState extends State<History_Box> {
                     const TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
                     const Padding(
                       padding: EdgeInsets.all(8.0)),
-                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                  const Text('Total time-limited stimulation time', style: //printer samlede tid continous stimulering
                     TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
                   Text(totalStimTime, style: //
                     const TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
