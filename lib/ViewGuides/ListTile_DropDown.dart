@@ -42,7 +42,7 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
               ImageAsset(imageAsset: widget.imageAsset),
               const Padding(padding: EdgeInsets.all(8.0)),
               Text(widget.tile_Text2, textAlign: TextAlign.left,),
-              VideoAsset(videoAssetString: widget.videoAsset, videoLink:''),
+              VideoAsset(videoAssetString: widget.videoAsset),
               ],
                 onExpansionChanged: (bool expanded) {
                   setState(() {

@@ -9,13 +9,11 @@ class EvaluationButton extends StatefulWidget {
 
   const EvaluationButton({required this.iconcolor, required this.bordercolor, required this.yourIcon, required this.onPressed});
 
-@override
-_EvaluationButtonState createState() => _EvaluationButtonState();
+  @override
+  _EvaluationButtonState createState() => _EvaluationButtonState();
 }
 
 class _EvaluationButtonState extends State<EvaluationButton> {
-
-
 
   @override
   Widget build(BuildContext context) {

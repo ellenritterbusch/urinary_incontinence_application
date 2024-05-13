@@ -36,7 +36,6 @@ class DatabaseManager{
 
 
 
-
 /////// CREATE TABLES ///////
  //CREATE USER TABLE
    Future <Database> get databaseDB async => database ??= await initializeUserDatabase();
@@ -103,7 +102,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
   }
 
 
-//RETRIEVE only the accidents                                           //////////////////////////
+//RETRIEVE only the accidents                                         
    Future<List<Map<String, dynamic>>> getAccidentBladderDiary(String date) async {
      Database db = await databaseDB;
     var res = await db.rawQuery('SELECT $colAccident FROM $BladderDiaryTable WHERE $colDate=?', [date]);
@@ -111,7 +110,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
     return res;
   }
 
-//RETRIEVE only the TIME                                           //////////////////////////
+//RETRIEVE only the TIME                                       
    Future<List<Map<String, dynamic>>> getTimeBladderDiary(String date) async {
      Database db = await databaseDB;
     var res = await db.rawQuery('SELECT $colTime FROM $BladderDiaryTable WHERE $colDate=?', [date]);
@@ -125,7 +124,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
     return await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable');
   }
 
-    //RETRIEVE only the stimtype = 1                                                              /////////////////////////
+    //RETRIEVE only the stimtype = 1                                                            
    Future<List<Map<String, dynamic>>> getOnDemandBladderDiary(String date) async {
     final Database db = await databaseDB;
     var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colStimType AND $colDate=?', [date]);
@@ -138,12 +137,13 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
     Database db = await databaseDB;
     return await db.rawQuery('SELECT $colDate FROM $BladderDiaryTable');
   }
-   //retriving only the date of bladderDiray
+  //RETRIEVE only the date of bladderDiray
   Future getBladderDiarydate(String date) async {
   final db = await databaseDB;
   var res = await db.rawQuery('SELECT * FROM $BladderDiaryTable WHERE $colDate =?', [date]);
   return res;
   }  
+  
 //UPDATE
 Future <int> updateBladderDiary (DatabaseModel bladderDiary) async {
   Database db = await databaseManager.databaseDB;

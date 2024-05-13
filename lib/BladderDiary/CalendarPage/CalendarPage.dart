@@ -6,7 +6,7 @@ import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Evalu
 
 class CalendarPage extends StatefulWidget {
   final String? payload;
-  const CalendarPage({this.payload});
+  const CalendarPage({super.key, this.payload});
 
   @override
   State<CalendarPage> createState() => _CalendarPageState();
@@ -22,26 +22,23 @@ class _CalendarPageState extends State<CalendarPage> {
         title: const Text("Calendar"),
         leading: null,
       ),
-      body: 
-
-      ////////// Opbygning af siden //////////
-      Column(
+      body: Column(
       children: [
-        Table_calendar(
+        Table_calendar(                                           //Instance of Table_Calendar
           yourCalendarFormat: CalendarFormat.month,
           onDaySelected: (DateTime newdate, DateTime focusedDay){
             setState(() {
             today = newdate;
             debugPrint('$today');
             });
-          }),         //Henviser til Table_calender klassen
+          }),        
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Evaluate_button()     //Henviser til Evaluate_button klassen
+          child: Evaluate_button()     //Instance of Evaluate_button
         ),
         const Padding(
           padding: EdgeInsets.all(8.0),
-          child: Track_button()       //Henviser til Track_button klassen
+          child: Track_button()       //Instance of Track_button 
           )
       ],
       )

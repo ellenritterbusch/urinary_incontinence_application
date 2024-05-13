@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
 
+//a class that instances the Table_Calendar on a weekly format
 class Calender_Bar extends StatefulWidget {
   const Calender_Bar({super.key});
 

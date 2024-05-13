@@ -27,14 +27,14 @@ static late Future <List<ChartData>> chartData;                          //Defin
  dynamic stimulationValue;
       
 
- @override //Brug future! eller lav en funktion som bliver kaldt herinde
+ @override
    void initState() {
     super.initState();
-    chartData = getChartData(today);
+    chartData = getChartData();
 } 
 
  
-Future<List<ChartData>> getChartData(DateTime date) async {
+Future<List<ChartData>> getChartData() async {
   List<ChartData> mapChartData = [];                                                                      //Define list mapChartData
  
   final dateString = today.toString().substring(0,10);                                                    //Chosen date on calendar_bar as string 
@@ -85,7 +85,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
             today = newdate;
             debugPrint('$today');
             });
-            chartData = getChartData(today);
+            chartData = getChartData();                                      //ensures that data is updated when a new day is selected
             final History_BoxState?  historyBoxState = historyBoxKey.currentState;
               if (historyBoxState != null) {
                 historyBoxState.fetchBladderDiaryData();
@@ -128,14 +128,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
                       yValueMapper: (ChartData chartData, _) => chartData.accident,             //Y value is data.y
                       color:  Colors.yellow,                                                  //Color of barseries
                       borderColor: Colors.yellow,                                             //Bordercolor in hope of thicker bars
-                      borderWidth: 3,                                                           //Borderwidth = 3 pixels
-                      // dataLabelSettings:
-                      //   const DataLabelSettings(
-                      //     showZeroValue: false,
-                      //     isVisible : true,
-                      //     // useSeriesColor: true,
-                      //     labelAlignment: ChartDataLabelAlignment.top
-                      //   ),                                                       
+                      borderWidth: 3,                                                           //Borderwidth = 3 pixels                                                   
                   ),
                   
                   ColumnSeries<ChartData, DateTime>(                             //Second bar serie, "Stimulations"
@@ -146,14 +139,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
                       dataSource: snapshot.data!,                               //Datasource 
                       xValueMapper: (ChartData chartData, _) => DateTime.parse(chartData.date),   //x-value
                       yValueMapper: (ChartData chartData, _) => chartData.amount_stimulation,     //y-value
-                      color: Colors.blue,                                                       //color of bar
-                      // dataLabelSettings:
-                      //   const DataLabelSettings(
-                      //     isVisible : true,
-                      //     // useSeriesColor: true,
-                      //     showZeroValue: false,
-                      //     labelAlignment: ChartDataLabelAlignment.top
-                      //   ),                                             
+                      color: Colors.blue,                                                       //color of bar                                      
                   )
                 ],
                 annotations: [
@@ -173,8 +159,8 @@ Future<List<ChartData>> getChartData(DateTime date) async {
         ////////////// data button ////////////////
          Data_Button(onButtonPressed: (){
           databutton.uploadFakeData();
-          Future.delayed(Duration(seconds: 24)).then((_){       // we wait 12 seconds for the data to upload
-            chartData = getChartData(today);
+          Future.delayed(Duration(seconds: 24)).then((_){       // we wait 24 seconds for the data to upload
+            chartData = getChartData();
             final History_BoxState?  historyBoxState = historyBoxKey.currentState;
               if (historyBoxState != null) {
                 historyBoxState.fetchBladderDiaryData();
@@ -187,9 +173,7 @@ Future<List<ChartData>> getChartData(DateTime date) async {
 }
 class ChartData {                                                        //Class ChartData is our data
         final String date;                                               //This one is dateTime
-        // ignore: non_constant_identifier_names
         final num? accident;                                             //This is num? (? = nullable) and our accidentdata variable
-        // ignore: non_constant_identifier_names
         final num? amount_stimulation;                                   //This is num? (? = nullable) and our stimulationdata variable
 
     ChartData(                                                           //We require the variables in the class! 

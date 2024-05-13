@@ -11,13 +11,13 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
 import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
-import 'package:urinary_incontinence_application/Home/HomePage.dart';
+import 'package:urinary_incontinence_application/Visualization/HomePage.dart';
 import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 import 'package:urinary_incontinence_application/main.dart';
 
 
 int id = 0;
-int dailyReminderHour = 20;
+int dailyReminderHour = 20;     //daily reminder notification is by default sat to 20:00
 int dailyReminderMin = 00;
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
@@ -73,18 +73,17 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 }
 
 
-// Initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
  class SetNotifications {
 
- void initializeNotification() {
+ void initializeNotification() {                      //function tha intialize a lot of thigs. Must be done for notification to work
 
   flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<
     AndroidFlutterLocalNotificationsPlugin>()?.requestNotificationsPermission();
 
-  const AndroidInitializationSettings initializationSettingsAndroid =
+  const AndroidInitializationSettings initializationSettingsAndroid =                           //settings for android
     AndroidInitializationSettings('app_icon');      //Icon wich will appear in out notification
 
-   DarwinInitializationSettings initializationSettingsDarwin =
+   DarwinInitializationSettings initializationSettingsDarwin =                                  //settings for IOS
     DarwinInitializationSettings(
       requestAlertPermission: true,
       requestBadgePermission: true,
@@ -107,12 +106,12 @@ void notificationTapBackground(NotificationResponse notificationResponse) {
 
     flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: onNotificationTap,
+      onDidReceiveNotificationResponse: onNotificationTap,                      //function called when a notfication is tapped
       onDidReceiveBackgroundNotificationResponse: notificationTapBackground);
   
  }
   
-Future onNotificationTap(NotificationResponse notificationResponse) async{
+Future onNotificationTap(NotificationResponse notificationResponse) async{    //when notification called, then navigate to CalendarPage
    navigatorKey.currentState?.push(MaterialPageRoute(builder: (context) => const CalendarPage()));  
   }
 
@@ -147,7 +146,7 @@ Future onNotificationTap(NotificationResponse notificationResponse) async{
     return scheduledDate;
   }
 
-    // action notification ///
+    // action notification -- not used currently ///
   Future<void> showNotificationWithActions() async {
     const AndroidNotificationDetails androidNotificationDetails =
         AndroidNotificationDetails(
@@ -187,18 +186,4 @@ Future onNotificationTap(NotificationResponse notificationResponse) async{
         payload: 'item z');
   }
 
-    ///// simple notification///
-  Future<void> showNotification() async {
-    const AndroidNotificationDetails androidNotificationDetails =
-        AndroidNotificationDetails('your channel id', 'your channel name',
-            channelDescription: 'your channel description',
-            importance: Importance.max,
-            priority: Priority.high,
-            ticker: 'ticker');
-    const NotificationDetails notificationDetails =
-        NotificationDetails(android: androidNotificationDetails);
-    await flutterLocalNotificationsPlugin.show(
-        id++, 'plain title', 'plain body', notificationDetails,
-        payload: 'item x');
-  }
 }

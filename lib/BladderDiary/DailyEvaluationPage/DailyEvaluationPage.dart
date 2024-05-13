@@ -96,14 +96,14 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
         SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 50),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: const Text('How was your day?',
+            const SizedBox(height: 50),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text('How was your day?',
               style: TextStyle(fontSize: 30),
               textAlign: TextAlign.center),
             ),
-            SizedBox(height: 80),
+            const SizedBox(height: 80),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Row( //Page is 1 column containing a button for green, yellow, and red, and one for "Submit daily evaluation"
@@ -140,7 +140,6 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                       }),
                       
                       EvaluationButton(      
-                                //green button
                         yourIcon: Icons.sentiment_satisfied_rounded,
                         iconcolor: Colors.green,
                         bordercolor: goodDay? Colors.green: kDefaultIconLightColor,
@@ -156,7 +155,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                     ]
                     )),
                      
-                      if ((goodDay) | (mehDay) | (badDay))
+                      if ((goodDay) | (mehDay) | (badDay))        //if a evaluationbutton is pressed then show the save button and the textfield
 
                     //Text field ////
 
@@ -197,6 +196,7 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                             await DatabaseManager.databaseManager.insertDailyEvaluation(databaseModelDE);
                             debugPrint('data is sucessfully inserted');
                             final evaluation = await DatabaseManager.databaseManager.getDailyEvaluations();
+                            debugPrint('$evaluation');
                             final evaluationEntry = await DatabaseManager.databaseManager.getDailyEvaluationsdate(date);  //for snackbar
               
                             //snack bar//
@@ -213,12 +213,11 @@ class _DailyEvaluationPageState extends State<DailyEvaluationPage> {
                             fixedSize: Size(MediaQuery.of(context).size.width * 0.70, MediaQuery.of(context).size.height * 0.06), 
                              shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30))),  
-                          child: Text('Save', style: 
+                          child: const Text('Save', style: 
                           TextStyle(
                             color: Colors.black, fontSize: 25),),       
                               ),
-                          ),
-                       
+                          ),  
           ],
         ),
         )    

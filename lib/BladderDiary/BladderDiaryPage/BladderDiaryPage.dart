@@ -19,6 +19,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
   late bool accident;
   late String date;
   late String time;
+
   DatabaseModel databaseModelBD = DatabaseModel.BD('','',0, 0, 0);
 
   bool sliderChanged = false; //Used for saving
@@ -40,18 +41,17 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
     // Track Button navigates to Bladder Diary //
       Column(
       children: [
-        const Calender_Bar(), 
+        const Calender_Bar(),                               //instance of the Calendar_bar
         const Padding(
         padding: EdgeInsets.all(20.0)), 
         Column(mainAxisAlignment: MainAxisAlignment.center,
           children:[
-          //overskrift//
-          const Text('Severity of accident', style: 
+          const Text('Severity of accident', style:         //title
           TextStyle(fontSize: 25, fontWeight:FontWeight.bold),),
 
           const SizedBox(height: 80,),
 
-          //slider//
+          //Slider//
           SeveritySlider(
             sliderChanged: (double value) {
              setState(() {
@@ -75,6 +75,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
             ],
           )   
          ]),
+
         ////// time picker /////
         const SizedBox(height: 60,),
         const Padding(
@@ -83,7 +84,6 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
         ),
 
         ///// save button ////
-
         Padding(
           padding: const EdgeInsets.all(25.0),
           child: Save_Button(
@@ -97,7 +97,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               time = selectedTime.toString().substring(10,15);
               databaseModelBD.time = time;
 
-//HARD CODE VALUE FOR STIM TYPE AND TIME SETTING, MUST BE CHANGED WHEN BLUETOOTH CONNECTION IS IMPLEMENTED//
+    //HARD CODE VALUE FOR STIM TYPE AND TIME SETTING, MUST BE CHANGED WHEN BLUETOOTH CONNECTION IS IMPLEMENTED//
               databaseModelBD.stimTimeSetting = 240;
               databaseModelBD.stimType = 1;
               //insert to database//
@@ -108,7 +108,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               final diaryEntry = await DatabaseManager.databaseManager.getBladderDiarydate(date);
 
                //snack bar//
-               if (diaryEntry != null){            //hvis der ligger en værdi for datoen har vi gemt evalueringen
+               if (diaryEntry != null){            //If the entry has a value the value is saved
               const snackBar = SnackBar(
                 content: Text('Accident is saved'),
               );

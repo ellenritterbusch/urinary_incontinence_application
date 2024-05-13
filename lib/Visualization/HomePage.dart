@@ -16,16 +16,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
-
-
-
-// @override
-//   void initState() async {
-//     super.initState();
-//     final getAccident = await DatabaseManager.databaseManager.getBladderDiary();
-//     var accident = getAccident as List<ChartData>;
-// }       
+class _HomePageState extends State<HomePage> {    
 
   @override
   Widget build(BuildContext context) {
