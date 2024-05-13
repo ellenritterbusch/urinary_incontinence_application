@@ -72,7 +72,6 @@ class History_BoxState extends State<History_Box> {
               } if (stimTimecounter >= 60) {
                 int hours = stimTimecounter ~/ 60; // Get the number of hours
                 int minutes = stimTimecounter % 60; // Get the remaining minutes
-                debugPrint('$hours hour(s) $minutes minutes');
                   setState(() {
                   stimTimecounter = stimTimecounter;
                   if (minutes == 0) {
@@ -120,47 +119,51 @@ class History_BoxState extends State<History_Box> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 
                 children: [
-                  Text('Accidents', style: //printer antal accidents
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
-                  Text('$accidentcounter', style:
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-                    Padding(
+                  const Text('Accidents', style: //printer antal accidents
+                    TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                    Text('$accidentcounter', style:
+                    const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                    
+                    const Padding(
                       padding: EdgeInsets.all(8.0)),
-                  Text('On-demand stimulations', style: //printer antal on demand stimuleringer
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
-                  Text('$stimTypecounter', style: //
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-                    Padding(
-                      padding: EdgeInsets.all(8.0)),
-                  Text('Continous stimulation', style: //printer samlede tid continous stimulering
-                    TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color.fromARGB(255, 2, 80, 144)),),
-                  Text(totalStimTime, style: //
-                    TextStyle(fontSize: 30, fontWeight: FontWeight.normal, color: Color.fromARGB(255, 2, 80, 144)),),
-          ],
-          ),
-                //VerticalDivider( //den lodrette linje der skiller information i boxen
-                  //width: 100,
-                  //thickness: 2,
-                  //indent: 0,
-                  //endIndent: 0,
-                  //color: Color.fromARGB(255, 40, 85, 162),),
 
-             // const Column(
-              //  mainAxisAlignment: MainAxisAlignment.center,
-               // crossAxisAlignment: CrossAxisAlignment.center,
-                 // Text('Use of app', style:
-                   // TextStyle(fontSize: 16, fontWeight: FontWeight.bold),),
-                 // Padding(
-                   // padding: EdgeInsets.all(20.0)),
-                 // Text('1h 3min', style:
-                   // TextStyle(fontSize: 18, fontWeight: FontWeight.normal),),),],
-              //)
+                  const Text('On-demand stimulations', style: //printer antal on demand stimuleringer
+                    TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                    Text('$stimTypecounter', style: //
+                    const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                    
+                    const Padding(
+                      padding: EdgeInsets.all(8.0)),
+
+                  const Text('Continous stimulation', style: //printer samlede tid continous stimulering
+                    TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                    Text(totalStimTime, style: //
+                    const TextStyle(
+                      fontSize: 30,
+                      fontWeight: FontWeight.normal,
+                      color: Color.fromARGB(255, 2, 80, 144)),),
+                ],
+              ),
             ]   
           )
           )
-    )
-          ]
-    );
-    // children 
+          )
+        ]
+      );
   }
 }
