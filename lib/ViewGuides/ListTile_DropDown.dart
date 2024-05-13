@@ -27,9 +27,8 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-       // Divider(color: Theme.of(context).colorScheme.secondary),
             Padding(
-              padding: EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(8.0),
               child: ExpansionTile(
                 title: Text(widget.tile_Title),
                 trailing: Icon(
@@ -37,24 +36,21 @@ class _ListTile_DropDownState extends State<ListTile_DropDown> {
                   ? Icons.keyboard_arrow_down_outlined
                   : Icons.keyboard_arrow_right_outlined),
                   
-                        children: [
+              children: [
               Text(
               widget.tile_Text, 
               textAlign: TextAlign.left,),
               ImageAsset(imageAsset: widget.imageAsset),
-              Padding(padding: EdgeInsets.all(8.0)),
-
+              const Padding(padding: EdgeInsets.all(8.0)),
               Text(widget.tile_Text2, textAlign: TextAlign.left,),
-
-                  
               VideoAsset(videoAssetString: widget.videoAsset, videoLink:''),
-                                  ],
-                        onExpansionChanged: (bool expanded) {
-              setState(() {
-                _tileExpanded = expanded;
-              });}
-                      ),
-            ),
+              ],
+                onExpansionChanged: (bool expanded) {
+                  setState(() {
+                    _tileExpanded = expanded;
+                  });}
+             ),
+          ),
       ]
     );  
   }
