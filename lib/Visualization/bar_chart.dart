@@ -16,7 +16,7 @@ class BarChart extends StatefulWidget {
 
 class BarChartState extends State<BarChart> {
 final Data_ButtonState databutton = Data_ButtonState();
-static late Future <List<ChartData>> chartData;                          //Define chartdata
+ late Future <List<ChartData>> chartData;                          //Define chartdata
 
  List<dynamic>? individualAccident;                              //Define list of accidents
  List<dynamic>? individualTime;                                 //Define list of times for incidents
@@ -29,9 +29,12 @@ static late Future <List<ChartData>> chartData;                          //Defin
   // void dayButton() {
   //   maximum = DateTime(today.year, today.month, today.day, 24, 0);
   //   minimum = DateTime(today.year, today.month, today.day, 00, 0);
+
+  void initState() {
     super.initState();
     chartData = getChartData(today);
-} 
+  }
+
 
 
 

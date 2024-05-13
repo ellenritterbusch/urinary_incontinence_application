@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
      return Scaffold(
       appBar: AppBar(actions: <Widget>[
-        const Data_Button(),
+        //  Data_Button(),
 
                       //Daybutton
         Padding(
@@ -100,7 +100,7 @@ class _HomePageState extends State<HomePage> {
         )
       ],),
     body : 
-        const SingleChildScrollView(
+         SingleChildScrollView(
            child: Column(
              children: [
               const BarChart(),
