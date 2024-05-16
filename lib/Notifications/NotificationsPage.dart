@@ -66,11 +66,10 @@ class _NotificationPage extends State<NotificationPage> {
           _dailyreminder = false;
         });
       }
-
-      setState(() {
-      dailyReminderHour = selectedDailyEvTime.hour;
-      dailyReminderMin = selectedDailyEvTime.minute;
-      });
+     
+       dailyReminderHour = selectedDailyEvTime.hour;
+        dailyReminderMin = selectedDailyEvTime.minute;
+        debugPrint('$dailyReminderHour');
     }
 
 

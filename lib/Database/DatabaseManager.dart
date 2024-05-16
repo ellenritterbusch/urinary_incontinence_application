@@ -37,17 +37,16 @@ class DatabaseManager{
 
 
 /////// CREATE TABLES ///////
- //CREATE USER TABLE
-   Future <Database> get databaseDB async => database ??= await initializeUserDatabase();
-
-   Future <Database> initializeUserDatabase() async { //Constructor for creating database, only used once. 
+   Future <Database> get databaseDB async => database ??= await initializeDatabase();
+  //Constructor for creating database, only used once.
+   Future <Database> initializeDatabase() async {  
     Directory directory = await getApplicationDocumentsDirectory();
     String path = join(directory.path,'p6.db');
-    var userDatabase = await openDatabase(path, version: 1, onCreate: _createUDb);
-    return userDatabase;
+    var dataBase = await openDatabase(path, version: 1, onCreate: _createDB);
+    return dataBase;
    }
-
-  void _createUDb(Database db, int newVersion) async { //Constructor for creating tables in database. 
+  //Constructor for creating tables in database.
+  void _createDB(Database db, int newVersion) async {  
     await db.execute('CREATE TABLE $UserTable($colPIN INTEGER PRIMARY KEY)');
     await db.execute('CREATE TABLE $DailyEvaluationTable($colDate STRING PRIMARY KEY, $colEvaluation INTEGER, $colMemo TEXT)');
     await db.execute('CREATE TABLE $BladderDiaryTable($colID INTEGER PRIMARY KEY AUTOINCREMENT, $colDate STRING, $colTime STRING, $colAccident INTEGER, $colStimType INTEGER, $colStimTimeSetting INTEGER)');

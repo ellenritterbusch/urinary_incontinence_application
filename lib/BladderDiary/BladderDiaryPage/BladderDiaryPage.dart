@@ -16,6 +16,14 @@ class BladderDiaryPage extends StatefulWidget {
 }
 
 class _BladderDiaryState extends State<BladderDiaryPage> {
+
+
+@override void initState() {
+    selectedTime = TimeOfDay.now();
+    currentSliderValue = 0;
+    super.initState();
+  }
+
   late bool accident;
   late String date;
   late String time;
@@ -78,7 +86,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
 
         ////// time picker /////
         const SizedBox(height: 60,),
-        const Padding(
+         Padding(
           padding: EdgeInsets.all(20.0),
           child: Time_picker(),
         ),
@@ -99,13 +107,14 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
 
     //HARD CODE VALUE FOR STIM TYPE AND TIME SETTING, MUST BE CHANGED WHEN BLUETOOTH CONNECTION IS IMPLEMENTED//
               databaseModelBD.stimTimeSetting = 240;
-              databaseModelBD.stimType = 1;
+              databaseModelBD.stimType = 0;
               //insert to database//
               await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD);
               debugPrint('data is sucessfully inserted');
               final diary = await DatabaseManager.databaseManager.getBladderDiary();
               debugPrint('$diary');
               final diaryEntry = await DatabaseManager.databaseManager.getBladderDiarydate(date);
+
 
                //snack bar//
                if (diaryEntry != null){            //If the entry has a value the value is saved
