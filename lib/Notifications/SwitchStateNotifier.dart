@@ -5,17 +5,17 @@ import 'package:provider/provider.dart';
 
 
 class SwitchStateNotifier extends ChangeNotifier {
-  bool _dailyreminderSwitch = false;
+  bool dailyreminderSwitch = false;
   DateTime? _selectedDate;
 
-  bool get dailyreminderSwitch => _dailyreminderSwitch;
+  //bool get dailyreminderSwitch => dailyreminderSwitch;
   DateTime? get selectedDate => _selectedDate;
 
   void toggleDailySwitch(bool value) {
-    if (_dailyreminderSwitch != value) {
-      _dailyreminderSwitch = value;
+    if (dailyreminderSwitch != value) {
+      dailyreminderSwitch = value;
       notifyListeners();
-      if (_dailyreminderSwitch) {
+      if (dailyreminderSwitch) {
         callDailyNotification();
       }
     }
@@ -24,7 +24,7 @@ class SwitchStateNotifier extends ChangeNotifier {
   void updateSelectedtime(DateTime newTime) {
     _selectedDate = newTime;
     notifyListeners();
-    if (_dailyreminderSwitch) {
+    if (dailyreminderSwitch) {
       callDailyNotification();
     }
   }

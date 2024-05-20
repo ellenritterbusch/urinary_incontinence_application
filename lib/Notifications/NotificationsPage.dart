@@ -9,9 +9,10 @@ import 'package:urinary_incontinence_application/Notifications/SwitchStateNotifi
 import 'package:provider/provider.dart';
 
 
-
-const double _kItemExtent = 32.0;
-List <int> timeOnDemand = <int> [
+ DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0); //daily reminder is default set to 8PM
+ int _selectedOnDemandTime = 3;                                                      //on demand is default set to 5 min
+ const double _kItemExtent = 32.0;
+ List <int> timeOnDemand = <int> [
   0,1,3,5,1,2,4,6,8,12,];
 
 class NotificationPage extends StatefulWidget {
@@ -24,12 +25,9 @@ class NotificationPage extends StatefulWidget {
 
 class _NotificationPage extends State<NotificationPage> {
   DatabaseModel databaseModelNoti = DatabaseModel.Noti(1,2,2,2);
-
   bool allnotifications = false;     //Value for all notification switch
   bool _dailyreminder = false;        //Value for daily reminder switch
   bool _ondemand = false;             //Value for on-demand
-  DateTime selectedDailyEvTime = DateTime(today.year, today.month, today.day, 20, 0); //daily reminder is default set to 8PM
-  int _selectedOnDemandTime = 3;                                                      //on demand is default set to 5 min
 
     @override
     void initState(){
@@ -45,6 +43,7 @@ class _NotificationPage extends State<NotificationPage> {
     final allNotiValue = allNotiList['allnotification'];                                    //retrieve the actual value for "all notifications"
     final dailyNotiValue = dailyNotiList['dailynotification'];                              //retrieve the actual value for "daily notifications"
     debugPrint('$allNotiValue');
+    debugPrint('$dailyNotiValue');
     if (allNotiValue == 1){
       setState(() {
         allnotifications = true;
@@ -59,17 +58,16 @@ class _NotificationPage extends State<NotificationPage> {
         }); }
     if (dailyNotiValue == 1){
       setState(() {
-        _dailyreminder = true;
+        SwitchStateNotifier().dailyreminderSwitch = true;
       }); 
       } else{
         setState(() {
-          _dailyreminder = false;
+          SwitchStateNotifier().dailyreminderSwitch = false;
         });
       }
      
        dailyReminderHour = selectedDailyEvTime.hour;
-        dailyReminderMin = selectedDailyEvTime.minute;
-        debugPrint('$dailyReminderHour');
+       dailyReminderMin = selectedDailyEvTime.minute;
     }
 
 
@@ -149,7 +147,7 @@ class _NotificationPage extends State<NotificationPage> {
             value: state.dailyreminderSwitch,                                                 //Switch value
             onChanged: (value) async {
               state.toggleDailySwitch(value);
-                if (_dailyreminder == true) {
+                if (state.dailyreminderSwitch == true) {
                   databaseModelNoti.noti_eva = 2;
                 } else {
                   databaseModelNoti.noti_eva = 1; 

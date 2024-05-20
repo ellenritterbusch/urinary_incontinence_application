@@ -17,8 +17,8 @@ import 'package:urinary_incontinence_application/main.dart';
 
 
 int id = 0;
-late int dailyReminderHour;     //daily reminder notification is by default sat to 20:00
-late int dailyReminderMin;
+int dailyReminderHour = 20;     //daily reminder notification is by default sat to 20:00
+int dailyReminderMin = 00;
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
