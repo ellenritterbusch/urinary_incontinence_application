@@ -3,9 +3,6 @@ import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPag
 import 'package:urinary_incontinence_application/Database/DatabaseModel.dart';
 import 'package:urinary_incontinence_application/Database/DatabaseManager.dart';
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/Table_calendar.dart';
-import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/Text_Field.dart';
-
-
 
 class DailyEvaluationPage extends StatefulWidget {
  const DailyEvaluationPage({super.key});

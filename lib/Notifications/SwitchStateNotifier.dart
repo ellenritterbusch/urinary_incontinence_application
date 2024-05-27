@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:urinary_incontinence_application/Notifications/SetNotifications.dart';
-import 'package:provider/provider.dart';
 
 
 class SwitchStateNotifier extends ChangeNotifier {

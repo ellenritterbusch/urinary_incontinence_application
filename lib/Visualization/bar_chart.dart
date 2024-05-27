@@ -38,14 +38,18 @@ final Data_ButtonState databutton = Data_ButtonState();
 
  
 Future<List<ChartData>> getChartData() async {
-  List<ChartData> mapChartData = [];                                                                      //Define list mapChartData
+  List<ChartData> mapChartData = [];             //Define list mapChartData
  
-  final dateString = today.toString().substring(0,10);                                                    //Chosen date on calendar_bar as string 
-  final accidents = await DatabaseManager.databaseManager.getAccidentBladderDiary(dateString);            //Fetch accidents from database
-  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString);                    //Fetch time of incidents from database
-  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);    //Fetch ALL stimulations from database
+  //Chosen date on calendar_bar as string 
+  final dateString = today.toString().substring(0,10);           
+  //Fetch accidents from database                                      
+  final accidents = await DatabaseManager.databaseManager.getAccidentBladderDiary(dateString);
+  //Fetch time of acidents from database            
+  final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString); 
+  //Fetch ALL stimulations from database                
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);    
 
-  for (var i = 0; i < accidents.length; i++){                    //For loop counter going from 0 - amount of accidents.
+  for (var i = 0; i < accidents.length; i++){  //For loop counter going from 0 - amount of accidents.
     final individualAccident = accidents[i];                              
     accidentValue = individualAccident['accident'];
 
@@ -56,19 +60,19 @@ Future<List<ChartData>> getChartData() async {
     final individualStimulation = amountStimulation[i];
     stimulationValue = individualStimulation['stimtype'];
 
-    if (stimulationValue > 1) {                                   //Stimulation data can be 1 or 2. We only want 1.
-      setState(() {                                               //We set stimulation data = 2 to be 0.
+    if (stimulationValue > 1) {    //Stimulation data can be 1 or 2. We only want 1.
+      setState(() {                //We set stimulation data = 2 to be 0.
     stimulationValue = 0;
     });}
 
-    mapChartData.add(                                             //We insert the data into the variables from the ChartData class
+    mapChartData.add(              //We insert the data into the variables from the ChartData class
       ChartData(
         date: dateTime,
         accident: accidentValue,
         amount_stimulation: stimulationValue,                           
       ));
 
-    debugPrint('acci: $accidentValue');                           //If these print, we enter the for loop. Also used for testing
+    debugPrint('acci: $accidentValue'); //If these print, we enter the for loop. Also used for testing
     debugPrint('time: $dateTime');
     debugPrint('Stim: $stimulationValue');    
   }

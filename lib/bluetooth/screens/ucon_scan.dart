@@ -6,7 +6,6 @@ import 'package:urinary_incontinence_application/bluetooth/screens/ucon_device_s
 import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_device_tile.dart';
 import 'package:urinary_incontinence_application/bluetooth/widgets/ucon_scan_result.dart';
 
-import 'device_screen.dart';
 import '../utils/snackbar.dart';
 import '../utils/extra.dart';
 

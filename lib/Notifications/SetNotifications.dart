@@ -1,18 +1,9 @@
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_timezone/flutter_timezone.dart';
-import 'package:get/get.dart';
-import 'package:provider/provider.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:timezone/data/latest_all.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 import 'package:urinary_incontinence_application/BladderDiary/CalendarPage/CalendarPage.dart';
-import 'package:urinary_incontinence_application/BladderDiary/DailyEvaluationPage/DailyEvaluationPage.dart';
-import 'package:urinary_incontinence_application/Visualization/HomePage.dart';
-import 'package:urinary_incontinence_application/Notifications/NotificationsPage.dart';
 import 'package:urinary_incontinence_application/main.dart';
 
 
