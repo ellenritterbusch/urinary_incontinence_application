@@ -28,7 +28,7 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
   late String date;
   late String time;
 
-  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0, 0, 0);
+  DatabaseModel databaseModelBD = DatabaseModel.BD('','',0,0,0);
 
   bool sliderChanged = false; //Used for saving
 
@@ -106,8 +106,8 @@ class _BladderDiaryState extends State<BladderDiaryPage> {
               databaseModelBD.time = time;
 
     //HARD CODE VALUE FOR STIM TYPE AND TIME SETTING, MUST BE CHANGED WHEN BLUETOOTH CONNECTION IS IMPLEMENTED//
-              databaseModelBD.stimTimeSetting = 240;
-              databaseModelBD.stimType = 0;
+               databaseModelBD.stimTimeSetting = 240;
+               databaseModelBD.stimType = 0;
               //insert to database//
               await DatabaseManager.databaseManager.insertBladderDiary(databaseModelBD);
               debugPrint('data is sucessfully inserted');

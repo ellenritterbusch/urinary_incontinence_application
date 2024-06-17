@@ -47,7 +47,12 @@ Future<List<ChartData>> getChartData() async {
   //Fetch time of acidents from database            
   final timer = await DatabaseManager.databaseManager.getTimeBladderDiary(dateString); 
   //Fetch ALL stimulations from database                
-  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);    
+  final amountStimulation = await DatabaseManager.databaseManager.getOnDemandBladderDiary(dateString);  
+  debugPrint(amountStimulation.toString());
+  debugPrint('længden for accidents er:');  
+  debugPrint(accidents.length.toString());
+   debugPrint('længden for stimulations er:');  
+  debugPrint(amountStimulation.length.toString());
 
   for (var i = 0; i < accidents.length; i++){  //For loop counter going from 0 - amount of accidents.
     final individualAccident = accidents[i];                              
@@ -72,9 +77,9 @@ Future<List<ChartData>> getChartData() async {
         amount_stimulation: stimulationValue,                           
       ));
 
-    debugPrint('acci: $accidentValue'); //If these print, we enter the for loop. Also used for testing
-    debugPrint('time: $dateTime');
-    debugPrint('Stim: $stimulationValue');    
+    // debugPrint('acci: $accidentValue'); //If these print, we enter the for loop. Also used for testing
+    // debugPrint('time: $dateTime');
+    // debugPrint('Stim: $stimulationValue');    
   }
   return mapChartData;
 }       

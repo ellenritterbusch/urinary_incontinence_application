@@ -125,7 +125,7 @@ Future <void> insertBladderDiary(DatabaseModel data) async {
     //RETRIEVE only the stimtype = 1                                                            
    Future<List<Map<String, dynamic>>> getOnDemandBladderDiary(String date) async {
     final Database db = await databaseDB;
-    var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colStimType AND $colDate=?', [date]);
+    var res = await db.rawQuery('SELECT $colStimType FROM $BladderDiaryTable WHERE $colDate=?', [date]);
     return res; 
   }
 
